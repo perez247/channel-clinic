@@ -1,0 +1,62 @@
+<div class="card mt-4 shadow">
+  <div class="card-header position-relative">
+
+    <div class="dropstart ticketOption">
+      <button class="btn" type="button" id="ticketMoreOptions" data-bs-toggle="dropdown" aria-expanded="false">
+        <fa-icon [icon]="fonts.faEllipsisV" class="text-dark"></fa-icon>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="ticketMoreOptions">
+        <li>
+          <a *ngIf="!finance" class="dropdown-item pointer"
+          [routerLink]="['/' + routes.privateRoute.single_ticket(ticket?.base?.id).$absolutePath]"
+          >View</a>
+          <a *ngIf="finance" class="dropdown-item pointer"
+          [routerLink]="['/' + routes.privateRoute.Single_finance_tickets(ticket?.base?.id).$absolutePath]"
+          >View</a>
+        </li>
+      </ul>
+    </div>
+
+    <strong class="d-block">
+      {{ ticket?.appInventoryType }} - {{ ticket?.base?.dateCreated | date : 'medium' }}
+    </strong>
+  </div>
+
+  <div class="card-body row">
+    <div class="col-6">
+      <img appDisplayProfileImage [imgSrc]="ticket?.patient?.user?.profile" class="float-start img-fluid m-auto mini-profile rounded-circle">
+
+      <span class="float-start ps-2">
+        <a [routerLink]="['/' + routes.privateRoute.single_patient(ticket?.patient?.user?.base?.id).$absolutePath]" >
+          {{ticket?.patient?.user?.firstName}}
+          {{ticket?.patient?.user?.lastName}}
+          {{ticket?.patient?.user?.otherName}}
+        </a>
+        <small class="d-block border-top mt-1 pt-1">
+          <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_company(ticket?.patient?.company?.user?.base?.id).$absolutePath]">
+            {{ticket?.patient?.company?.name}}
+          </a>
+        </small>
+      </span>
+    </div>
+
+    <div class="col-6">
+      <strong>Doctor</strong>
+      <small class="d-block border-top mt-1 pt-1">
+        <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_staff(ticket?.doctor?.user?.base?.id).$absolutePath]">
+          {{ticket?.doctor?.user?.lastName}} {{ticket?.doctor?.user?.firstName}}
+        </a>
+      </small>
+    </div>
+  </div>
+
+  <div class="card-footer text-muted">
+    <small>
+      <span> <strong>Status:</strong> {{ ticket?.appTicketStatus }} </span>
+      <strong class="px-2 text-primary">|</strong>
+      <span> <strong>Sent to department:</strong> {{ ticket?.sent ? 'Yes' : 'No' }} </span>
+        <strong class="px-2 text-primary">|</strong>
+      <span> <strong>Sent to finance:</strong> {{ ticket?.sentToFinance ? 'Yes' : 'No' }} ({{ ticket?.cost === null ? 'pending' : 'paid' }})</span>
+    </small>
+  </div>
+</div>

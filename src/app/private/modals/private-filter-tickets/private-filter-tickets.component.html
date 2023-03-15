@@ -1,0 +1,103 @@
+
+
+<div class="modal-content">
+  <div class="modal-header c-bg-primary">
+    <h5 class="modal-title">Filter Tickets</h5>
+    <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body c-bg-secondary">
+
+    <form [formGroup]="form">
+
+      <div class="row">
+        <div class="form-group col-md-12 position-relative">
+
+          <div class="w-100 position-relative">
+            <label class="form-control-label mb-2" for="patientNameField">
+              <strong>Patient Name</strong>
+            </label>
+            <input (keydown)="clear('patientId')" placeholder="Patient Name" maxlength="250" type="text" class="form-control" id="patientNameField" formControlName="patientName"  [ngClass]="{'is-invalid': errorService.getError(form, 'patientName')}">
+            <app-shared-user-autocomplete [userType]="'patient'" (selected)="setPatient($event)" class="position-absolute w-100" [searchWord]="form.get('patientName')?.value"></app-shared-user-autocomplete>
+            <app-custom-error-message [errorMessage]="errorService.getError(form, 'patientId')"></app-custom-error-message>
+          </div>
+
+        </div>
+
+        <div class="form-group col-md-12 position-relative">
+
+          <div class="w-100 position-relative">
+            <label class="form-control-label mb-2" for="staffNameField">
+              <strong>Staff Name</strong>
+            </label>
+            <input (keydown)="clear('doctorId')" placeholder="Staff Name" maxlength="250" type="text" class="form-control" id="staffNameField" formControlName="doctorName"  [ngClass]="{'is-invalid': errorService.getError(form, 'doctorName')}">
+            <app-shared-user-autocomplete [userType]="'staff'" (selected)="setPatient($event)" class="position-absolute w-100" [searchWord]="form.get('doctorName')?.value"></app-shared-user-autocomplete>
+            <app-custom-error-message [errorMessage]="errorService.getError(form, 'doctorId')"></app-custom-error-message>
+          </div>
+
+        </div>
+
+        <div class="form-group col-12">
+          <label class="form-control-label mb-2" for="typeField"><strong>Type of Ticket</strong></label>
+          <select class="form-control" id="typeField" formControlName="appInventoryType"  [ngClass]="{'is-invalid': errorService.getError(form, 'appInventoryType')}">
+              <option *ngFor="let type of appInventoryTypes" [value]="type.name" >{{type.display}}</option>
+          </select>
+          <app-custom-error-message [errorMessage]="errorService.getError(form, 'appInventoryType')"></app-custom-error-message>
+        </div>
+
+        <div *ngIf="isAdmin">
+          <div class="form-group col-12">
+            <label class="form-control-label mb-2" for="statusField"><strong>Status of Ticket</strong></label>
+            <select class="form-control" id="statusField" formControlName="appTicketStatus"  [ngClass]="{'is-invalid': errorService.getError(form, 'appTicketStatus')}">
+                <option *ngFor="let status of appStatuses" [value]="status.name" >{{status.display}}</option>
+            </select>
+            <app-custom-error-message [errorMessage]="errorService.getError(form, 'appTicketStatus')"></app-custom-error-message>
+          </div>
+
+          <div class="form-group col-12">
+            <label class="form-control-label mb-2" for="statusField"><strong>Sent to department</strong></label>
+            <div class="form-check">
+              <input formControlName="sentToDepartment" class="form-check-input" type="radio" name="sentToDepartment" id="sentToDepartmentTrue" [value]="true">
+              <label class="form-check-label" for="sentToDepartmentTrue">
+                Yes
+              </label>
+            </div>
+            <div class="form-check">
+              <input formControlName="sentToDepartment" class="form-check-input" type="radio" name="sentToDepartment" id="sentToDepartmentFalse" [value]="false">
+              <label class="form-check-label" for="sentToDepartmentFalse">
+                No
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group col-12">
+            <label class="form-control-label mb-2" for="statusField"><strong>Sent to finanace</strong></label>
+            <div class="form-check">
+              <input formControlName="sentToFinance" class="form-check-input" type="radio" name="sentToFinance" id="sentToFinanceTrue" [value]="true">
+              <label class="form-check-label" for="sentToFinanceTrue">
+                Yes
+              </label>
+            </div>
+            <div class="form-check">
+              <input formControlName="sentToFinance" class="form-check-input" type="radio" name="sentToFinance" id="sentToFinanceFalse" [value]="false">
+              <label class="form-check-label" for="sentToFinanceFalse">
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+  <div class="modal-footer c-bg-primary justify-content-between">
+    <button (click)="addFilter()" [disabled]="form.invalid" type="button" class="btn btn-primary">Update filter</button>
+    <div>
+      <button (click)="clearForm()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Reset</button>
+      <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+.appnavbar {
+    z-index: 10;
+    top: -8px;
+}
+
+.img-div {
+    width: 40px;
+}
+
+.menu-toggler {
+  position: absolute;
+  left: -70px;
+  transition: all 0.7s;
+}
+
+.menu-toggler.close {
+  left: -94px;
+}

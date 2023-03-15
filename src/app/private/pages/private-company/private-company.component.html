@@ -1,0 +1,64 @@
+
+<div class="d-flex justify-content-between mb-4">
+    <div class="d-flex justify-content-start mb-4 position-relative">
+        <span class="p-3 bg-primary shadow position-absolute">
+            <fa-icon [icon]="fonts.faBuilding" class="pe-1 text-light"></fa-icon>
+        </span>
+        <div class="ms-5 ps-3">
+          <span class="h3 me-1">Companies</span>
+          <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+          <small class="d-block text-dark">{{paginationResponse.totalItems}}</small>
+        </div>
+
+    </div>
+    <div>
+        <div class="dropdown">
+            <button class="btn btn-primary btn-sm text-white dropdown-toggle" type="button" id="more-action" data-bs-toggle="dropdown" aria-expanded="false">
+                Action
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="more-action">
+              <li><a class="dropdown-item pointer" (click)="openAddCompanyModal()" >Add Company</a></li>
+              <li><a class="dropdown-item pointer" (click)="openFilterCompanies()" >Filter</a></li>
+            </ul>
+          </div>
+    </div>
+</div>
+
+<section class="bg-light rounded shadow">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <!-- <th scope="col">&nbsp;</th> -->
+            <th scope="col">Name</th>
+            <th scope="col">Contract Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let company of companies">
+            <!-- <th scope="row"> </th>-->
+            <td>
+              <img appDisplayProfileImage [imgSrc]="company?.profile" class="img-fluid m-auto mini-profile">
+              <a class="ps-2" [routerLink]="['/' + routes.privateRoute.single_company(company.base?.id).$absolutePath]" >
+                {{company.firstName}}
+              </a>
+            </td>
+            <td>
+              <div>
+                {{company?.company?.companyContract | contractDetail }}
+              </div>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</section>
+
+<section>
+  <ngb-pagination
+    [(page)]="paginationResponse.pageNumber"
+    [pageSize]="paginationResponse.pageSize"
+    [collectionSize]="paginationResponse.totalItems"
+    (pageChange)="pageChanged($event)"
+    >
+  </ngb-pagination>
+</section>

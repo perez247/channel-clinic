@@ -1,0 +1,107 @@
+<div class="d-flex justify-content-between mb-4">
+  <div class="d-flex justify-content-start mb-4 position-relative">
+      <span class="p-3 bg-primary shadow position-absolute">
+          <fa-icon [icon]="fonts.faTicket" class="pe-1 text-light"></fa-icon>
+      </span>
+      <div class="placeholder-glow ms-5 ps-3">
+        <span *ngIf="!ticket" class="placeholder col-12"></span>
+        <span *ngIf="ticket" class="h5 me-1">
+          {{ ticket.appInventoryType }} - {{ ticket.base.dateCreated | date : 'medium' }}
+        </span>
+
+        <app-shared-loading *ngIf="!ticket" ></app-shared-loading>
+
+        <small class="d-block">
+          <span *ngIf="!ticket || isLoading" class="placeholder col-6"></span>
+          <span *ngIf="ticket && !isLoading" class="d-block">
+            <strong>Patient: </strong>
+            <span>
+              <a [routerLink]="['/' + routes.privateRoute.single_patient(ticket.patient?.user?.base?.id).$absolutePath]" >
+                {{ticket.patient?.user?.firstName}}
+                {{ticket.patient?.user?.lastName}}
+                {{ticket.patient?.user?.otherName}}
+              </a>
+            </span>
+            <strong class="px-2 text-primary">|</strong>
+            <strong>Company: </strong>
+            <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_company(ticket.patient.company?.user?.base?.id).$absolutePath]">
+              {{ticket?.patient?.company?.name}}
+            </a>
+            <span class="d-block">
+              <strong>Doctor: </strong>
+              <span>
+                <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_staff(ticket.doctor?.user?.base?.id).$absolutePath]">
+                  {{ticket?.doctor?.user?.lastName}} {{ticket?.doctor?.user?.firstName}}
+                </a>
+              </span>
+            </span>
+          </span>
+          <!-- <app-private-user-contract *ngIf="ticket && !isLoading" [user]="ticket" (reload)="getticket(currentSection)" (avaliable)="disableTabs = !$event"></app-private-user-contract> -->
+        </small>
+      </div>
+
+  </div>
+</div>
+
+<div  *ngIf="!ticket || isLoading" class="border rounded placeholder-glow">
+  <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+  <div class="p-2">
+      <span class="placeholder col-7"></span>
+      <span class="placeholder col-10"></span>
+      <span class="placeholder col-12"></span>
+      <span class="placeholder col-6"></span>
+      <span class="placeholder col-5"></span>
+  </div>
+  <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+  <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+  <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+  <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+</div>
+
+<ngb-accordion *ngIf="ticket && !isLoading" [activeIds]="currentSection">
+	<ngb-panel [id]="userSections.ticketDetail">
+
+		<ng-template ngbPanelTitle>
+			Overall description
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <p [innerHTML]="ticket.overallAppointmentDescription" ></p>
+    </ng-template>
+
+	</ngb-panel>
+  <ngb-panel [id]="userSections.overallAppointmentDescription">
+
+		<ng-template ngbPanelTitle>
+			Overall description for {{ ticket.appInventoryType }}
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      {{ ticket.overallDescription }}
+    </ng-template>
+
+	</ngb-panel>
+  <ngb-panel [id]="userSections.ticketList" *ngIf="ticket.sent">
+
+		<ng-template ngbPanelTitle>
+			Tickets
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <app-private-pharmacy-ticket-list (reload)="getTicket($event)" *ngIf="ticket.appInventoryType === types.pharmacy" [ticket]="ticket" ></app-private-pharmacy-ticket-list>
+    </ng-template>
+
+	</ngb-panel>
+  <ngb-panel appHasRole [roles]="[roles.admin, roles.finance]" [operator]="'or'" [id]="userSections.financeInventory" *ngIf="ticket.cost">
+
+		<ng-template ngbPanelTitle>
+			Finance - {{ ticket.cost.paymentStatus }}
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <app-private-finance-inventory (reload)="getTicket($event)" [ticket]="ticket" ></app-private-finance-inventory>
+    </ng-template>
+
+	</ngb-panel>
+</ngb-accordion>
+

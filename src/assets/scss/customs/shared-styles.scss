@@ -1,0 +1,44 @@
+
+
+.view-password {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+}
+
+.public-box {
+  max-width: 400px;
+  min-width: 300px;
+  width: 100vw;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.mini-profile {
+  max-width: 50px;
+}
+
+.edit-pic {
+  position: absolute;
+  left: 15px;
+}
+
+.edit-pic-trash {
+  position: absolute;
+  right: 15px;
+}
+
+.hover-illum {
+  -webkit-filter: brightness(100%);
+}
+
+.hover-illum:hover {
+  -webkit-filter: brightness(80%);
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}

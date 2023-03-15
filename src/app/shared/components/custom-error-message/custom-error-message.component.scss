@@ -1,0 +1,25 @@
+
+.hide-empty-error {
+  position: absolute;
+  bottom: 0;
+  transition: all 200ms;
+  opacity: 0;
+  font-size: small;
+}
+
+.show-error {
+  opacity: 1;
+  transition: all 200ms;
+  transform: translate3d(0, 90%, 0);
+  // bottom: -10px;
+}
+
+app-validator-error-message {
+  position: absolute;
+  width: 100%;
+}
+
+.form-hint {
+  position: absolute;
+  right: 13px;
+}

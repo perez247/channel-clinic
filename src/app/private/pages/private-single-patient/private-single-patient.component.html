@@ -1,0 +1,111 @@
+<div class="d-flex justify-content-between mb-4">
+  <div class="d-flex justify-content-start mb-4 position-relative">
+      <span class="p-3 bg-primary position-absolute">
+          <fa-icon [icon]="fonts.faBedPulse" class="pe-1 text-light"></fa-icon>
+      </span>
+      <div class="placeholder-glow ms-5 ps-3">
+        <span *ngIf="!patient" class="placeholder col-12"></span>
+        <span *ngIf="patient" class="h5 me-1">
+          {{ patient.firstName }}
+          {{ patient.lastName }}
+          {{ patient.otherName }}
+        </span>
+
+        <app-shared-loading *ngIf="!patient" ></app-shared-loading>
+
+        <span class="d-block">
+          <span *ngIf="!patient || isLoading" class="placeholder col-6"></span>
+
+          <!-- <small *ngIf="patient" class="text-dark">
+            <button (click)="confirmAddContract()" class="btn btn-primary">Add Contract
+              <app-shared-loading *ngIf="loadingContract" ></app-shared-loading>
+            </button>
+          </small> -->
+          <app-private-patient-contract *ngIf="patient && !isLoading" [user]="patient" (reload)="getPatient(currentSection)" (avaliable)="disableTabs = !$event"></app-private-patient-contract>
+        </span>
+      </div>
+
+  </div>
+</div>
+
+<div  *ngIf="!patient || isLoading" class="border rounded placeholder-glow">
+  <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+  <div class="p-2">
+      <span class="placeholder col-7"></span>
+      <span class="placeholder col-10"></span>
+      <span class="placeholder col-12"></span>
+      <span class="placeholder col-6"></span>
+      <span class="placeholder col-5"></span>
+  </div>
+  <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+  <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+  <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+  <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+</div>
+
+
+
+<ngb-accordion *ngIf="patient && !isLoading" [closeOthers]="true" [activeIds]="currentSection">
+
+	<ngb-panel [id]="userSections.personalDetails" [disabled]="disableTabs">
+
+		<ng-template ngbPanelTitle>
+			Personal Details
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <app-private-user-personal-detail [user]="patient" (reload)="getPatient($event)" ></app-private-user-personal-detail>
+		</ng-template>
+
+	</ngb-panel>
+
+  <ngb-panel [id]="userSections.nextOfKin" [disabled]="disableTabs">
+
+		<ng-template ngbPanelTitle>
+			Next of Kin
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <app-private-user-next-of-kin [user]="patient" (reload)="getPatient($event)" ></app-private-user-next-of-kin>
+		</ng-template>
+
+	</ngb-panel>
+
+  <ngb-panel [id]="userSections.allergies" [disabled]="disableTabs">
+
+		<ng-template ngbPanelTitle>
+			Allergies
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <app-private-patient-allergies [user]="patient" (reload)="getPatient($event)"></app-private-patient-allergies>
+		</ng-template>
+
+	</ngb-panel>
+
+
+  <ngb-panel [id]="userSections.vitals" [disabled]="disableTabs">
+
+		<ng-template ngbPanelTitle>
+			Vitals
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <app-private-patient-vitals [user]="patient" (reload)="getPatient($event)"></app-private-patient-vitals>
+		</ng-template>
+
+	</ngb-panel>
+
+  <ngb-panel [id]="userSections.userFiles" [disabled]="disableTabs">
+
+		<ng-template ngbPanelTitle>
+			Files
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+            <app-private-user-files [user]="patient" (reload)="getPatient($event)" ></app-private-user-files>
+		</ng-template>
+
+	</ngb-panel>
+
+</ngb-accordion>

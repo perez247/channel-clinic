@@ -1,0 +1,110 @@
+<div class="d-flex justify-content-between mb-4">
+    <div class="d-flex justify-content-start mb-4 position-relative">
+        <span class="p-3 bg-primary shadow position-absolute">
+            <fa-icon [icon]="fonts.faBedPulse" class="pe-1 text-light"></fa-icon>
+        </span>
+        <div  class="placeholder-glow ms-5 ps-3">
+          <span *ngIf="!staffItem" class="placeholder col-12"></span>
+          <span *ngIf="staffItem" class="h5 me-1">
+            {{ staffItem.firstName }}
+            {{ staffItem.lastName }}
+            {{ staffItem.otherName }}
+          </span>
+
+          <app-shared-loading *ngIf="!staffItem" ></app-shared-loading>
+
+          <span class="d-block">
+            <span *ngIf="!staffItem" class="placeholder col-6"></span>
+            <small *ngIf="staffItem"> {{ staffItem.staff?.position }} </small>
+
+            <!-- <small *ngIf="patient" class="text-dark">
+              <button (click)="confirmAddContract()" class="btn btn-primary">Add Contract
+                <app-shared-loading *ngIf="loadingContract" ></app-shared-loading>
+              </button>
+            </small> -->
+          </span>
+        </div>
+
+    </div>
+  </div>
+
+  <div  *ngIf="!staffItem || isLoading" class="border rounded placeholder-glow">
+    <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+    <div class="p-2">
+        <span class="placeholder col-7"></span>
+        <span class="placeholder col-10"></span>
+        <span class="placeholder col-12"></span>
+        <span class="placeholder col-6"></span>
+        <span class="placeholder col-5"></span>
+    </div>
+    <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+    <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+    <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+    <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+  </div>
+
+
+
+  <ngb-accordion *ngIf="staffItem && !isLoading" [closeOthers]="true" [activeIds]="currentSection">
+
+      <ngb-panel [id]="userSections.personalDetails" [disabled]="disableTabs">
+
+          <ng-template ngbPanelTitle>
+              Personal Details
+          </ng-template>
+
+          <ng-template ngbPanelContent>
+        <app-private-user-personal-detail [user]="staffItem" (reload)="getStaffList($event)" ></app-private-user-personal-detail>
+          </ng-template>
+
+      </ngb-panel>
+
+    <ngb-panel [id]="userSections.nextOfKin" [disabled]="disableTabs">
+
+          <ng-template ngbPanelTitle>
+              Next of Kin
+          </ng-template>
+
+          <ng-template ngbPanelContent>
+        <app-private-user-next-of-kin [user]="staffItem" (reload)="getStaffList($event)" ></app-private-user-next-of-kin>
+          </ng-template>
+
+    </ngb-panel>
+
+    <ngb-panel [id]="userSections.staffDetails" [disabled]="disableTabs">
+
+      <ng-template ngbPanelTitle>
+          Staff Details
+      </ng-template>
+
+      <ng-template ngbPanelContent>
+        <app-private-staff-details [user]="staffItem" (reload)="getStaffList($event)" ></app-private-staff-details>
+      </ng-template>
+
+    </ngb-panel>
+
+    <ngb-panel [id]="userSections.staffRoles" [disabled]="disableTabs">
+
+      <ng-template ngbPanelTitle>
+          Staff Roles
+      </ng-template>
+
+      <ng-template ngbPanelContent>
+        <app-private-staff-roles [user]="staffItem" (reload)="getStaffList($event)" ></app-private-staff-roles>
+      </ng-template>
+
+    </ngb-panel>
+
+    <ngb-panel [id]="userSections.userFiles" [disabled]="disableTabs">
+
+      <ng-template ngbPanelTitle>
+        Files
+      </ng-template>
+
+      <ng-template ngbPanelContent>
+              <app-private-user-files [user]="staffItem" (reload)="getStaffList($event)" ></app-private-user-files>
+      </ng-template>
+
+    </ngb-panel>
+
+  </ngb-accordion>

@@ -1,0 +1,42 @@
+
+
+    <div class="modal-content">
+        <div class="modal-header c-bg-primary">
+          <h5 class="modal-title">Edit display image</h5>
+          <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body c-bg-secondary">
+
+          <div class="row">
+
+            <div class="col-12 text-center">
+                <label class="btn btn-sm btn-primary">
+                    Browse&hellip; <input (change)="fileChangeEvent($event)" type="file" accept="image/*" style="display: none;">
+                  </label>
+            </div>
+
+            <div class="text-center col-12">
+                <image-cropper
+                  [imageChangedEvent]="imageChangedEvent"
+                  [maintainAspectRatio]="true"
+                  [aspectRatio]="4 / 4"
+                  [resizeToWidth]="300"
+                  [imageQuality]="30"
+                  format="jpeg"
+                  (imageCropped)="imageCropped($event)"
+                  class="img-fluid c-bg-primary"
+                  >
+              </image-cropper>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="modal-footer c-bg-primary d-flex justify-content-between">
+          <button (click)="saveChanges()" type="button" class="btn btn-primary">Save changes
+          </button>
+          <button (click)="activeModal.close()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>

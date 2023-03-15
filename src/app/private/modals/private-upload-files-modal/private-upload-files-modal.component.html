@@ -1,0 +1,71 @@
+
+
+    <div class="modal-content">
+        <div class="modal-header c-bg-primary">
+          <h5 class="modal-title">Upload Files ({{ total }})</h5>
+          <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body c-bg-secondary">
+
+          <div class="row border-bottom pb-4 mb-3">
+
+            <div *ngIf="!imageChangedEvent && files.length < total" class="col-12 text-center">
+                <label class="btn btn-sm btn-primary">
+                    Browse&hellip; <input (change)="fileChangeEvent($event)" type="file" accept=" application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                    text/plain, application/pdf, image/*" style="display: none;">
+                  </label>
+            </div>
+
+            <div *ngIf="imageChangedEvent" class="col-12 position-relative">
+
+              <div class="input-group">
+                <span class="input-group-text bg-primary">
+                  <fa-icon [icon]="fonts.faFileAlt" class="bg-primary rounded text-white"></fa-icon>
+                </span>
+                <input type="text" class="form-control" (keydown)="resetError()" [(ngModel)]="fileOnDisplay" >
+                <button [disabled]="fileStatus?.errorMessage" (click)="addToList()" class="btn btn-outline-primary btn-primary"
+                        [ngClass]="{'text-dark': fileStatus?.errorMessage, 'text-white': !fileStatus?.errorMessage}" type="button">Add File</button>
+              </div>
+              <div
+                class="hide-empty-error"
+                [ngClass]="{'show-error': fileStatus?.errorMessage}"
+                [style.visibility]="fileStatus?.errorMessage ? 'visible' : 'hidden'"
+              >
+              <small class="text-danger">{{ fileStatus?.errorMessage }}</small>
+              </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+          <div *ngIf="files.length > 0" class="col-12 mb-2 border-bottom">
+            <small>{{files.length}}/{{total}}</small>
+          </div>
+
+          <div class="col-12 mb-2" *ngFor="let file of files; let i = index">
+
+            <div class="input-group">
+              <span class="input-group-text bg-primary">
+                <fa-icon [icon]="fonts.faFileAlt" class="bg-primary rounded text-white"></fa-icon>
+              </span>
+              <input readonly disabled class="form-control" [value]="file.name" >
+              <button (click)="removeFromList(i)" class="btn btn-outline-danger btn-danger text-white" type="button">
+                <fa-icon [icon]="fonts.faTrashAlt" class="bg-danger rounded text-white"></fa-icon>
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        </div>
+        <div class="modal-footer c-bg-primary d-flex justify-content-between">
+          <button (click)="addFiles()" [disabled]="files.length <= 0" type="button" class="btn btn-primary">Add files</button>
+          <button (click)="activeModal.close()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>

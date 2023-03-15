@@ -1,0 +1,39 @@
+<div class="d-flex justify-content-between mb-4">
+    <div class="d-flex justify-content-start mb-4">
+        <span class="p-3 bg-primary shadow me-2">
+            <fa-icon [icon]="fonts.faCalendarCheck" class="pe-1 text-light"></fa-icon>
+        </span>
+        <div>
+          <span class="h3 me-1">Appointments</span>
+          <!-- <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+          <small class="d-block text-dark">{{paginationResponse.totalItems}}</small> -->
+        </div>
+
+    </div>
+    <div>
+        <div class="dropdown">
+            <button class="btn btn-primary btn-sm text-white dropdown-toggle" type="button" id="more-action" data-bs-toggle="dropdown" aria-expanded="false">
+                Action
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="more-action">
+              <li *ngIf="!displayCalendar"><a class="dropdown-item" (click)="displayCalendar = true" >View as calendar</a></li>
+              <li *ngIf="displayCalendar"><a class="dropdown-item" (click)="displayCalendar = false" >View as list</a></li>
+              <li appHasRole [roles]="[roles.admin, roles.nurse]" [operator]="'or'"><a class="dropdown-item" (click)="openAddPatientAppointmentModal()" >Add Patient Appointment</a></li>
+              <li><a class="dropdown-item" (click)="openFilterAppointment()" >Filter</a></li>
+            </ul>
+          </div>
+    </div>
+</div>
+
+
+<section *ngIf="displayCalendar" class="p-2 shadow rounded">
+
+  <app-private-appointments-by-calendar [filter]="filter"></app-private-appointments-by-calendar>
+
+</section>
+
+<section *ngIf="!displayCalendar">
+
+  <app-private-appointments-by-list [filter]="filter" ></app-private-appointments-by-list>
+
+</section>

@@ -1,0 +1,70 @@
+
+
+        <div class="modal-content">
+          <div class="modal-header c-bg-primary">
+            <div>
+              <h5 class="modal-title">Add a Patient</h5>
+              <small class="d-block text-danger">Check if patient is a staff first</small>
+            </div>
+            <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body c-bg-secondary">
+
+            <form [formGroup]="form">
+
+              <div class="row">
+
+                <div class="form-group col-12 position-relative">
+
+                  <div class="w-100 position-relative">
+                    <label class="form-control-label mb-2" for="firstNameField">
+                      <strong>First Name</strong>
+                    </label>
+                    <input placeholder="First Name" maxlength="250" type="text" class="form-control" id="firstNameField" formControlName="firstName"  [ngClass]="{'is-invalid': errorService.getError(form, 'firstName')}">
+                    <app-shared-user-autocomplete [userType]="'staff'" (selected)="updateFormFromAutoComplete($event)" class="position-absolute w-100" [searchWord]="form.get('firstName')?.value"></app-shared-user-autocomplete>
+                    <app-custom-error-message [errorMessage]="errorService.getError(form, 'firstName')"></app-custom-error-message>
+                  </div>
+
+                </div>
+
+                <div class="form-group col-6">
+                  <label class="form-control-label mb-2" for="lastNameField"><strong>Last Name</strong></label>
+                  <input placeholder="Last Name" maxlength="250" type="text" class="form-control" id="lastNameField" formControlName="lastName"  [ngClass]="{'is-invalid': errorService.getError(form, 'lastName')}">
+                  <app-custom-error-message [errorMessage]="errorService.getError(form, 'lastName')"></app-custom-error-message>
+                </div>
+
+                <div class="form-group col-6">
+                  <label class="form-control-label mb-2" for="otherNameField"><strong>Other Name</strong></label>
+                  <input placeholder="Other Name" maxlength="250" type="text" class="form-control" id="otherNameField" formControlName="otherName"  [ngClass]="{'is-invalid': errorService.getError(form, 'otherName')}">
+                  <app-custom-error-message [errorMessage]="errorService.getError(form, 'otherName')"></app-custom-error-message>
+                </div>
+
+                <div class="form-group col-12">
+                  <label class="form-control-label mb-2" for="emailField"><strong>Email</strong></label>
+                  <input placeholder="Email" maxlength="250" type="email" class="form-control" id="emailField" formControlName="email"  [ngClass]="{'is-invalid': errorService.getError(form, 'email')}">
+                  <app-custom-error-message [errorMessage]="errorService.getError(form, 'email')"></app-custom-error-message>
+                </div>
+
+                <div class="form-group col-12">
+                  <label class="form-control-label mb-2" for="addressField"><strong>Address</strong></label>
+                  <input placeholder="Address" maxlength="1000" type="email" class="form-control" id="addressField" formControlName="address"  [ngClass]="{'is-invalid': errorService.getError(form, 'address')}">
+                  <app-custom-error-message [errorMessage]="errorService.getError(form, 'address')"></app-custom-error-message>
+                </div>
+
+              </div>
+
+            </form>
+
+          </div>
+          <div class="modal-footer c-bg-primary justify-content-between">
+            <button [disabled]="form.invalid || isLoading" (click)="createNewPatient()" type="button" class="btn btn-primary">
+              Create Patient
+              <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+            </button>
+            <div>
+              <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>

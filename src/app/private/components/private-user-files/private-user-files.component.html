@@ -1,0 +1,38 @@
+
+<div class="d-flex justify-content-between mb-4">
+    <div class="d-flex justify-content-start align-items-center mb-4">
+        <fa-icon [icon]="fonts.faFileAlt" [size]="'2x'" class="pe-1 text-primary"></fa-icon>
+        <div>
+          <span class="h6 me-1">{{userFiles.length}}</span>
+          <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+        </div>
+
+    </div>
+    <div>
+        <button (click)="openUploadFileModal()" class="btn btn-sm btn-primary">Add Files</button>
+    </div>
+</div>
+
+<section>
+
+<div class="row">
+  <div class="col-12 mb-2" *ngFor="let file of userFiles; let i = index">
+
+    <div class="input-group">
+      <span class="input-group-text bg-primary">
+        <fa-icon [icon]="fonts.faFileAlt" class="bg-primary rounded text-white"></fa-icon>
+      </span>
+      <button [disabled]="isLoadingFile" (click)="confirmDeleteOfFile(file)" class="btn btn-outline-danger btn-danger text-white" type="button">
+        <fa-icon [icon]="fonts.faTrash" class="bg-danger rounded text-white"></fa-icon>
+      </button>
+      <input readonly disabled class="form-control" [value]="file.name" >
+      <button [disabled]="isLoadingFile" (click)="downloadFile(file.id)" class="btn btn-outline-success btn-success text-white" type="button">
+        <fa-icon [icon]="fonts.faDownload" class="bg-success rounded text-white"></fa-icon>
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
+</section>

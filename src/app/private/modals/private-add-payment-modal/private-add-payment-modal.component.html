@@ -1,0 +1,70 @@
+
+
+<div class="modal-content">
+  <div class="modal-header c-bg-primary">
+    <h5 class="modal-title">Add Payment</h5>
+    <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body c-bg-secondary">
+
+    <form [formGroup]="viewModel.form">
+
+      <div class="row">
+
+        <div class="form-group col-12">
+
+          <label class="form-control-label mb-2" for="amountField">
+            <strong>Amount Paid</strong>
+          </label>
+          <input placeholder="Amount" type="number" class="form-control" id="amountField" formControlName="amount"  [ngClass]="{'is-invalid': errorService.getError(viewModel.form, 'amount')}">
+          <app-custom-error-message [errorMessage]="errorService.getError(viewModel.form, 'amount')"></app-custom-error-message>
+
+        </div>
+
+        <div class="form-group col-12">
+          <label class="form-control-label mb-2" for="typeField"><strong>Payment type</strong></label>
+          <select class="form-control" id="typeField" formControlName="paymentType"  [ngClass]="{'is-invalid': errorService.getError(viewModel.form, 'paymentType')}">
+              <option [value]="null" >---</option>
+              <option *ngFor="let type of viewModel.paymentTypes" [value]="type.name" >{{type.display}}</option>
+          </select>
+          <app-custom-error-message [errorMessage]="errorService.getError(viewModel.form, 'paymentType')"></app-custom-error-message>
+        </div>
+
+        <div [style.display]="!viewModel.paymentMade.base64String ? 'block' : 'none'" class="col-12">
+          <label class="btn btn-sm btn-primary">
+            Browse&hellip; <input (change)="fileChangeEvent($event)" type="file" accept="image/jpeg, image/jpg, image/png" style="display: none;">
+          </label>
+        </div>
+
+        <div [style.display]="viewModel.paymentMade.base64String ? 'block' : 'none'" class="form-group col-12">
+          <div class="input-group">
+            <button (click)="viewModel.downloadFile()" class="btn btn-outline-success btn-success text-white" type="button">
+              <fa-icon [icon]="fonts.faDownload" class="bg-success rounded text-white"></fa-icon>
+            </button>
+            <input type="text" disabled readonly value="Proof of Payment" class="form-control">
+            <button (click)="viewModel.clearDownload()" class="btn btn-outline-danger btn-danger text-white" type="button">
+              <fa-icon [icon]="fonts.faTrash" class="bg-danger rounded text-white"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="hide-empty-error"
+          [ngClass]="{'show-error': viewModel.fileStatus.errorMessage}"
+          [style.visibility]="viewModel.fileStatus.errorMessage ? 'visible' : 'hidden'"
+        >
+          <small class="text-danger">{{ viewModel.fileStatus.errorMessage }}</small>
+        </div>
+      </div>
+
+    </form>
+
+
+  </div>
+  <div class="modal-footer c-bg-primary d-flex justify-content-between">
+    <button (click)="addPayment()" [disabled]="!viewModel.fileStatus.isSuccess || viewModel.form.invalid" type="button" class="btn btn-primary">Add Payment</button>
+    <button (click)="activeModal.close()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  </div>
+</div>

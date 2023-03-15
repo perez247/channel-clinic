@@ -1,0 +1,85 @@
+<div class="app-sidebar bg-primary position-relative" [ngClass]="{ 'close' : !openBar }">
+  <!-- <section class="overlay-color"></section> -->
+
+  <div style="width: 100%;">
+
+
+    <div class="ps-3 title bg-dark d-flex justify-content-start align-items-center">
+
+      <div class="dropdown">
+        <img appDisplayProfileImage [imgSrc]="currentUser?.profile" class="img-fluid rounded-circle me-3 dropdown-toggle" role="button" id="profileInfo" data-bs-toggle="dropdown" aria-expanded="false">
+
+        <ul class="dropdown-menu" aria-labelledby="profileInfo">
+          <li><a [routerLink]="['/' + appRroutes.privateRoute.single_staff(currentUser?.base?.id).$absolutePath]" class="dropdown-item" href="#">My Profile</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a (click)="logOut()" class="dropdown-item" href="#">Log out</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <span class="text-white">{{ currentUser?.lastName }}</span>
+        <small class="d-block text-light">{{ currentUser?.staff?.position }}</small>
+      </div>
+    </div>
+
+    <a href="#" class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.dashboard().$absolutePath]" routerLinkActive="active-tab">
+      <fa-icon [icon]="fonts.faChartLine" class="pe-1"></fa-icon> Dashboard
+    </a>
+    <a href="#" class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.patients().$absolutePath]" routerLinkActive="active-tab">
+      <fa-icon [icon]="fonts.faBedPulse" class="pe-1"></fa-icon> Patients
+    </a>
+
+    <a href="#" class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.staff().$absolutePath]" routerLinkActive="active-tab">
+      <fa-icon [icon]="fonts.faClipboardUser" class="pe-1"></fa-icon> Staff
+    </a>
+
+    <a href="#" class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.companies().$absolutePath]" routerLinkActive="active-tab">
+      <fa-icon [icon]="fonts.faBuilding" class="pe-1"></fa-icon> Companies
+    </a>
+
+    <a href="#"
+      appHasRole [roles]="[roles.admin, roles.pharmacy, roles.surgery, roles.lab, roles.radiology, roles.admission]"
+      [operator]="'or'"
+      class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.inventories().$absolutePath]" routerLinkActive="active-tab">
+      <fa-icon [icon]="fonts.faWarehouse" class="pe-1"></fa-icon> Inventories
+    </a>
+
+    <a href="#"
+      appHasRole [roles]="[roles.admin, roles.nurse, roles.doctor]" [operator]="'or'"
+      class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.appointments().$absolutePath]" routerLinkActive="active-tab">
+      <fa-icon [icon]="fonts.faCalendarCheck" class="pe-1"></fa-icon> Appointments
+    </a>
+
+    <a href="#"
+      class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.tickets().$absolutePath]" routerLinkActive="active-tab">
+      <fa-icon [icon]="fonts.faTicket" class="pe-1"></fa-icon> Tickets
+    </a>
+    <a
+      appHasRole [roles]="[roles.admin, roles.finance]" [operator]="'or'"
+      class="d-block ps-4"
+      data-bs-toggle="collapse"
+      href="#financeCollapse"
+      role="button"
+      aria-expanded="false"
+      aria-controls="financeCollapse"
+      #financeBlock
+    >
+      <fa-icon [icon]="fonts.faCoins" class="pe-1"></fa-icon> Finance
+    </a>
+
+
+    <div class="collapse position-relative illum text-dark py-2" id="financeCollapse">
+      <!-- <div class="illum"></div> -->
+      <div class="ps-5 collapsed-anchors">
+        <a href="#" class="d-block ps-4 border-end-0" [routerLink]="['/' + appRroutes.privateRoute.finance_contracts().$absolutePath]" routerLinkActive="active-tab">
+          <fa-icon [icon]="fonts.faSignature" class="pe-1"></fa-icon> Contacts
+        </a>
+        <a href="#" class="d-block ps-4 border-end-0 mt-3" [routerLink]="['/' + appRroutes.privateRoute.finance_tickets().$absolutePath]" routerLinkActive="active-tab">
+          <fa-icon [icon]="fonts.faTicket" class="pe-1"></fa-icon> Tickets
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</div>

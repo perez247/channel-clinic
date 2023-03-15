@@ -1,0 +1,80 @@
+
+<div  class="public-box">
+    <div class="bg-white p-4">
+  
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <a class="text-decoration-none text-dark" [routerLink]="['/' + appRoutes.publicRoute.home().$absolutePath]">
+            <fa-icon size="2x" [icon]="fonts.faChevronLeft"></fa-icon>
+        </a>
+
+        <a [routerLink]="['/' + appRoutes.publicRoute.home().$absolutePath]" routerLinkActive="router-link-active"  class="register-text text-decoration-none text-dark" href="">Already have an account?</a>
+      </div>
+  
+      <div>
+        <h2 class="title-text text-dark">Welcome!</h2>
+      </div>
+  
+      <div>
+  
+        <form>
+            <div class="form-floating mb-3 rounded-pill">
+                <input type="text" class="form-control rounded-pill" id="firstName" placeholder="John">
+                <label for="firstName">First Name</label>
+            </div>
+
+            <div class="form-floating mb-3 rounded-pill">
+                <input type="text" class="form-control rounded-pill" id="lastName" placeholder="Doe">
+                <label for="lastName">Last Name</label>
+            </div>
+
+            <div class="form-floating mb-3 rounded-pill">
+                <input type="email" class="form-control rounded-pill" id="emailAddress" placeholder="name@example.com">
+                <label for="emailAddress">Email address</label>
+            </div>
+    
+            <div class="form-floating rounded-pill">
+                <input [type]="viewPassword ? 'text' : 'password' " class="form-control rounded-pill" id="newPassword" placeholder="Password">
+                <fa-icon *ngIf="!viewPassword" [icon]="fonts.faEye" (click)="viewPassword = true"  class="text-dark view-password pointer"></fa-icon>
+                <fa-icon *ngIf="viewPassword" [icon]="fonts.faEyeSlash" (click)="viewPassword = false"  class="text-dark view-password pointer"></fa-icon>
+                <label for="newPassword">Password</label>
+            </div>
+  
+            <div class="form-floating rounded-pill my-3">
+                <input type="password" class="form-control rounded-pill" id="confirmNewPassword" placeholder="Password">
+                <label for="confirmNewPassword">Confirm Password</label>
+            </div>
+  
+          <div class="d-grid">
+            <button [routerLink]="['/' + appRoutes.publicRoute.forgotPassword().$absolutePath]"  type="submit" class="btn btn-primary rounded-pill"><span class="text-white login-text">Sign Up</span></button>
+          </div>
+        </form>
+  
+  
+        <div class="mt-4 mb-3">
+          <div class="border-top border-1" style="border-color: #000 !important;"></div>
+          <div class="d-flex justify-content-center" style="margin-top: -14px;">
+            <div class="bg-white text-center" style="width: 50px;">
+              <span class="or-text">or</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="d-grid">
+          <button type="submit" class="btn btn-danger rounded-pill">
+            <span class="text-white google-login-text">
+              <img src="/assets/images/Google logo Vector.svg" class="me-1" alt=""/>
+              Continue with Google
+            </span>
+          </button>
+        </div>
+  
+      </div>
+  
+    </div>
+  
+    <div class="d-flex justify-content-between mt-3">
+      <p class="p-2 or-text text-white bg-dark"><img src="/assets/images/Google Play.svg" alt=""/></p>
+      <p class="p-2 or-text text-white bg-dark"><img src="/assets/images/Apple Store.svg" alt=""/></p>
+    </div>
+  </div>
+  

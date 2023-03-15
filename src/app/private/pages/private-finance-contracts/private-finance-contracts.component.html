@@ -1,0 +1,114 @@
+<div class="d-flex justify-content-between mb-4">
+  <div class="d-flex justify-content-start mb-4 position-relative">
+      <span class="p-3 bg-primary shadow position-absolute">
+          <fa-icon [icon]="fonts.faSignature" class="pe-1 text-light"></fa-icon>
+      </span>
+      <div class="ms-5 ps-3">
+        <span class="h3 me-1">Contracts</span>
+        <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+        <small class="d-block text-dark">{{paginationResponse.totalItems | shortNumber}}</small>
+      </div>
+
+  </div>
+  <div>
+      <div class="dropdown">
+          <button class="btn btn-primary btn-sm text-white dropdown-toggle" type="button" id="more-action" data-bs-toggle="dropdown" aria-expanded="false">
+              Action
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="more-action">
+            <li><a (click)="openFilterTicketModal()" class="dropdown-item pointer" >Filter</a></li>
+          </ul>
+        </div>
+  </div>
+</div>
+
+<section class="p-2 my-2 shadow">
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <!-- <th scope="col">&nbsp;</th> -->
+        <th scope="col">User</th>
+        <th scope="col">Amount</th>
+        <!-- <th scope="col">Handle</th> -->
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let contract of contracts">
+        <td>
+          <div class="d-block" *ngIf="contract.patientContract">
+
+            &nbsp;
+            <img appDisplayProfileImage [imgSrc]="contract.patientContract.patient?.user?.profile" class="float-start img-fluid m-auto mini-profile rounded-circle">
+
+            <span class="float-start ps-2">
+              <a [routerLink]="['/' + routes.privateRoute.single_patient(contract.patientContract.patient?.user?.base?.id).$absolutePath]" >
+                {{contract.patientContract.patient?.user?.firstName}}
+                {{contract.patientContract.patient?.user?.lastName}}
+                {{contract.patientContract.patient?.user?.otherName}}
+              </a>
+            </span>
+          </div>
+
+          <span class="d-block" *ngIf="contract.companyContract">
+            &nbsp;
+            <img appDisplayProfileImage [imgSrc]="contract.companyContract.company?.user?.profile" class="float-start img-fluid m-auto mini-profile rounded-circle">
+
+            <span class="float-start ps-2">
+              <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_company(contract.companyContract.company?.user?.base?.id).$absolutePath]">
+                {{contract.companyContract.company?.name}}
+              </a>
+            </span>
+          </span>
+
+          <span class="ms-2 ps-5 d-block">
+            <span *ngIf="contract.companyContract">
+              {{ contract.companyContract.duration }} days
+            </span>
+            <span *ngIf="contract.patientContract">
+              {{ contract.patientContract.duration }} days
+            </span>
+          </span>
+        </td>
+        <td class="position-relative">
+          <div class="dropstart ticketOption">
+            <button class="btn" type="button" id="ticketMoreOptions" data-bs-toggle="dropdown" aria-expanded="false">
+              <fa-icon *ngIf="!isLoading" [icon]="fonts.faEllipsisV" class="text-dark"></fa-icon>
+              <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="ticketMoreOptions">
+              <li><span (click)="addPayment(contract)" class="dropdown-item pointer">Add Payment</span></li>
+            </ul>
+          </div>
+          <span>
+            {{ contract.amount | currency: 'N' }}
+          </span>
+          <span class="d-block" *ngIf="contract.companyContract">
+            {{ contract.companyContract.appCost?.description }}
+          </span>
+          <span class="d-block" *ngIf="contract.patientContract">
+            {{ contract.patientContract.appCost?.description }}
+          </span>
+          <span>
+
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</section>
+
+<section>
+  <ngb-pagination
+    [(page)]="paginationResponse.pageNumber"
+    [pageSize]="paginationResponse.pageSize"
+    [collectionSize]="paginationResponse.totalItems"
+    (pageChange)="pageChanged($event)"
+    [maxSize]="5"
+    [rotate]="true"
+    [boundaryLinks]="true"
+    >
+  </ngb-pagination>
+</section>

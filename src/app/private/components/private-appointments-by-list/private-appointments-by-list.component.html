@@ -1,0 +1,61 @@
+<section *ngIf="isLoading" class="text-center mt-5">
+  <app-shared-loading [size]="'lg'" ></app-shared-loading>
+</section>
+
+<section>
+  <span class="lead">Total {{ paginationResponse.totalItems }}</span>
+</section>
+
+<section class="p-2 my-2 shadow">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <!-- <th scope="col">&nbsp;</th> -->
+        <th scope="col">Patient Name</th>
+        <th scope="col">Time</th>
+        <!-- <th scope="col">Handle</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let appointment of appointments">
+        <!-- <th scope="row"> </th>-->
+        <td>
+            <img appDisplayProfileImage [imgSrc]="appointment.patient?.user?.profile" class="float-start img-fluid m-auto mini-profile rounded-circle">
+
+            <span class="float-start ps-2">
+              <a [routerLink]="['/' + routes.privateRoute.single_patient(appointment.patient?.user?.base?.id).$absolutePath]" >
+                {{appointment.patient?.user?.firstName}}
+                {{appointment.patient?.user?.lastName}}
+                {{appointment.patient?.user?.otherName}}
+              </a>
+              <small class="d-block border-top mt-1 pt-1">
+                <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_company(appointment.company?.user?.base?.id).$absolutePath]">
+                  {{appointment?.company?.name}}
+                </a>
+              </small>
+            </span>
+        </td>
+        <td>
+          <a class="text-danger" [routerLink]="['/' + routes.privateRoute.single_appointment(appointment.base?.id).$absolutePath]">
+            {{appointment.appointmentDate | date : 'medium'}}
+          </a>
+          <small class="d-block border-top mt-1 pt-1">
+            <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_staff(appointment.doctor?.user?.base?.id).$absolutePath]">
+              {{appointment?.doctor?.user?.lastName}} {{appointment?.doctor?.user?.firstName}}
+            </a>
+          </small>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+  <section>
+    <ngb-pagination
+      [(page)]="paginationResponse.pageNumber"
+      [pageSize]="paginationResponse.pageSize"
+      [collectionSize]="paginationResponse.totalItems"
+      (pageChange)="pageChanged($event)"
+      >
+    </ngb-pagination>
+  </section>

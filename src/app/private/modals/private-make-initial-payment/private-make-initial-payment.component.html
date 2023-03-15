@@ -1,0 +1,135 @@
+
+
+<div class="modal-content">
+  <div class="modal-header c-bg-primary">
+    <h5 class="modal-title">Make Payments</h5>
+    <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body c-bg-secondary">
+
+    <div class="card mb-3">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-6">
+            <strong>Name</strong>
+          </div>
+          <div class="col-3"><strong>Quantity</strong></div>
+          <div class="col-3"><strong>Amount</strong></div>
+        </div>
+      </div>
+      <div class="card-header" *ngFor="let ticketInventory of ticket?.ticketInventories">
+        <div class="row" *ngIf="ticketInventory.appTicketStatus === 'ongoing'">
+          <div class="col-6">
+            {{ ticketInventory.inventory.name }}
+          </div>
+          <div class="col-3">{{ ticketInventory.prescribedQuantity }} ({{ pricePerItem(ticketInventory) | currency : 'N'}})</div>
+          <div class="col-3">{{ ticketInventory.totalPrice | currency : 'N'}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card my-3">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-6">
+            <strong>Name</strong>
+          </div>
+          <div class="col-3"><strong>&nbsp;</strong></div>
+          <div class="col-3"><strong>Amount</strong></div>
+        </div>
+      </div>
+      <div class="card-header">
+        <div class="row">
+          <div class="col-6">
+            Total
+          </div>
+          <div class="col-3"><strong>&nbsp;</strong></div>
+          <div class="col-3">{{total | currency : 'N'}}</div>
+        </div>
+      </div>
+      <div class="card-header">
+        <div class="row">
+          <div class="col-6">
+            VAT ({{ vat }})
+          </div>
+          <div class="col-3"><strong>&nbsp;</strong></div>
+          <div class="col-3">{{vatTotal | currency : 'N'}}</div>
+        </div>
+      </div>
+      <div class="card-header">
+        <div class="row">
+          <div class="col-6">
+            <strong>Sum Total</strong>
+          </div>
+          <div class="col-3"><strong>&nbsp;</strong></div>
+          <div class="col-3"><strong>{{sumTotal | currency : 'N'}}</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!payee.forIndividual" class="card my-3">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-6">
+            <strong>Payee</strong>
+          </div>
+          <div class="col-3"><strong>&nbsp;</strong></div>
+          <div class="col-3">
+            <strong>{{payee.name}}</strong>
+            <small class="d-block text-danger">Payment will be sent to the company</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="payee.forIndividual" class="card my-3">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-6">
+            <strong>Payee</strong>
+          </div>
+          <div class="col-3"><strong>&nbsp;</strong></div>
+          <div class="col-3">
+            <strong class="d-block">{{payee.name}}</strong>
+            <button (click)="addPayment()" class="btn btn-sm btn-primary">Add Payment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="payments.length > 0">
+      <h4 class="border-bottom">Payments</h4>
+      <div class="card">
+        <div *ngFor="let payment of payments; let i = index" class="card-header">
+          <div class="border-bottom">
+            {{ payment.amount | currency: 'N'}} - {{ payment.typeDisplayName }}
+          </div>
+          <div class="input-group">
+            <button (click)="downloadFile(payment)" class="btn btn-outline-success btn-success text-white" type="button">
+              <fa-icon [icon]="fonts.faDownload" class="bg-success rounded text-white"></fa-icon>
+            </button>
+            <input disabled [value]="payment.name" type="text" class="form-control" >
+            <button (click)="removeFromList(i)" class="btn btn-outline-danger btn-danger text-white" type="button">
+              <fa-icon [icon]="fonts.faTrash" class="bg-danger rounded text-white"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="modal-footer c-bg-primary justify-content-between">
+    <button (click)="uploadPayment()" [disabled]="isLoading" type="button" class="btn btn-primary">
+      Update Payment
+      <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+    </button>
+
+    <div>
+      <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

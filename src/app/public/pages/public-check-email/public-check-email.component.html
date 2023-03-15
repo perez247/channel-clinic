@@ -1,0 +1,35 @@
+
+<div  class="public-box">
+    <div class="bg-white p-4">
+  
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <a class="text-decoration-none text-dark" [routerLink]="['/' + appRoutes.publicRoute.home().$absolutePath]">
+                <fa-icon size="2x" [icon]="fonts.faChevronLeft"></fa-icon>
+            </a>
+        </div>
+
+        <div>
+            <h2 class="title-text text-dark">Check your mail</h2>
+        </div>
+
+        
+        <div class="mb-3">
+            <span class="register-text text-decoration-none text-dark">We just sent you a mail tha contains steps for setting a new password.</span>
+        </div>
+  
+        <div>
+    
+            <form>
+    
+                <div class="d-grid">
+                    <button [routerLink]="['/' + appRoutes.publicRoute.home().$absolutePath]" type="submit" class="btn btn-primary rounded-pill"><span class="text-white login-text">Home</span></button>
+                </div>
+
+            </form>
+    
+        
+        </div>
+  
+    </div>
+  </div>
+  

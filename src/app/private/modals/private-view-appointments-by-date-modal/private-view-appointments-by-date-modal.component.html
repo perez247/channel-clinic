@@ -1,0 +1,64 @@
+
+
+        <div class="modal-content">
+          <div class="modal-header c-bg-primary">
+              <h5 class="modal-title">Appointments on {{ appointmentDate | date }}
+              <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+              </h5>
+            <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body c-bg-secondary">
+
+            <section *ngIf="!isLoading" class="p-2 shadow">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <!-- <th scope="col">&nbsp;</th> -->
+                    <th scope="col">Patient Name</th>
+                    <th scope="col">Time</th>
+                    <!-- <th scope="col">Handle</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let appointment of appointments">
+                    <!-- <th scope="row"> </th>-->
+                    <td>
+                        <img appDisplayProfileImage [imgSrc]="appointment.patient?.user?.profile" class="float-start img-fluid m-auto mini-profile rounded-circle">
+
+                        <span class="float-start ps-2">
+                          <a [routerLink]="['/' + routes.privateRoute.single_patient(appointment.patient?.user?.base?.id).$absolutePath]" (click)="closeModal()" >
+                            {{appointment.patient?.user?.firstName}}
+                            {{appointment.patient?.user?.lastName}}
+                            {{appointment.patient?.user?.otherName}}
+                          </a>
+                          <small class="d-block border-top mt-1 pt-1">
+                            <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_company(appointment.company?.user?.base?.id).$absolutePath]" (click)="closeModal()">
+                              {{appointment?.company?.name}}
+                            </a>
+                          </small>
+                        </span>
+                    </td>
+                    <td>
+                      <a class="text-danger" [routerLink]="['/' + routes.privateRoute.single_appointment(appointment.base?.id).$absolutePath]" (click)="closeModal()">
+                        {{appointment.appointmentDate | date : 'h:mm a'}}
+                      </a>
+                      <small class="d-block border-top mt-1 pt-1">
+                        <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_staff(appointment.doctor?.user?.base?.id).$absolutePath]">
+                          {{appointment?.doctor?.user?.lastName}} {{appointment?.doctor?.user?.firstName}}
+                        </a>
+                      </small>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+          </div>
+          <div class="modal-footer c-bg-primary justify-content-between">
+            <div>
+              <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>

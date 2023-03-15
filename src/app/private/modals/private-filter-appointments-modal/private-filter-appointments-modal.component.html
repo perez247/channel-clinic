@@ -1,0 +1,53 @@
+
+
+<div class="modal-content">
+  <div class="modal-header c-bg-primary">
+    <h5 class="modal-title">Filter Appointment</h5>
+    <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body c-bg-secondary">
+
+    <form [formGroup]="form">
+
+      <div class="row">
+
+        <div class="form-group col-md-12">
+          <label class="form-control-label mb-2" for="patientNameField"><strong>Patient Name</strong></label>
+          <input (keydown)="clearPatient" placeholder="Patient Name" maxlength="250" type="text" class="form-control" id="patientNameField" formControlName="patientName"  [ngClass]="{'is-invalid': errorService.getError(form, 'patientName')}">
+          <app-shared-user-autocomplete [userType]="'patient'" (selected)="updatePatient($event)" class="position-absolute w-100" [searchWord]="form.get('patientName')?.value"></app-shared-user-autocomplete>
+          <app-custom-error-message [errorMessage]="errorService.getError(form, 'patientName')"></app-custom-error-message>
+        </div>
+
+        <div class="form-group col-md-12">
+          <label class="form-control-label mb-2" for="doctorNameField"><strong>Doctor Name</strong></label>
+          <input (keydown)="clearDoctor()" placeholder="Doctor Name" maxlength="250" type="text" class="form-control" id="doctorNameField" formControlName="doctorName"  [ngClass]="{'is-invalid': errorService.getError(form, 'doctorName')}">
+          <app-shared-user-autocomplete [userType]="'staff'" (selected)="updateDoctor($event)" class="position-absolute w-100" [searchWord]="form.get('doctorName')?.value"></app-shared-user-autocomplete>
+          <app-custom-error-message [errorMessage]="errorService.getError(form, 'doctorName')"></app-custom-error-message>
+        </div>
+
+        <div class="form-group col-md-12">
+          <label class="form-control-label mb-2"><strong>Appointment Date</strong></label>
+          <div class="input-group mb-3">
+            <input ngbDatepicker #d="ngbDatepicker" type="text" placeholder="YYYY-MM-DD" class="form-control" formControlName="exactDate"  [ngClass]="{'is-invalid': errorService.getError(form, 'exactDate')}">
+            <button (click)="d.toggle()" class="btn-primary bg-primary">
+              <fa-icon [icon]="fonts.faCalendar" class="text-white"></fa-icon>
+            </button>
+          </div>
+          <app-custom-error-message [errorMessage]="errorService.getError(form, 'exactDate')"></app-custom-error-message>
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+  <div class="modal-footer c-bg-primary justify-content-between">
+    <button (click)="addFilter()" [disabled]="form.invalid" type="button" class="btn btn-primary">Update filter</button>
+    <div>
+      <button (click)="clearForm()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Reset</button>
+      <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

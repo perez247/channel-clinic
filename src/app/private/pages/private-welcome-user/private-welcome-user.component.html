@@ -1,0 +1,21 @@
+
+<div  class="public-box">
+    <div class="d-flex justify-content-center d-flex align-items-center">
+
+        <span class="title-text text-white">
+            <span class="d-block">Hello</span>
+            <span>{{ currentUser?.lastName }}!</span>
+        </span>
+    </div>
+
+</div>
+
+
+<div class="text-end explore">
+    <a [routerLink]="['/' + appRoutes.privateRoute.dashboard().$absolutePath]" class="text-white" >
+      <span class="d-flex justify-content-center d-flex align-items-center pointer">
+        <span class="h6 pt-1">Explore</span>
+        <fa-icon [icon]="fonts.faAngleDoubleRight" size="2x"  class="ms-1"></fa-icon>
+      </span>
+    </a>
+</div>

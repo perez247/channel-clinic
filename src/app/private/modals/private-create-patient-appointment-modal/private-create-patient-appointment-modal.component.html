@@ -1,0 +1,70 @@
+
+
+        <div class="modal-content">
+          <div class="modal-header c-bg-primary">
+            <div>
+              <h5 class="modal-title">Create Patient Appointment</h5>
+            </div>
+            <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body c-bg-secondary">
+
+            <form [formGroup]="form">
+
+              <div class="row">
+
+                <div class="form-group col-md-12 position-relative">
+
+                  <div class="w-100 position-relative">
+                    <label class="form-control-label mb-2" for="patientField">
+                      <strong>Patient</strong>
+                    </label>
+                    <input (keydown)="clearpatient()" placeholder="Search for patient" maxlength="250" type="text" class="form-control" id="patientField" formControlName="patientName"  [ngClass]="{'is-invalid': errorService.getError(form, 'patientId')}">
+                    <app-shared-user-autocomplete [userType]="'patient'" (selected)="addPatient($event)" class="position-absolute w-100" [searchWord]="form.get('patientName')?.value"></app-shared-user-autocomplete>
+                    <app-custom-error-message [errorMessage]="errorService.getError(form, 'patientId')"></app-custom-error-message>
+                  </div>
+
+                </div>
+
+                <div class="form-group col-md-12 position-relative">
+
+                  <div class="w-100 position-relative">
+                    <label class="form-control-label mb-2" for="doctorField">
+                      <strong>Doctor</strong>
+                    </label>
+                    <input (keydown)="clearDoctor()" placeholder="Search for doctor" maxlength="250" type="text" class="form-control" id="doctorField" formControlName="doctorName"  [ngClass]="{'is-invalid': errorService.getError(form, 'doctorId')}">
+                    <app-shared-user-autocomplete [userType]="'staff'" (selected)="addDoctor($event)" class="position-absolute w-100" [searchWord]="form.get('doctorName')?.value"></app-shared-user-autocomplete>
+                    <app-custom-error-message [errorMessage]="errorService.getError(form, 'doctorId')"></app-custom-error-message>
+                  </div>
+
+                </div>
+
+                <div class="form-group col-md-6 text-center">
+                  <label class="form-control-label mb-2 d-block"><strong>Appointment Date</strong></label>
+                  <ngb-datepicker #dp formControlName="appointmentDate"></ngb-datepicker>
+                  <app-custom-error-message [errorMessage]="errorService.getError(form, 'appointmentDate')"></app-custom-error-message>
+                </div>
+
+                <div class="form-group col-md-6 position-relative">
+                  <app-custom-error-message [errorMessage]="errorService.getError(form, 'appointmentTime')"></app-custom-error-message>
+                  <label class="form-control-label mb-2 d-block" for="appointmentTime"><strong>Appoitment Time</strong></label>
+                  <ngb-timepicker formControlName="appointmentTime" [meridian]="true"></ngb-timepicker>
+                </div>
+
+              </div>
+
+            </form>
+
+          </div>
+          <div class="modal-footer c-bg-primary justify-content-between">
+            <button [disabled]="form.invalid || isLoading" (click)="createPatientAppointment()" type="button" class="btn btn-primary">
+              Create Patient Appointment
+              <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+            </button>
+            <div>
+              <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>

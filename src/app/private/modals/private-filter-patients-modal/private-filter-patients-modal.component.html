@@ -1,0 +1,58 @@
+
+
+        <div class="modal-content">
+          <div class="modal-header c-bg-primary">
+            <h5 class="modal-title">Filter Patients</h5>
+            <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body c-bg-secondary">
+
+            <form [formGroup]="form">
+
+              <div class="row">
+
+                <div class="form-group col-12">
+                  <label class="form-control-label mb-2" for="nameField"><strong>Name</strong></label>
+                  <input placeholder="Name" maxlength="250" type="text" class="form-control" id="nameField" formControlName="name"  [ngClass]="{'is-invalid': errorService.getError(form, 'name')}">
+                  <app-custom-error-message [errorMessage]="errorService.getError(form, 'name')"></app-custom-error-message>
+                </div>
+
+
+                <div class="form-group col-md-12 position-relative">
+
+                  <div class="w-100 position-relative">
+                    <label class="form-control-label mb-2" for="companyNameField">
+                      <strong>Company Name</strong>
+                    </label>
+                    <input (keydown)="clear()" placeholder="Company Name" maxlength="250" type="text" class="form-control" id="companyNameField" formControlName="patientCompanyName"  [ngClass]="{'is-invalid': errorService.getError(form, 'patientCompanyName')}">
+                    <app-shared-user-autocomplete [userType]="'company'" (selected)="setPatientComany($event)" class="position-absolute w-100" [searchWord]="form.get('patientCompanyName')?.value"></app-shared-user-autocomplete>
+                    <app-custom-error-message [errorMessage]="errorService.getError(form, 'patientCompanyName')"></app-custom-error-message>
+                  </div>
+
+                </div>
+
+                <!-- <div class="form-group col-12">
+                  <label class="form-control-label mb-2" for="isCompanyField"><strong>Type of Patient</strong></label>
+                  <select class="form-control" id="isCompanyField" formControlName="isCompany"  [ngClass]="{'is-invalid': errorService.getError(form, 'isCompany')}">
+                      <option [value]="null" >--</option>
+                      <option [value]="false">Individual</option>
+                      <option [value]="true">Company</option>
+                  </select>
+                  <app-custom-error-message [errorMessage]="errorService.getError(form, 'isCompany')"></app-custom-error-message>
+                </div> -->
+
+              </div>
+
+            </form>
+
+          </div>
+          <div class="modal-footer c-bg-primary justify-content-between">
+            <button (click)="addFilter()" [disabled]="form.invalid" type="button" class="btn btn-primary">Update filter</button>
+            <div>
+              <button (click)="clearForm()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Reset</button>
+              <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>

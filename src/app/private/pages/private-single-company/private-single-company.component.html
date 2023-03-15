@@ -1,0 +1,79 @@
+  <div class="d-flex justify-content-between mb-4">
+    <div class="d-flex justify-content-start mb-4 position-relative">
+        <span class="p-3 bg-primary shadow position-absolute">
+            <fa-icon [icon]="fonts.faBuilding" class="pe-1 text-light"></fa-icon>
+        </span>
+        <div class="placeholder-glow ms-5 ps-3">
+          <span *ngIf="!company" class="placeholder col-12"></span>
+          <span *ngIf="company" class="h5 me-1">
+            {{ company.firstName }}
+          </span>
+
+          <app-shared-loading *ngIf="!company" ></app-shared-loading>
+
+          <span class="d-block">
+            <span *ngIf="!company || isLoading" class="placeholder col-6"></span>
+            <app-private-company-contract *ngIf="company && !isLoading" [user]="company" (reload)="getCompany(currentSection)" (avaliable)="disableTabs = !$event"></app-private-company-contract>
+          </span>
+        </div>
+
+    </div>
+  </div>
+
+  <div  *ngIf="!company || isLoading" class="border rounded placeholder-glow">
+    <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+    <div class="p-2">
+        <span class="placeholder col-7"></span>
+        <span class="placeholder col-10"></span>
+        <span class="placeholder col-12"></span>
+        <span class="placeholder col-6"></span>
+        <span class="placeholder col-5"></span>
+    </div>
+    <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+    <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+    <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+    <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+  </div>
+
+
+
+<ngb-accordion *ngIf="company && !isLoading" [closeOthers]="true" [activeIds]="currentSection">
+
+	<ngb-panel [id]="userSections.companyDetails" [disabled]="disableTabs">
+
+		<ng-template ngbPanelTitle>
+			Company Details
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+            <app-private-company-details [user]="company" (reload)="getCompany($event)" ></app-private-company-details>
+		</ng-template>
+
+	</ngb-panel>
+
+
+  <ngb-panel [id]="userSections.companyInventoryItems" [disabled]="disableTabs">
+
+		<ng-template ngbPanelTitle>
+			Inventory Items
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <app-private-company-intentory-items [company]="company" (reload)="getCompany($event)" ></app-private-company-intentory-items>
+		</ng-template>
+
+	</ngb-panel>
+
+  <ngb-panel [id]="userSections.userFiles" [disabled]="disableTabs">
+
+		<ng-template ngbPanelTitle>
+			Files
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+            <app-private-user-files [user]="company" (reload)="getCompany($event)" ></app-private-user-files>
+		</ng-template>
+
+	</ngb-panel>
+
+</ngb-accordion>

@@ -1,0 +1,67 @@
+<div class="d-flex justify-content-between mb-4">
+  <div class="d-flex justify-content-start mb-4 position-relative">
+      <span class="p-3 bg-primary shadow position-absolute">
+          <fa-icon [icon]="fonts.faCalendar" class="pe-1 text-light"></fa-icon>
+      </span>
+      <div class="placeholder-glow ms-5 ps-3">
+        <span *ngIf="!appointment" class="placeholder col-12"></span>
+        <span *ngIf="appointment" class="h5 me-1">
+          {{appointment.appointmentDate | date : 'medium'}}
+        </span>
+
+        <app-shared-loading *ngIf="!appointment"></app-shared-loading>
+
+          <small class="d-block">
+            <span *ngIf="!appointment || isLoading" class="placeholder col-6"></span>
+            <span *ngIf="appointment && !isLoading" class="d-block">
+              <strong>Patient: </strong>
+              <span>
+                <a [routerLink]="['/' + routes.privateRoute.single_patient(appointment.patient?.user?.base?.id).$absolutePath]" >
+                  {{appointment.patient?.user?.firstName}}
+                  {{appointment.patient?.user?.lastName}}
+                  {{appointment.patient?.user?.otherName}}
+                </a>
+              </span>
+              <strong class="px-2 text-primary">|</strong>
+              <strong>Company: </strong>
+              <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_company(appointment.company?.user?.base?.id).$absolutePath]">
+                {{appointment?.company?.name}}
+              </a>
+              <span class="d-block">
+                <strong>Doctor: </strong>
+                <span>
+                  <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_staff(appointment.doctor?.user?.base?.id).$absolutePath]">
+                    {{appointment?.doctor?.user?.lastName}} {{appointment?.doctor?.user?.firstName}}
+                  </a>
+                </span>
+              </span>
+            </span>
+            <!-- <app-private-user-contract *ngIf="ticket && !isLoading" [user]="ticket" (reload)="getticket(currentSection)" (avaliable)="disableTabs = !$event"></app-private-user-contract> -->
+          </small>
+      </div>
+  </div>
+
+  <div>
+
+    <div class="dropdown">
+      <span class="p-3 bg-primary shadow pointer" role="button" id="ticketAddMenu" data-bs-toggle="dropdown" aria-expanded="false">
+        <fa-icon [icon]="fonts.faGears" class="pe-1 text-light"></fa-icon>
+      </span>
+
+      <ul class="dropdown-menu" aria-labelledby="ticketAddMenu">
+        <li appHasRole [roles]="[roles.admin, roles.doctor, roles.nurse]" [operator]="'or'"><a class="dropdown-item" (click)="updateDoctor()" >Change Doctor</a></li>
+        <div appHasRole [roles]="[roles.admin, roles.doctor]" [operator]="'or'">
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" (click)="openAddNewTicket('pharmacy')">Create Pharmacy Ticket</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" (click)="confirmSendAllToDepartment()">Send all tickets to departments</a></li>
+
+        </div>
+         </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<app-private-appointment-tickets *ngIf="appointment && !isLoading" [appointment]="appointment" (reload)="getAppointmentByDate()" ></app-private-appointment-tickets>

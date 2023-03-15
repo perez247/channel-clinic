@@ -1,0 +1,71 @@
+<div class="d-flex justify-content-between mb-4">
+
+  <div class="d-flex justify-content-start align-items-center mb-4">
+    <fa-icon [icon]="fonts.faKitMedical" [size]="'2x'" class="pe-1 text-primary"></fa-icon>
+    <div>
+      <span class="h6 me-1">{{paginationResponse.totalItems}}</span>
+      <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+    </div>
+  </div>
+
+  <div>
+      <div class="dropdown">
+          <button class="btn btn-primary btn-sm text-white dropdown-toggle" type="button" id="more-action" data-bs-toggle="dropdown" aria-expanded="false">
+              Action
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="more-action">
+            <li><a class="dropdown-item pointer" (click)="addCompanyInventoryItem()">Save Inventory item</a></li>
+            <li><a class="dropdown-item pointer" (click)="openFilterInventoryItems()" >Filter</a></li>
+          </ul>
+        </div>
+  </div>
+</div>
+
+
+<section class="bg-light rounded shadow">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+          <!-- <th scope="col">&nbsp;</th> -->
+          <th scope="col">Name</th>
+          <th scope="col">Type</th>
+          <th scope="col">Price per item</th>
+          <!-- <th scope="col">&nbsp;</th> -->
+          <!-- <th scope="col">Handle</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let inventoryItem of inventoryItems">
+          <!-- <th scope="row"> </th>-->
+          <td>
+            <a class="ps-2" [routerLink]="['/' + routes.privateRoute.single_inventory(inventoryItem?.inventory?.base?.id).$absolutePath]" >
+              {{inventoryItem?.inventory?.name}}
+            </a>
+          </td>
+          <td>
+            {{inventoryItem?.inventory?.appInventoryType}}
+          </td>
+          <td>
+            <fa-icon [icon]="fonts.faNairaSign"></fa-icon>
+            {{inventoryItem.pricePerItem}}
+          </td>
+          <!-- <td> -->
+            <!-- <fa-icon [icon]="fonts.faPencil" class="bg-primary text-white pointer p-1 me-4"></fa-icon> -->
+            <!-- <fa-icon [icon]="fonts.faTrash" class="bg-danger text-white pointer p-1"></fa-icon> -->
+          <!-- </td> -->
+          <!-- <td>@mdo</td> -->
+        </tr>
+      </tbody>
+    </table>
+</section>
+
+<section>
+<ngb-pagination
+  [(page)]="paginationResponse.pageNumber"
+  [pageSize]="paginationResponse.pageSize"
+  [collectionSize]="paginationResponse.totalItems"
+  (pageChange)="pageChanged($event)"
+  >
+</ngb-pagination>
+</section>
+

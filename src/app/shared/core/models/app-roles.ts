@@ -1,0 +1,15 @@
+export const AppRoles = {
+  admin: "admin",
+  nurse : "nurse",
+  pharmacy : "pharmacy",
+  surgery : "surgery",
+  lab : "lab",
+  doctor : "doctor",
+  radiology : "radiology",
+  admission : "admission",
+  hr : "hr",
+  finance : "finance",
+  staff : "staff",
+  patients : "patient",
+  company : "company",
+}

@@ -1,0 +1,45 @@
+
+
+<div class="modal-content">
+  <div class="modal-header c-bg-primary">
+    <div>
+      <h5 class="modal-title">Change Company</h5>
+    </div>
+    <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body c-bg-secondary">
+
+    <form [formGroup]="form">
+
+      <div class="row">
+
+        <div class="form-group col-12 position-relative">
+
+          <div class="w-100 position-relative">
+            <label class="form-control-label mb-2" for="companyNameField">
+              <strong>Company Name</strong>
+            </label>
+            <input (keydown)="clearCompany()" placeholder="Company Name" maxlength="250" type="text" class="form-control" id="companyNameField" formControlName="companyName"  [ngClass]="{'is-invalid': errorService.getError(form, 'companyId')}">
+            <app-shared-user-autocomplete [userType]="'company'" (selected)="updateFormFromAutoComplete($event)" class="position-absolute w-100" [searchWord]="form.get('companyName')?.value"></app-shared-user-autocomplete>
+            <app-custom-error-message [errorMessage]="errorService.getError(form, 'companyId')"></app-custom-error-message>
+          </div>
+
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+  <div class="modal-footer c-bg-primary justify-content-between">
+    <button [disabled]="form.invalid || isLoading" (click)="changeCompany()" type="button" class="btn btn-primary">
+      Change compnay
+      <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+    </button>
+    <div>
+      <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

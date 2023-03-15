@@ -1,0 +1,22 @@
+
+    <div class="modal-content">
+        <div class="modal-header c-bg-primary">
+          <h5 class="modal-title">{{confirmData?.title}}</h5>
+          <button (click)="makeDecision(false)" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body c-bg-secondary">
+          <div class="row">
+
+            <div class="col-12">
+              <span [innerHTML]="confirmData?.body" ></span>
+            </div>
+
+        </div>
+        </div>
+        <div class="modal-footer c-bg-primary d-flex justify-content-between">
+          <button (click)="makeDecision(true)" type="button" class="btn" [class]="confirmData?.positiveBtnCss">{{ confirmData?.positiveBtn }}</button>
+          <button (click)="makeDecision(false)" type="button" class="btn" [class]="confirmData?.negativeBtnCss" data-dismiss="modal">{{ confirmData?.nagativeBtn }}</button>
+        </div>
+      </div>

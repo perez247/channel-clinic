@@ -1,0 +1,40 @@
+
+
+        <div class="modal-content">
+            <div class="modal-header c-bg-primary">
+                <h5 *ngIf="!patientVital" class="modal-title">Add Patient Vital</h5>
+                <h5 *ngIf="patientVital" class="modal-title">View Patient's Vital</h5>
+              <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="modal-body c-bg-secondary">
+  
+                <div *ngIf="!patientVital">
+                    <angular-editor maxlength="5000" [placeholder]="'Enter vitals here...'" [(ngModel)]="vital" [config]="editorConfig"></angular-editor>
+                    <small class="d-block text-end">
+                        {{vital?.length ?? 0}}/5000
+                    </small>
+                </div>
+
+                <div *ngIf="patientVital" >
+                  <div class="mb-2">
+                    <strong>Staff: </strong><span>{{patientVital?.nurse?.user?.lastName}} {{patientVital?.nurse?.user?.firstName}}</span>
+                    - {{patientVital?.base?.dateCreated | date:"dd/MMM/yyyy HH:mm"}}
+                  </div>
+                  <div class="border border-3 rounded" style="height: 25rem; overflow-y: scroll;">
+                    <p [innerHTML]="patientVital.data" ></p>
+                  </div>
+                </div>
+
+            </div>
+            <div class="modal-footer c-bg-primary justify-content-between">
+              <button *ngIf="!patientVital" [disabled]="isLoading" (click)="addVital()" type="button" class="btn btn-primary">
+                Add Vital
+                <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+              </button>
+              <div>
+                <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>

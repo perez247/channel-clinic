@@ -1,0 +1,22 @@
+
+<div class="d-inline-block mt-0 w-100" ngbDropdown #myDrop="ngbDropdown">
+
+  <div *ngIf="!isLoading" ngbDropdownMenu aria-labelledby="dropdownManual" style="margin-top: -18px; width: 100%;">
+    <span (click)="inventorySeletected(inventory)" ngbDropdownItem class="w-100" *ngFor="let inventory of inventories">
+      <strong class="d-block">
+        {{ inventory.name }}
+      </strong>
+      <small>
+        {{ inventory.appInventoryType }}
+      </small>
+    </span>
+  </div>
+
+  <div *ngIf="isLoading" ngbDropdownMenu aria-labelledby="dropdownManual" style="margin-top: -18px; width: 100%;">
+    <span ngbDropdownItem class="w-100">
+      <strong><app-shared-loading></app-shared-loading></strong>
+    </span>
+  </div>
+
+</div>
+

@@ -1,0 +1,52 @@
+
+
+        <div class="modal-content">
+          <div class="modal-header c-bg-primary">
+            <div>
+              <h5 class="modal-title">Create Company Inventory Item</h5>
+              <small class="d-block text-danger">Check if company has already been created</small>
+            </div>
+            <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body c-bg-secondary">
+
+            <form [formGroup]="form">
+
+              <div class="row">
+
+                <div class="form-group col-md-12 position-relative">
+
+                  <div class="w-100 position-relative">
+                    <label class="form-control-label mb-2" for="inventoryNameField">
+                      <strong>Inventory Name</strong>
+                    </label>
+                    <input (keydown)="clearInventory()" placeholder="Inventory Name" maxlength="250" type="text" class="form-control" id="inventoryNameField" formControlName="inventoryName"  [ngClass]="{'is-invalid': errorService.getError(form, 'inventoryId')}">
+                    <app-shared-inventory-autocomplete [filter]="filter" (selected)="updateInventoryName($event)" class="position-absolute w-100" [searchWord]="form.get('inventoryName')?.value"></app-shared-inventory-autocomplete>
+                    <app-custom-error-message [errorMessage]="errorService.getError(form, 'inventoryId')"></app-custom-error-message>
+                  </div>
+
+                </div>
+
+                <div class="form-group col-md-12">
+                  <label class="form-control-label mb-2" for="amountField"><strong>Price per item</strong></label>
+                  <input placeholder="Amount" maxlength="250" type="text" step=".01" class="form-control" id="amountField" formControlName="companyAmount"  [ngClass]="{'is-invalid': errorService.getError(form, 'companyAmount')}">
+                  <app-custom-error-message [errorMessage]="errorService.getError(form, 'companyAmount')"></app-custom-error-message>
+                </div>
+
+              </div>
+
+            </form>
+
+          </div>
+          <div class="modal-footer c-bg-primary justify-content-between">
+            <button [disabled]="form.invalid || isLoading" (click)="createNewInventoryForCompany()" type="button" class="btn btn-primary">
+              Create Inventory
+              <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+            </button>
+            <div>
+              <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>

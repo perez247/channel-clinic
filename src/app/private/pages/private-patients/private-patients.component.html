@@ -1,0 +1,72 @@
+
+<div class="d-flex justify-content-between mb-4">
+    <div class="d-flex justify-content-start mb-4 position-relative">
+        <span class="p-3 bg-primary shadow position-absolute">
+            <fa-icon [icon]="fonts.faBedPulse" class="pe-1 text-light"></fa-icon>
+        </span>
+        <div class="ms-5 ps-3">
+          <span class="h3 me-1">Patients</span>
+          <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+          <small class="d-block text-dark">{{paginationResponse.totalItems}}</small>
+        </div>
+
+    </div>
+    <div>
+        <div class="dropdown">
+            <button class="btn btn-primary btn-sm text-white dropdown-toggle" type="button" id="more-action" data-bs-toggle="dropdown" aria-expanded="false">
+                Action
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="more-action">
+              <li appHasRole [roles]="[roles.admin, roles.nurse]" [operator]="'or'">
+                <a class="dropdown-item" (click)="openAddPatientModal()" >Add Patient</a>
+              </li>
+              <li><a class="dropdown-item" (click)="openFilterPatients()" >Filter</a></li>
+            </ul>
+          </div>
+    </div>
+</div>
+
+<section class="bg-light rounded shadow">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <!-- <th scope="col">&nbsp;</th> -->
+            <th scope="col">Name</th>
+            <th scope="col">Company</th>
+            <!-- <th scope="col">Handle</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let patient of patients">
+            <!-- <th scope="row"> </th>-->
+            <td>
+              <img appDisplayProfileImage [imgSrc]="patient?.profile" class="img-fluid m-auto mini-profile rounded-circle">
+              <a class="ps-2" [routerLink]="['/' + routes.privateRoute.single_patient(patient.base?.id).$absolutePath]" >
+                {{patient.firstName}}
+                {{patient.lastName}}
+                {{patient.otherName}}
+              </a>
+            </td>
+            <td>
+              {{patient.patient?.company?.name}}
+              <div>
+                <span *ngIf="patient.patient?.company?.companyContract"> {{ patient.patient?.company?.companyContract | contractDetail }} </span>
+                <span *ngIf="patient.patient?.patientContract"> {{ patient.patient?.patientContract | contractDetail }} </span>
+                <span *ngIf="!patient.patient?.patientContract && !patient.patient?.company?.companyContract"> No Contract available </span>
+              </div>
+            </td>
+            <!-- <td>@mdo</td> -->
+          </tr>
+        </tbody>
+      </table>
+</section>
+
+<section>
+  <ngb-pagination
+    [(page)]="paginationResponse.pageNumber"
+    [pageSize]="paginationResponse.pageSize"
+    [collectionSize]="paginationResponse.totalItems"
+    (pageChange)="pageChanged($event)"
+    >
+  </ngb-pagination>
+</section>

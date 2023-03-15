@@ -1,0 +1,88 @@
+
+
+<form [formGroup]="form">
+  <div class="row">
+
+      <div class="col-sm-3 position-relative text-center">
+          <img appDisplayProfileImage [imgSrc]="inventory?.profile" [profile]="'inventory'" class="img-fluid m-auto" [ngClass]="{'border border-danger border-3': errorService.getError(form, 'profile')}">
+          <fa-icon (click)="openUploadProfileModal()" *ngIf="!disableForm" [icon]="fonts.faPencilAlt" class="edit-pic text-primary pointer bg-white p-2 rounded"></fa-icon>
+          <fa-icon (click)="updateProfilePicture('')" *ngIf="!disableForm && inventory?.profile" [icon]="fonts.faTrash" class="edit-pic-trash text-danger pointer bg-white p-2 rounded"></fa-icon>
+          <div class="position-relative">
+              <strong>
+                  <app-custom-error-message [errorMessage]="errorService.getError(form, 'profile')"></app-custom-error-message>
+              </strong>
+          </div>
+      </div>
+
+      <div class="col-sm-9">
+          <fieldset [disabled]=disableForm>
+              <div class="row">
+
+                  <div class="form-group col-md-6 position-relative">
+
+                      <div class="w-100 position-relative">
+                      <label class="form-control-label mb-2" for="nameField">
+                          <strong>Name</strong>
+                      </label>
+                      <input placeholder="Name" maxlength="250" type="text" class="form-control" id="nameField" formControlName="name"  [ngClass]="{'is-invalid': errorService.getError(form, 'name')}">
+                      <app-custom-error-message [errorMessage]="errorService.getError(form, 'name')"></app-custom-error-message>
+                      </div>
+
+                  </div>
+
+                  <div class="form-group col-md-6">
+                      <label class="form-control-label mb-2" for="quantity"><strong>Quantity</strong></label>
+                      <input placeholder="Quantity" maxlength="250" type="number" class="form-control" id="quantity" formControlName="quantity"  [ngClass]="{'is-invalid': errorService.getError(form, 'quantity')}">
+                      <app-custom-error-message [errorMessage]="errorService.getError(form, 'quantity')"></app-custom-error-message>
+                  </div>
+
+                  <div class="form-group col-md-6">
+                      <label class="form-control-label mb-2" for="notifyWhenLowField"><strong>Notify when low</strong></label>
+                      <select class="form-control" id="notifyWhenLowField" formControlName="notifyWhenLow"  [ngClass]="{'is-invalid': errorService.getError(form, 'notifyWhenLow')}">
+                        <option [value]="null">--</option>
+                        <option [value]="true">Yes</option>
+                        <option [value]="false">No</option>
+                      </select>
+                      <app-custom-error-message [errorMessage]="errorService.getError(form, 'notifyWhenLow')"></app-custom-error-message>
+                  </div>
+
+                  <div class="form-group col-md-6">
+                      <label class="form-control-label mb-2" for="howLowField"><strong>How Low</strong></label>
+                      <input placeholder="How Low" maxlength="250" type="text" class="form-control" id="howLowField" formControlName="howLow"  [ngClass]="{'is-invalid': errorService.getError(form, 'howLow')}">
+                      <app-custom-error-message [errorMessage]="errorService.getError(form, 'howLow')"></app-custom-error-message>
+                  </div>
+
+                  <div class="form-group col-md-12">
+                    <label class="form-control-label mb-2" for="inventoryTypeField"><strong>Inventory Type</strong></label>
+                    <select class="form-control" id="inventoryTypeField" formControlName="appInventoryType"  [ngClass]="{'is-invalid': errorService.getError(form, 'appInventoryType')}">
+                      <option [value]="null">--</option>
+                      <option *ngFor="let lookup of lookups" [value]="lookup.name">{{lookup.display}}</option>
+                    </select>
+                    <app-custom-error-message [errorMessage]="errorService.getError(form, 'appInventoryType')"></app-custom-error-message>
+                  </div>
+
+              </div>
+          </fieldset>
+
+          <div class="row">
+              <div class="col-12">
+
+                  <div class="d-flex justify-content-end" *ngIf="disableForm" >
+                      <button (click)="edit()" class="btn btn-primary">Edit</button>
+                  </div>
+
+                  <div class="d-flex justify-content-between" *ngIf="!disableForm">
+                      <button (click)="beginUpdate()" [disabled]="form.invalid || isLoading" class="btn btn-success">
+                          Update
+                          <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+                      </button>
+
+                      <button (click)="cancelEdit()" class="btn btn-danger">Cancel</button>
+                  </div>
+
+              </div>
+          </div>
+      </div>
+
+  </div>
+</form>

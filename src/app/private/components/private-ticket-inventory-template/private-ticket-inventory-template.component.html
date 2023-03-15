@@ -1,0 +1,45 @@
+
+
+<div class="card mt-4 shadow">
+  <div class="card-header position-relative">
+    <div class="dropstart ticketOption">
+      <button class="btn" type="button" id="ticketMoreOptions" data-bs-toggle="dropdown" aria-expanded="false">
+        <fa-icon *ngIf="!isLoading" [icon]="fonts.faEllipsisV" class="text-dark"></fa-icon>
+        <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="ticketMoreOptions">
+        <li>
+          <a class="dropdown-item pointer"
+          [routerLink]="['/' + routes.privateRoute.single_ticket(ticket?.base?.id).$absolutePath]"
+          >View</a></li>
+          <div appHasRole [roles]="[roles.admin, roles.doctor]" [operator]="'or'" *ngIf="!ticket?.sent">
+            <li><hr class="dropdown-divider"></li>
+            <li><span class="dropdown-item pointer"(click)="confirmSendToDepartment()">Send to department</span></li>
+          </div>
+          <!-- <li><hr class="dropdown-divider"></li>
+        <li><span class="dropdown-item pointer">Delete</span></li> -->
+      </ul>
+    </div>
+
+    <strong class="d-block pointer">
+      {{ ticket?.base?.dateCreated | date : 'medium' }}
+    </strong>
+  </div>
+
+  <div class="card-body">
+    <p class="card-text">{{ ticket?.overallDescription | trimSentence : 200 }}</p>
+  </div>
+
+  <div class="card-footer text-muted">
+    <small>
+      <span> <strong>Status:</strong> {{ ticket?.appTicketStatus }} </span>
+      <strong class="px-2 text-primary">|</strong>
+      <span> <strong>Sent to department:</strong> {{ ticket?.sent ? 'Yes' : 'No' }} </span>
+        <strong class="px-2 text-primary">|</strong>
+      <span> <strong>Sent to finance:</strong> {{ ticket?.sentToFinance ? 'Yes' : 'No' }}
+        ({{ ticket?.cost === null ? 'pending' : ticket?.cost?.paymentStatus }})
+      </span>
+    </small>
+  </div>
+</div>
+

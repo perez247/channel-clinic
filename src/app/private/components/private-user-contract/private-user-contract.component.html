@@ -1,0 +1,34 @@
+
+<section *ngIf="hasContract">
+    <span class="me-2">{{ startDate?.toDate() | date: 'MMM d, y'}} - {{ endDate?.toDate() | date: 'MMM d, y' }}</span>
+
+    <ng-template #hasContractToolTip>
+        <span *ngIf="iconCss == 'text-warning'"> This contract will soon expire {{daysRemaining}} day(s) remaining </span>
+        <span *ngIf="iconCss == 'text-success'"> {{daysRemaining}} day(s) remaining </span>
+    </ng-template>
+
+    <fa-icon [ngbTooltip]="hasContractToolTip" [icon]="iconStat" class="pe-1" [ngClass]="iconCss"></fa-icon>
+    <span
+        (click)="confirmAddContract()"
+        *ngIf="iconCss == 'text-warning' || iconCss == 'text-danger'"
+        class="badge rounded-pill bg-primary pointer ms-2 shadow">Add Contract
+    </span>
+</section>
+<section *ngIf="!hasContract">
+        <span class="text-danger me-2">User contract unavaliable</span>
+
+        <ng-template #notHasContractToolTip>
+            <span *ngIf="iconCss == 'text-danger'"> This contract has expired </span>
+        </ng-template>
+
+        <fa-icon [ngbTooltip]="notHasContractToolTip" [icon]="iconStat" class="pe-1" [ngClass]="iconCss"></fa-icon>
+
+        <span
+            (click)="confirmAddContract()"
+            class="badge rounded-pill bg-primary pointer ms-2 shadow">Add Contract
+        </span>
+
+</section>
+<span *ngIf="companyId">
+    <a [routerLink]="['/' + routes.privateRoute.single_company(companyId).$absolutePath]" >{{ companyName }}</a>
+</span>

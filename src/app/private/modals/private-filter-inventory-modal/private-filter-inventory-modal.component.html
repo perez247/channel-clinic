@@ -1,0 +1,49 @@
+
+
+        <div class="modal-content">
+          <div class="modal-header c-bg-primary">
+            <h5 class="modal-title">Filter Inventory</h5>
+            <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body c-bg-secondary">
+
+            <form [formGroup]="form">
+
+              <div class="row">
+
+                <div class="form-group col-12">
+                  <label class="form-control-label mb-2" for="nameField"><strong>Name</strong></label>
+                  <input placeholder="Name" maxlength="250" type="text" class="form-control" id="nameField" formControlName="name"  [ngClass]="{'is-invalid': errorService.getError(form, 'name')}">
+                  <app-custom-error-message [errorMessage]="errorService.getError(form, 'name')"></app-custom-error-message>
+                </div>
+
+                <div class="form-group col-12">
+                  <label class="form-control-label mb-2" for="appInventoryTypeField"><strong>Type of Inventory</strong></label>
+                  <select class="form-control" id="appInventoryTypeField" formControlName="appInventoryType"  [ngClass]="{'is-invalid': errorService.getError(form, 'appInventoryType')}">
+                    <option [value]="null">--</option>
+                    <option *ngFor="let lookup of lookups" [value]="lookup.name">{{lookup.display}}</option>
+                  </select>
+                  <app-custom-error-message [errorMessage]="errorService.getError(form, 'appInventoryType')"></app-custom-error-message>
+                </div>
+
+              </div>
+
+              <div class="form-group col-12">
+                <label class="form-control-label mb-2" for="quantityField"><strong>Quantity Less than</strong></label>
+                <input placeholder="Quantity" type="number" class="form-control" id="quantityField" formControlName="quantity"  [ngClass]="{'is-invalid': errorService.getError(form, 'quantity')}">
+                <app-custom-error-message [errorMessage]="errorService.getError(form, 'quantity')"></app-custom-error-message>
+              </div>
+
+            </form>
+
+          </div>
+          <div class="modal-footer c-bg-primary justify-content-between">
+            <button (click)="addFilter()" [disabled]="form.invalid" type="button" class="btn btn-primary">Update filter</button>
+            <div>
+              <button (click)="clearForm()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Reset</button>
+              <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>

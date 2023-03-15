@@ -1,0 +1,40 @@
+
+<section *ngIf="isLoading" class="text-center mt-5">
+  <app-shared-loading [size]="'lg'" ></app-shared-loading>
+</section>
+
+<div class="my-3">
+  <div class="d-flex justify-content-between">
+    <fa-icon
+    mwlCalendarPreviousView
+    [view]="view"
+    [(viewDate)]="viewDate"
+    (mwlClick)="getAppointmentCountByDate()"
+    [icon]="fonts.faChevronCircleLeft" [size]="'3x'" class="text-primary pointer"></fa-icon>
+
+    <div class="text-center">
+      <span class="h3">
+        {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
+      </span>
+      <small class="d-block">
+        Total {{ totalForMonth }}
+      </small>
+    </div>
+
+
+    <fa-icon
+    mwlCalendarNextView
+    [view]="view"
+    [(viewDate)]="viewDate"
+    (mwlClick)="getAppointmentCountByDate()"
+    [icon]="fonts.faChevronCircleRight" [size]="'3x'" class="text-primary pointer"></fa-icon>
+  </div>
+</div>
+
+<mwl-calendar-month-view
+[viewDate]="viewDate"
+[events]="events"
+(dayClicked)="dayClicked($event)"
+(beforeViewRender)="beforeMonthViewRender($event)"
+>
+</mwl-calendar-month-view>

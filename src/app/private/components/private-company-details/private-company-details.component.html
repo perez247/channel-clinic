@@ -1,0 +1,101 @@
+
+
+<form [formGroup]="form">
+
+    <div class="row">
+        <div class="col-sm-3 position-relative text-center">
+            <img appDisplayProfileImage [imgSrc]="user?.profile" class="img-fluid m-auto" [ngClass]="{'border border-danger border-3': errorService.getError(form, 'profile')}">
+            <fa-icon (click)="openUploadProfileModal()" *ngIf="!disableForm" [icon]="fonts.faPencilAlt" class="edit-pic text-primary pointer bg-white p-2 rounded"></fa-icon>
+            <fa-icon (click)="updateProfilePicture('')" *ngIf="!disableForm && user?.profile" [icon]="fonts.faTrash" class="edit-pic-trash text-danger pointer bg-white p-2 rounded"></fa-icon>
+            <div class="position-relative">
+                <strong>
+                    <app-custom-error-message [errorMessage]="errorService.getError(form, 'profile')"></app-custom-error-message>
+                </strong>
+            </div>
+        </div>
+
+
+        <div class="col-md-9">
+            <fieldset [disabled]=disableForm>
+                <div class="row">
+
+                    <div class="form-group col-md-6 position-relative">
+
+                      <div class="w-100 position-relative">
+                        <label class="form-control-label mb-2" for="companyNameField">
+                          <strong>Company Name</strong>
+                        </label>
+                        <input placeholder="Company Name" maxlength="250" type="text" class="form-control" id="companyNameField" formControlName="name"  [ngClass]="{'is-invalid': errorService.getError(form, 'name')}">
+                        <app-shared-user-autocomplete [userType]="'company'" class="position-absolute w-100" [searchWord]="form.get('name')?.value"></app-shared-user-autocomplete>
+                        <app-custom-error-message [errorMessage]="errorService.getError(form, 'name')"></app-custom-error-message>
+                      </div>
+
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <label class="form-control-label mb-2" for="uniqueIdField"><strong>Unique Id</strong></label>
+                      <input placeholder="Unique Id" maxlength="1000" type="text" class="form-control" id="uniqueIdField" formControlName="uniqueId"  [ngClass]="{'is-invalid': errorService.getError(form, 'uniqueId')}">
+                      <app-custom-error-message [errorMessage]="errorService.getError(form, 'uniqueId')"></app-custom-error-message>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <label class="form-control-label mb-2" for="otherIdField"><strong>Other Id</strong></label>
+                      <input placeholder="Other Id" maxlength="250" type="text" class="form-control" id="otherIdField" formControlName="otherId"  [ngClass]="{'is-invalid': errorService.getError(form, 'otherId')}">
+                      <app-custom-error-message [errorMessage]="errorService.getError(form, 'otherId')"></app-custom-error-message>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <label class="form-control-label mb-2" for="addressField"><strong>Address</strong></label>
+                      <input placeholder="Address" maxlength="1000" type="text" class="form-control" id="addressField" formControlName="address"  [ngClass]="{'is-invalid': errorService.getError(form, 'address')}">
+                      <app-custom-error-message [errorMessage]="errorService.getError(form, 'address')"></app-custom-error-message>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                      <label class="form-control-label mb-2" for="otherIdField"><strong>Description</strong></label>
+                      <textarea placeholder="Other Id" maxlength="2000" type="text" class="form-control" id="otherIdField" formControlName="description"  [ngClass]="{'is-invalid': errorService.getError(form, 'description')}"></textarea>
+                      <app-custom-error-message [errorMessage]="errorService.getError(form, 'description')"></app-custom-error-message>
+                      <small class="d-block text-end">{{form.get('description')?.value?.length ?? 0 }}/2000</small>
+                    </div>
+
+                    <div class="form-group col-12">
+                      <label class="form-control-label mb-2" for="statusField"><strong>For Individuals</strong></label>
+                      <div class="form-check">
+                        <input formControlName="forIndividual" class="form-check-input" type="radio" name="forIndividual" id="forIndividualTrue" [value]="true">
+                        <label class="form-check-label" for="forIndividualTrue">
+                          Yes
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input formControlName="forIndividual" class="form-check-input" type="radio" name="forIndividual" id="forIndividualFalse" [value]="false">
+                        <label class="form-check-label" for="forIndividualFalse">
+                          No
+                        </label>
+                      </div>
+                    </div>
+
+                  </div>
+            </fieldset>
+
+
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="d-flex justify-content-end" *ngIf="disableForm" >
+                        <button (click)="edit()" class="btn btn-primary">Edit</button>
+                    </div>
+
+                    <div class="d-flex justify-content-between" *ngIf="!disableForm">
+                        <button (click)="beginUpdate()" [disabled]="form.invalid || isLoading" class="btn btn-success">
+                            Update
+                            <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+                        </button>
+
+                        <button (click)="cancelEdit()" class="btn btn-danger">Cancel</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>

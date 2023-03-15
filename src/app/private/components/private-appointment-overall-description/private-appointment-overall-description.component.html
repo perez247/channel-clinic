@@ -1,0 +1,25 @@
+
+
+<div *ngIf="canEdit">
+  <angular-editor maxlength="5000" [placeholder]="'Enter vitals here...'" [(ngModel)]="editableDescription" [config]="editorConfig"></angular-editor>
+
+  <div class="d-flex justify-content-between mt-2">
+    <div>
+      <button appHasRole [roles]="[roles.admin, roles.doctor]" [operator]="'or'" (click)="saveOverallDescription()" [disabled]="appointment?.overallDescription === editableDescription || isLoading" class="btn btn-sm btn-primary">
+        Save
+        <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+      </button>
+    </div>
+
+    <small class="d-block">
+      {{editableDescription?.length ?? 0}}/5000
+    </small>
+  </div>
+
+</div>
+
+<div *ngIf="!canEdit" >
+  <div class="border border-3 rounded" style="height: 25rem; overflow-y: scroll;">
+    <p [innerHTML]="editableDescription" ></p>
+  </div>
+</div>

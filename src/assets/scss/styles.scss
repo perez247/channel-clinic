@@ -1,0 +1,13 @@
+
+
+@import "./customs/colors.scss";
+
+@import "node_modules/bootstrap/scss/bootstrap.scss";
+
+@import "./customs/custom-fonts.scss";
+@import "./customs/shared-styles.scss";
+@import "./customs/custom-forms.scss";
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

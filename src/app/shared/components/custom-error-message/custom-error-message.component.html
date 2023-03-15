@@ -1,0 +1,9 @@
+<div
+class="hide-empty-error"
+[ngClass]="{'show-error': errorMessage}"
+[style.visibility]=" errorMessage ? 'visible' : 'hidden'"
+>
+  <!-- <small>{{ form.get(field).errors['message'] }}</small>
+  <small>{{ form?.get(field)?.errors?.message }}</small> -->
+  <small class="text-danger">{{ errorMessage }}</small>
+</div>

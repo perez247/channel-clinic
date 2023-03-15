@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-between mb-4">
+  <div class="d-flex justify-content-start mb-4 position-relative">
+      <span class="p-3 bg-primary shadow position-absolute">
+          <fa-icon [icon]="fonts.faWarehouse" class="pe-1 text-light"></fa-icon>
+      </span>
+      <div class="placeholder-glow ms-5 ps-3">
+        <span *ngIf="!inventory" class="placeholder col-12"></span>
+        <span *ngIf="inventory" class="h5 me-1">
+          <span class="h3">{{ inventory.name }}</span>
+        </span>
+
+        <app-shared-loading *ngIf="!inventory" ></app-shared-loading>
+
+      </div>
+
+  </div>
+</div>
+
+<div  *ngIf="!inventory|| isLoading" class="border rounded placeholder-glow">
+  <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+  <div class="p-2">
+      <span class="placeholder col-7"></span>
+      <span class="placeholder col-10"></span>
+      <span class="placeholder col-12"></span>
+      <span class="placeholder col-6"></span>
+      <span class="placeholder col-5"></span>
+  </div>
+  <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+  <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+  <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+  <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
+</div>
+
+<ngb-accordion *ngIf="inventory && !isLoading" [closeOthers]="true" [activeIds]="currentSection">
+
+	<ngb-panel [id]="userSections.inventoryDetails" [disabled]="disableTabs">
+
+		<ng-template ngbPanelTitle>
+			Inventory Details
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <app-private-inventory-details [inventory]="inventory" (reload)="getInventories($event)"></app-private-inventory-details>
+		</ng-template>
+
+	</ngb-panel>
+
+  <ngb-panel [id]="userSections.inventoryItems" [disabled]="disableTabs">
+
+		<ng-template ngbPanelTitle>
+			Inventory Items
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <app-private-inventory-items [inventory]="inventory" ></app-private-inventory-items>
+		</ng-template>
+
+	</ngb-panel>
+
+</ngb-accordion>
