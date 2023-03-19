@@ -14,6 +14,7 @@ import { PrivateAddPaymentModalComponent } from '../../modals/private-add-paymen
 import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
 import { AppConstants } from 'src/app/shared/core/models/app-constants';
 import { CustomToastService } from 'src/app/shared/services/common/custom-toast/custom-toast.service';
+import { AppUser } from 'src/app/shared/core/models/app-user';
 
 @Component({
   selector: 'app-private-finance-inventory',
@@ -31,6 +32,7 @@ export class PrivateFinanceInventoryComponent extends SharedUtilityComponent imp
   currentSum = 0;
   currentOwing = 0;
   paying = 0;
+  payer?: AppUser;
 
   routes = ApplicationRoutes.generateRoutes();
   userSections = AppConstants.UserSections;
@@ -44,9 +46,13 @@ export class PrivateFinanceInventoryComponent extends SharedUtilityComponent imp
   }
 
   override ngOnInit(): void {
-    console.log(this.ticket);
+    this.getPayer();
     this.calculatePaid();
     this.calculatePaying();
+  }
+
+  getPayer(): void {
+    this.payer = this.ticket.payerPayee.find(x => x.payer)?.appUser;
   }
 
   downloadFile(base64string?: string, name: string = 'proof_of_payment.jpeg'): void {
@@ -97,7 +103,7 @@ export class PrivateFinanceInventoryComponent extends SharedUtilityComponent imp
     };
 
     this.isLoading = true;
-    const sub = this.financialService.updatePayment(data)
+    const sub = this.financialService.updatePatientPayment(data)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: () => {

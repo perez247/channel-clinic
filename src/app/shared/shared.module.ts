@@ -33,6 +33,8 @@ import { AppErrorInterceptorProvider } from './interceptors/app-error.handler';
 import { ShortNumberPipe } from './pipes/short-number.pipe';
 import { HasRoleDirective } from './directives/has-role.directive';
 import { ContractDetailPipe } from './pipes/contract-detail.pipe';
+import { SharedToastComponent } from './components/shared-toast/shared-toast.component';
+import { PaidDebtPipe } from './pipes/paid-debt.pipe';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { ContractDetailPipe } from './pipes/contract-detail.pipe';
     TrimSentencePipe,
     ShortNumberPipe,
     ContractDetailPipe,
+    PaidDebtPipe,
 
     SharedUtilityComponent,
     CustomErrorMessageComponent,
@@ -55,6 +58,7 @@ import { ContractDetailPipe } from './pipes/contract-detail.pipe';
     ShortNumberPipe,
     HasRoleDirective,
     ContractDetailPipe,
+    SharedToastComponent,
 
   ],
   imports: [
@@ -90,6 +94,7 @@ import { ContractDetailPipe } from './pipes/contract-detail.pipe';
     SharedConfirmActionModalComponent,
     SharedUserAutocompleteComponent,
     SharedInventoryAutocompleteComponent,
+    SharedToastComponent,
 
     // Directives
     DisplayProfileImageDirective,
@@ -100,6 +105,7 @@ import { ContractDetailPipe } from './pipes/contract-detail.pipe';
     TrimSentencePipe,
     ShortNumberPipe,
     ContractDetailPipe,
+    PaidDebtPipe,
   ],
   providers: [
     // apis

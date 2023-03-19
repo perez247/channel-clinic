@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PrivateFinanceComponent } from './private-finance.component';
+import { PrivateFinancePaidComponent } from './private-finance-paid.component';
 
-describe('PrivateFinanceComponent', () => {
-  let component: PrivateFinanceComponent;
-  let fixture: ComponentFixture<PrivateFinanceComponent>;
+describe('PrivateFinancePaidComponent', () => {
+  let component: PrivateFinancePaidComponent;
+  let fixture: ComponentFixture<PrivateFinancePaidComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PrivateFinanceComponent ]
+      declarations: [ PrivateFinancePaidComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PrivateFinanceComponent);
+    fixture = TestBed.createComponent(PrivateFinancePaidComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

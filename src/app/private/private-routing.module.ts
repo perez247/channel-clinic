@@ -1,3 +1,7 @@
+import { PrivateSingleFinancePaidComponent } from './pages/private-single-finance-paid/private-single-finance-paid.component';
+import { PrivateFinancePaidComponent } from './pages/private-finance-paid/private-finance-paid.component';
+import { PrivateFinanceDebtsComponent } from './pages/private-finance-debts/private-finance-debts.component';
+import { PrivateSingleFinanceDebtComponent } from './pages/private-single-finance-debt/private-single-finance-debt.component';
 import { PrivateFinanceTicketsComponent } from './pages/private-finance-tickets/private-finance-tickets.component';
 import { PrivateFinanceContractsComponent } from './pages/private-finance-contracts/private-finance-contracts.component';
 import { PrivateSingleTicketComponent } from './pages/private-single-ticket/private-single-ticket.component';
@@ -15,7 +19,6 @@ import { PrivateLayoutFullComponent } from './layout/private-layout-full/private
 import { PrivateDashboardComponent } from './pages/private-dashboard/private-dashboard.component';
 import { PrivateWelcomeUserComponent } from './pages/private-welcome-user/private-welcome-user.component';
 import { PrivateCompanyComponent } from './pages/private-company/private-company.component';
-import { PrivateFinanceComponent } from './pages/private-finance/private-finance.component';
 import { PrivateNotfoundComponent } from './pages/private-notfound/private-notfound.component';
 import { PrivateSingleStaffComponent } from './pages/private-single-staff/private-single-staff.component';
 import { PrivateSingleCompanyComponent } from './pages/private-single-company/private-single-company.component';
@@ -106,6 +109,22 @@ const routes: Routes = [
       {
         path: `${appRoutes.privateRoute.finance_tickets().$name}`,
         component: PrivateFinanceTicketsComponent
+      },
+      {
+        path: `${appRoutes.privateRoute.single_finance_debt().$name}`,
+        component: PrivateSingleFinanceDebtComponent
+      },
+      {
+        path: `${appRoutes.privateRoute.finance_debts().$name}`,
+        component: PrivateFinanceDebtsComponent
+      },
+      {
+        path: `${appRoutes.privateRoute.single_finance_paid().$name}`,
+        component: PrivateSingleFinancePaidComponent
+      },
+      {
+        path: `${appRoutes.privateRoute.finance_paid().$name}`,
+        component: PrivateFinancePaidComponent
       },
       {
         path: `${appRoutes.privateRoute.notfound(':error').$name}`,

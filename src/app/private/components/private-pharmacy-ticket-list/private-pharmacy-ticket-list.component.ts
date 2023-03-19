@@ -259,7 +259,7 @@ export class PrivatePharmacyTicketListComponent extends SharedUtilityComponent i
 
     this.isLoading = true;
 
-    const sub = this.ticketService.concludeTicket(data)
+    const sub = this.ticketService.concludePharmacyTicket(data)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: () => {

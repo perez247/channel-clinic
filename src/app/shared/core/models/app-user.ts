@@ -20,6 +20,8 @@ export class AppUser {
     company?: Company
     profile?: string;
     email?: string;
+    isPatient?: boolean;
+    isCompany?: boolean;
 
     hasRole(roles: string[] = [], and: boolean): boolean {
 
@@ -86,6 +88,7 @@ export class AppUser {
     companyContract?: UserContract
     base?: Base
     forIndividual?: boolean
+    homeCompany?: boolean
   }
 
   export class NextOfKin {

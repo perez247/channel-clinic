@@ -1,0 +1,24 @@
+<div class="d-flex justify-content-between mb-4">
+  <div class="d-flex justify-content-start mb-4 position-relative">
+      <span class="p-3 bg-primary shadow position-absolute">
+          <fa-icon [icon]="fonts.faHandHoldingDollar" class="pe-1 text-light"></fa-icon>
+      </span>
+      <div class="ms-5 ps-3">
+        <span class="h3 me-1">Paid</span>
+        <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+        <small class="d-block text-dark">{{paginationResponse.totalItems}}</small>
+      </div>
+
+  </div>
+  <div>
+      <div class="dropdown">
+          <button class="btn btn-primary btn-sm text-white dropdown-toggle" type="button" id="more-action" data-bs-toggle="dropdown" aria-expanded="false">
+              Action
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="more-action">
+            <li><a class="dropdown-item pointer" >Generate Reciept</a></li>
+            <li><a class="dropdown-item pointer" >Filter</a></li>
+          </ul>
+        </div>
+  </div>
+</div>

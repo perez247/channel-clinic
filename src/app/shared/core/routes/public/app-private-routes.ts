@@ -194,6 +194,46 @@ export class AppPrivateRoute {
     }
 
     /**
+     * @description Single Finance Debts
+     */
+    public static single_financeDebt(id: string = ':id'): IRoutePath {
+      return {
+          $name: `finance-debts/${id}`,
+          $absolutePath: `${AppPrivateRoute.$absolutePath}/finance-debts/${id}`
+      };
+    }
+
+    /**
+     * @description Finance tickets
+     */
+    public static financeDebts(): IRoutePath {
+      return {
+          $name: `finance-debts`,
+          $absolutePath: `${AppPrivateRoute.$absolutePath}/finance-debts`
+      };
+    }
+
+    /**
+     * @description Single Finance paid
+     */
+    public static single_financePaid(id: string = ':id'): IRoutePath {
+      return {
+          $name: `finance-paid/${id}`,
+          $absolutePath: `${AppPrivateRoute.$absolutePath}/finance-paid/${id}`
+      };
+    }
+
+    /**
+     * @description Finance paid
+     */
+    public static financePaid(): IRoutePath {
+      return {
+          $name: `finance-paid`,
+          $absolutePath: `${AppPrivateRoute.$absolutePath}/finance-paid`
+      };
+    }
+
+    /**
      * @description Not found in private
      */
          public static notfound(error?: string): IRoutePath {
@@ -218,6 +258,8 @@ export class AppPrivateRoute {
         finance: AppPrivateRoute.finance,
         finance_tickets: AppPrivateRoute.financeTickets,
         finance_contracts: AppPrivateRoute.financeContracts,
+        finance_debts: AppPrivateRoute.financeDebts,
+        finance_paid: AppPrivateRoute.financePaid,
         single_patient: AppPrivateRoute.single_patient,
         single_staff: AppPrivateRoute.single_staff,
         single_company: AppPrivateRoute.single_company,
@@ -225,6 +267,8 @@ export class AppPrivateRoute {
         single_appointment: AppPrivateRoute.single_appointment,
         single_ticket: AppPrivateRoute.single_ticket,
         Single_finance_tickets: AppPrivateRoute.Single_financeTickets,
+        single_finance_debt: AppPrivateRoute.single_financeDebt,
+        single_finance_paid: AppPrivateRoute.single_financePaid,
         notfound: AppPrivateRoute.notfound,
       };
     }
@@ -244,6 +288,8 @@ export interface IAppPrivateRoute {
   finance: () => IRoutePath;
   finance_tickets: () => IRoutePath;
   finance_contracts: () => IRoutePath;
+  finance_debts: () => IRoutePath;
+  finance_paid: () => IRoutePath;
   single_patient: (id?: string) => IRoutePath;
   single_staff: (id?: string) => IRoutePath;
   single_company: (id?: string) => IRoutePath;
@@ -251,6 +297,8 @@ export interface IAppPrivateRoute {
   single_appointment: (id?: string) => IRoutePath;
   single_ticket: (id?: string) => IRoutePath;
   Single_finance_tickets: (id?: string) => IRoutePath;
+  single_finance_debt: (id?: string) => IRoutePath;
+  single_finance_paid: (id?: string) => IRoutePath;
   notfound: (error?: string) => IRoutePath;
 }
 

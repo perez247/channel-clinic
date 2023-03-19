@@ -34,7 +34,7 @@ export class TicketService {
     return this.http.post<void>(`${this.apiUrl}/send-pharmacy-to-finance`, data);
   }
 
-  concludeTicket(data: any): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/conclude-ticket-inventory`, data);
+  concludePharmacyTicket(data: any): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/conclude-pharmacy-ticket-inventory`, data);
   }
 }

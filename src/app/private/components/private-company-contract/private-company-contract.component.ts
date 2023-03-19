@@ -77,7 +77,7 @@ export class PrivateCompanyContractComponent extends SharedUtilityComponent impl
       return;
     }
 
-    if (contract.appCost.paymentStatus != 'approved') {
+    if (contract.appCost.paymentStatus != 'approved' && contract.appCost.paymentStatus != 'owing') {
       this.hasApproved = false;
       return;
     }

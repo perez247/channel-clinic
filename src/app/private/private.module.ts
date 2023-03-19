@@ -13,7 +13,6 @@ import { PrivateCompanyComponent } from './pages/private-company/private-company
 import { PrivateInventoryComponent } from './pages/private-inventory/private-inventory.component';
 import { PrivateAppointmentsComponent } from './pages/private-appointments/private-appointments.component';
 import { PrivateTicketsComponent } from './pages/private-tickets/private-tickets.component';
-import { PrivateFinanceComponent } from './pages/private-finance/private-finance.component';
 import { PrivateSinglePatientComponent } from './pages/private-single-patient/private-single-patient.component';
 import { PrivateUserPersonalDetailComponent } from './components/private-user-personal-detail/private-user-personal-detail.component';
 import { PrivateNotfoundComponent } from './pages/private-notfound/private-notfound.component';
@@ -78,6 +77,10 @@ import { PrivateCompanyContractComponent } from './components/private-company-co
 import { PrivateFilterFinanceContractModalComponent } from './modals/private-filter-finance-contract-modal/private-filter-finance-contract-modal.component';
 import { PrivateStaffRolesComponent } from './components/private-staff-roles/private-staff-roles.component';
 import { PrivatePatientChangeCompanyComponent } from './modals/private-patient-change-company/private-patient-change-company.component';
+import { PrivateFinanceDebtsComponent } from './pages/private-finance-debts/private-finance-debts.component';
+import { PrivateSingleFinanceDebtComponent } from './pages/private-single-finance-debt/private-single-finance-debt.component';
+import { PrivateFinancePaidComponent } from './pages/private-finance-paid/private-finance-paid.component';
+import { PrivateSingleFinancePaidComponent } from './pages/private-single-finance-paid/private-single-finance-paid.component';
 
 @NgModule({
   declarations: [
@@ -122,7 +125,6 @@ import { PrivatePatientChangeCompanyComponent } from './modals/private-patient-c
     PrivateInventoryComponent,
     PrivateAppointmentsComponent,
     PrivateTicketsComponent,
-    PrivateFinanceComponent,
     PrivateSinglePatientComponent,
     PrivateUserPersonalDetailComponent,
     PrivateNotfoundComponent,
@@ -161,6 +163,10 @@ import { PrivatePatientChangeCompanyComponent } from './modals/private-patient-c
     PrivateFilterFinanceContractModalComponent,
     PrivateStaffRolesComponent,
     PrivatePatientChangeCompanyComponent,
+    PrivateFinanceDebtsComponent,
+    PrivateSingleFinanceDebtComponent,
+    PrivateFinancePaidComponent,
+    PrivateSingleFinancePaidComponent,
   ],
   imports: [
     PrivateRoutingModule,

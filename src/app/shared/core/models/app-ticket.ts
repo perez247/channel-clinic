@@ -1,3 +1,4 @@
+import { PayerPayee } from './financial';
 import { Company } from 'src/app/shared/core/models/app-user';
 import { AppUser, Base, Patient, Staff, UserContract } from "./app-user";
 import { AppInventory } from "./inventory";
@@ -29,8 +30,7 @@ export interface AppTicket {
   ticketInventories: TicketInventory[]
   doctor: Staff
   patient: Patient
-  patientPaying: Patient
-  companyPaying: Company
+  payerPayee: PayerPayee[]
 }
 
 export const AppTicketTypes = {

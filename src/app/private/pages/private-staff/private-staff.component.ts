@@ -1,14 +1,18 @@
+import { CustomToastService } from 'src/app/shared/services/common/custom-toast/custom-toast.service';
 import { Component, OnInit } from '@angular/core';
 import { faClipboardUser, faEllipsisV, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { finalize } from 'rxjs';
+import { finalize, throwError } from 'rxjs';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
 import { AppUser, UserFilter } from 'src/app/shared/core/models/app-user';
 import { AppPagination, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
 import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
 import { UserService } from 'src/app/shared/services/api/user/user.service';
+import { EventBusActions, EventBusData } from 'src/app/shared/services/common/event-bus/event-bus-action';
+import { EventBusService } from 'src/app/shared/services/common/event-bus/event-bus.service';
 import { PrivateAddAStaffModalComponent } from '../../modals/private-add-a-staff-modal/private-add-a-staff-modal.component';
 import { PrivateFilterStaffModalComponent } from '../../modals/private-filter-staff-modal/private-filter-staff-modal.component';
+import { IToastConfig } from 'src/app/shared/components/shared-toast/shared-toast.component';
 
 @Component({
   selector: 'app-private-staff',
@@ -29,7 +33,7 @@ export class PrivateStaffComponent extends SharedUtilityComponent implements OnI
 
   constructor(
     private userService: UserService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
   ) {
     super();
   }
@@ -48,7 +52,7 @@ export class PrivateStaffComponent extends SharedUtilityComponent implements OnI
           this.staff = data.result ?? [];
         },
         error: (error) => {
-          console.log(error);
+          throw error;
         }
       });
     this.subscriptions.push(sub);

@@ -48,7 +48,9 @@
               </a>
             </td>
             <td>
-              {{patient.patient?.company?.name}}
+              <a class="text-info pointer" [routerLink]="['/' + routes.privateRoute.single_company(patient.patient?.company?.userId).$absolutePath]">
+                {{patient.patient?.company?.name}}
+              </a>
               <div>
                 <span *ngIf="patient.patient?.company?.companyContract"> {{ patient.patient?.company?.companyContract | contractDetail }} </span>
                 <span *ngIf="patient.patient?.patientContract"> {{ patient.patient?.patientContract | contractDetail }} </span>
