@@ -35,7 +35,6 @@ export class PrivateDashboardComponent extends SharedUtilityComponent implements
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: (data: AppDashboard) => {
-          console.log(data);
           this.dashboard = data;
         },
         error: (error) => {

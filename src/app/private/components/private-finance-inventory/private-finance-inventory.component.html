@@ -83,7 +83,7 @@
       <div class="col-10">
         {{ ticket.cost.paymentStatus }}
         <span *ngIf="currentOwing > 0" > - {{currentOwing | currency: 'N'}}
-          <span *ngIf="payer?.isPatient" class="ms-2"> <button (click)="addPayment()" class="btn btn-sm btn-primary"><small>Add payment</small></button> </span>
+          <span *ngIf="payer?.isPatient && ticket?.cost?.paymentStatus !== 'approved'" class="ms-2"> <button (click)="addPayment()" class="btn btn-sm btn-primary"><small>Add payment</small></button> </span>
           <span *ngIf="payer?.isCompany" class="ms-2"> An invoice will be sent to the company </span>
         </span>
       </div>

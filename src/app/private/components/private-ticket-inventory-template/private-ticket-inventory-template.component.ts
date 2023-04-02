@@ -1,3 +1,4 @@
+import { ITicketInventory } from './../../../shared/core/models/app-ticket';
 import { ApplicationRoutes } from './../../../shared/core/routes/app-routes';
 import { CustomErrorService } from './../../../shared/services/common/custom-error/custom-error.service';
 import { finalize, throwError } from 'rxjs';
@@ -10,6 +11,8 @@ import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility
 import { IConfirmAction, SharedConfirmActionModalComponent } from 'src/app/shared/modals/shared-confirm-action-modal/shared-confirm-action-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoles } from 'src/app/shared/core/models/app-roles';
+import { AppAppointment } from 'src/app/shared/core/models/app-appointment';
+import { PrivateCreatePharmacyTicketModalComponent } from '../../modals/private-create-ticket-modal/private-create-pharmacy-ticket-modal/private-create-pharmacy-ticket-modal.component';
 
 @Component({
   selector: 'app-private-ticket-inventory-template',
@@ -19,6 +22,7 @@ import { AppRoles } from 'src/app/shared/core/models/app-roles';
 export class PrivateTicketInventoryTemplateComponent extends SharedUtilityComponent implements OnInit {
 
   @Input() ticket?: AppTicket;
+  @Input() appointment?: AppAppointment;
   @Input() type?: string;
   @Output() reload = new EventEmitter<string>();
 
@@ -76,7 +80,6 @@ export class PrivateTicketInventoryTemplateComponent extends SharedUtilityCompon
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: (data) => {
-          // this.reload.emit(this.type);
           this.ticket!.sent = true;
           this.toast.success(`Ticket sent to the ${this.type?.replace('tickets:', '')} department`);
         },
@@ -86,5 +89,63 @@ export class PrivateTicketInventoryTemplateComponent extends SharedUtilityCompon
       });
 
       this.subscriptions.push(sub);
+  }
+
+  confirmDeleteTicket(): void {
+    const data = {
+      title: 'Delete Ticket',
+      body: 'Are you sure you want to delete this ticket.',
+      positiveBtn: 'Yes Delete',
+      positiveBtnCss: 'btn btn-danger',
+      nagativeBtn: 'No I changed my mind',
+      negativeBtnCss: 'btn btn-success'
+    } as IConfirmAction;
+
+    const modalRef = this.modalService.open(SharedConfirmActionModalComponent);
+    modalRef.componentInstance.confirmData = data;
+    const sub = modalRef.componentInstance.actionTaken.subscribe({
+      next: (action: boolean) => {
+        if (action)
+        {
+          this.deleteTicket();
+        }
+      }
+    });
+    this.subscriptions.push(sub);
+  }
+
+  deleteTicket(): void {
+    this.isLoading = true;
+    const data = {
+      ticketId: this.ticket?.base.id,
+    };
+    const sub = this.ticketService.deleteTicket(data)
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: (data) => {
+          this.reload.emit(this.type);
+          this.toast.success(`Ticket deleted successfully`);
+        },
+        error: (error) => {
+          throw error;
+        }
+      });
+
+      this.subscriptions.push(sub);
+  }
+
+  editTicket(): void {
+    const modalRef = this.modalService.open(PrivateCreatePharmacyTicketModalComponent, { size: 'lg' });
+    modalRef.componentInstance.ticket = this.ticket;
+    modalRef.componentInstance.appointment = this.appointment;
+    const sub = modalRef.componentInstance.saved.subscribe({
+      next: (action: boolean) => {
+        if (action)
+        {
+          this.deleteTicket();
+        }
+      }
+    });
+    this.subscriptions.push(sub);
   }
 }

@@ -37,4 +37,8 @@ export class TicketService {
   concludePharmacyTicket(data: any): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/conclude-pharmacy-ticket-inventory`, data);
   }
+
+  deleteTicket(data: any): Observable<void> {
+    return this.http.request<void>('delete', `${this.apiUrl}/app-ticket`, { body: data });
+  }
 }

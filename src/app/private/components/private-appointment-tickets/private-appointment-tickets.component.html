@@ -22,7 +22,7 @@
 		</ng-template>
 
 		<ng-template ngbPanelContent>
-      <app-private-patient-allergies [user]="appointment?.patient?.user" (reload)="getTickets($event)"></app-private-patient-allergies>
+      <app-private-patient-allergies [appointment]="appointment" [user]="appointment?.patient?.user" (reload)="getTickets($event)"></app-private-patient-allergies>
 		</ng-template>
 
 	</ngb-panel>
@@ -49,7 +49,7 @@
 
       <section class="row">
 
-        <app-private-ticket-inventory-template *ngFor="let pharmacy of pharmacies; trackBy:ticketTrackBy" [ticket]="pharmacy" [type]="userSections.tickets.pharmacy"></app-private-ticket-inventory-template>
+        <app-private-ticket-inventory-template *ngFor="let pharmacy of pharmacies; trackBy:ticketTrackBy" [ticket]="pharmacy" [appointment]="appointment" [type]="userSections.tickets.pharmacy" (reload)="getTickets($event)"></app-private-ticket-inventory-template>
 
       </section>
 

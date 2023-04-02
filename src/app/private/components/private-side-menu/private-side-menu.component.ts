@@ -15,6 +15,7 @@ import * as $ from "jquery";
 import { EventBusService } from 'src/app/shared/services/common/event-bus/event-bus.service';
 import { EventBusActions } from 'src/app/shared/services/common/event-bus/event-bus-action';
 import { AppUser } from 'src/app/shared/core/models/app-user';
+import { AppConstants } from 'src/app/shared/core/models/app-constants';
 
 @Component({
   selector: 'app-private-side-menu',
@@ -34,6 +35,9 @@ export class PrivateSideMenuComponent extends SharedUtilityComponent implements 
 
   roles = AppRoles;
 
+  ticketRoles: (string | undefined)[] = []
+  lookupType = AppConstants.LookUpType;
+
   constructor(
     private eventBus: EventBusService,
     private route: Router
@@ -42,12 +46,18 @@ export class PrivateSideMenuComponent extends SharedUtilityComponent implements 
   }
 
   override ngOnInit(): void {
+    this.setTicketRoles();
     this.currentUser = this.eventBus.getState().user.value ?? {} as AppUser;
     this.listenForChanges();
   }
 
   ngAfterViewInit(): void {
     this.isFinance();
+  }
+
+  setTicketRoles(): void {
+    this.ticketRoles = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType).map(y => y.name) || [];
+    this.ticketRoles?.push(this.roles.admin);
   }
 
   isFinance(): void {

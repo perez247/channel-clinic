@@ -3,7 +3,7 @@ import { Base, Company } from "./app-user";
   export class InventoryFilter {
 
     name?: string;
-    appInventoryType?: string;
+    appInventoryType?: string[];
     quantity?: number;
     inventoryId?: string;
   }

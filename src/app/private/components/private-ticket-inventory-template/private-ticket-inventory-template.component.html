@@ -12,12 +12,13 @@
           <a class="dropdown-item pointer"
           [routerLink]="['/' + routes.privateRoute.single_ticket(ticket?.base?.id).$absolutePath]"
           >View</a></li>
-          <div appHasRole [roles]="[roles.admin, roles.doctor]" [operator]="'or'" *ngIf="!ticket?.sent">
+          <div appHasRole [roles]="[roles.admin, appointment?.doctor?.user?.base?.id]" [operator]="'or'" *ngIf="!ticket?.sent">
             <li><hr class="dropdown-divider"></li>
             <li><span class="dropdown-item pointer"(click)="confirmSendToDepartment()">Send to department</span></li>
+            <li><span class="dropdown-item pointer" (click)="editTicket()" >Edit</span></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><span class="dropdown-item pointer text-danger" (click)="confirmDeleteTicket()" >Delete</span></li>
           </div>
-          <!-- <li><hr class="dropdown-divider"></li>
-        <li><span class="dropdown-item pointer">Delete</span></li> -->
       </ul>
     </div>
 

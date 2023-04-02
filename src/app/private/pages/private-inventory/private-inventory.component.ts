@@ -3,10 +3,13 @@ import { faWarehouse } from "@fortawesome/free-solid-svg-icons";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { finalize } from "rxjs";
 import { SharedUtilityComponent } from "src/app/shared/components/shared-utility/shared-utility.component";
+import { AppConstants } from "src/app/shared/core/models/app-constants";
+import { AppRoles } from "src/app/shared/core/models/app-roles";
 import { AppInventory, InventoryFilter } from "src/app/shared/core/models/inventory";
 import { AppPagination, PaginationRequest, PaginationResponse } from "src/app/shared/core/models/pagination";
 import { ApplicationRoutes } from "src/app/shared/core/routes/app-routes";
 import { InventoryService } from "src/app/shared/services/api/inventory/inventory.service";
+import { EventBusService } from "src/app/shared/services/common/event-bus/event-bus.service";
 import { PrivateAddInventoryModalComponent } from "../../modals/private-add-inventory-modal/private-add-inventory-modal.component";
 import { PrivateFilterInventoryModalComponent } from "../../modals/private-filter-inventory-modal/private-filter-inventory-modal.component";
 
@@ -27,15 +30,27 @@ export class PrivateInventoryComponent extends SharedUtilityComponent implements
   paginationRequest = new PaginationRequest<InventoryFilter>(this.appPagination, this.filter);
   paginationResponse = new PaginationResponse<any[]>();
 
+  roles = AppRoles;
+
+  ticketRoles: (string | undefined)[] = []
+  lookupType = AppConstants.LookUpType;
+
   constructor(
     private modalService: NgbModal,
-    private inventoryService: InventoryService
+    private inventoryService: InventoryService,
+    private eventBus: EventBusService
     ) {
     super();
   }
 
   override ngOnInit(): void {
+    this.setTicketRoles();
     this.getInventories();
+  }
+
+  setTicketRoles(): void {
+    this.ticketRoles = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType).map(y => y.name) || [];
+    this.ticketRoles?.push(this.roles.admin);
   }
 
   getInventories(): void {

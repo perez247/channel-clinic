@@ -111,7 +111,7 @@ export class PrivatePharmacyTicketListComponent extends SharedUtilityComponent i
           inventoryId: x.inventory.base?.id,
           ticketInventoryId: x.base.id,
           appTicketStatus: x.appTicketStatus,
-          prescribedQuantity: x.prescribedQuantity,
+          prescribedQuantity: x.prescribedQuantity ? x.prescribedQuantity : 0,
           departmentDescription: x.departmentDescription
         }
       })
@@ -138,13 +138,13 @@ export class PrivatePharmacyTicketListComponent extends SharedUtilityComponent i
     let valid = true;
     for (const iterator of this.ticket?.ticketInventories ?? []) {
 
-      if (!iterator.prescribedQuantity || iterator.prescribedQuantity <= 0) {
+      if ((!iterator.prescribedQuantity || iterator.prescribedQuantity <= 0) && iterator.appTicketStatus != 'canceled') {
         this.toast.error(`"${iterator.inventory.name}" must have quantity greater than 0`);
         valid = false;
         break;
       }
 
-      if (iterator.prescribedQuantity > (iterator.inventory.quantity ?? 0)) {
+      if ((iterator.prescribedQuantity ?? 0) > (iterator.inventory.quantity ?? 0)) {
         this.toast.error(`"${iterator.inventory.name}" does not have enough available quantity`);
         valid = false;
         break;

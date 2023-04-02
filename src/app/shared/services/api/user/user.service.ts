@@ -15,8 +15,8 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getUsers(data: any): Observable<PaginationResponse<AppUser[]>> {
-    return this.http.post<PaginationResponse<AppUser[]>>(`${this.apiUrl}`, data)
-    .pipe(timeout(environment.timeOut));
+    return this.http.post<PaginationResponse<AppUser[]>>(`${this.apiUrl}`, data);
+    // .pipe(timeout(environment.timeOut));
   }
 
   editPersonalDetails(data: any): Observable<any> {

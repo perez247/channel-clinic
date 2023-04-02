@@ -38,14 +38,12 @@
     </a>
 
     <a href="#"
-      appHasRole [roles]="[roles.admin, roles.pharmacy, roles.surgery, roles.lab, roles.radiology, roles.admission]"
-      [operator]="'or'"
       class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.inventories().$absolutePath]" routerLinkActive="active-tab">
       <fa-icon [icon]="fonts.faWarehouse" class="pe-1"></fa-icon> Inventories
     </a>
 
     <a href="#"
-      appHasRole [roles]="[roles.admin, roles.nurse, roles.doctor]" [operator]="'or'"
+      appHasRole [roles]="[roles.admin, roles.nurse, roles.doctor]"
       class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.appointments().$absolutePath]" routerLinkActive="active-tab">
       <fa-icon [icon]="fonts.faCalendarCheck" class="pe-1"></fa-icon> Appointments
     </a>
@@ -55,7 +53,7 @@
       <fa-icon [icon]="fonts.faTicket" class="pe-1"></fa-icon> Tickets
     </a>
     <a
-      appHasRole [roles]="[roles.admin, roles.finance]" [operator]="'or'"
+      appHasRole [roles]="[roles.admin, roles.finance]"
       class="d-block ps-4"
       data-bs-toggle="collapse"
       href="#financeCollapse"

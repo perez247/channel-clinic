@@ -15,6 +15,7 @@ export class TicketFilter {
   sentToDepartment?: boolean;
   sentToFinance?: boolean;
   appTicketStatus?: string;
+  paymentStatus?: string[];
 }
 
 export interface AppTicket {
@@ -96,7 +97,16 @@ export interface AppCost {
   payment: Payment[]
   costType: string
   paymentStatus: string
-  patientContract: UserContract,
-  companyContract: UserContract
+  patientContractObj: UserContract,
+  companyContractObj: UserContract
+  patientContract: boolean,
+  companyContract: boolean
   base: Base
 }
+
+export interface ITicketInventory {
+  doctorsPrescription: string,
+  inventoryId: string,
+  inventoryName: string,
+}
+

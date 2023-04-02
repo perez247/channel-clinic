@@ -35,6 +35,7 @@ import { HasRoleDirective } from './directives/has-role.directive';
 import { ContractDetailPipe } from './pipes/contract-detail.pipe';
 import { SharedToastComponent } from './components/shared-toast/shared-toast.component';
 import { PaidDebtPipe } from './pipes/paid-debt.pipe';
+import { UserIdPipe } from './pipes/user-id.pipe';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { PaidDebtPipe } from './pipes/paid-debt.pipe';
     HasRoleDirective,
     ContractDetailPipe,
     SharedToastComponent,
+    UserIdPipe,
 
   ],
   imports: [
@@ -106,23 +108,9 @@ import { PaidDebtPipe } from './pipes/paid-debt.pipe';
     ShortNumberPipe,
     ContractDetailPipe,
     PaidDebtPipe,
+    UserIdPipe,
   ],
   providers: [
-    // apis
-    PatientService,
-    StaffService,
-    UserService,
-    CompanyService,
-    InventoryService,
-    AuthService,
-    InventoryService,
-    AppointmentService,
-    TicketService,
-    FinancialService,
-
-    // common
-    CustomErrorService,
-    CustomToastService,
 
     // Before a call is made to the backend add the authToken to it
     JwtInterceptorProvider,

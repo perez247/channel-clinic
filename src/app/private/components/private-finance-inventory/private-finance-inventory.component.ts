@@ -1,3 +1,5 @@
+import { UserFile } from './../../../shared/core/models/files';
+import { AppFileService } from 'src/app/shared/services/app-file/app-file.service';
 import { finalize } from 'rxjs';
 import { FinancialService } from 'src/app/shared/services/api/financial/financial.service';
 import { Payment } from './../../../shared/core/models/app-ticket';
@@ -41,6 +43,7 @@ export class PrivateFinanceInventoryComponent extends SharedUtilityComponent imp
     private modalService: NgbModal,
     private financialService: FinancialService,
     private toast: CustomToastService,
+    private fileService: AppFileService
     ) {
     super();
   }
@@ -56,8 +59,7 @@ export class PrivateFinanceInventoryComponent extends SharedUtilityComponent imp
   }
 
   downloadFile(base64string?: string, name: string = 'proof_of_payment.jpeg'): void {
-    const file = UtilityHelpers.dataURLtoFile(base64string ?? '', name)
-    saveAs(file, name);
+    this.fileService.download({ base64String: base64string, name } as UserFile)
   }
 
   removeFromList(index: any): void {
@@ -67,6 +69,7 @@ export class PrivateFinanceInventoryComponent extends SharedUtilityComponent imp
 
   addPayment(): void {
     const modalRef = this.modalService.open(PrivateAddPaymentModalComponent, { size: 'lg' });
+    modalRef.componentInstance.cost = this.currentOwing;
 
     const sub = modalRef.componentInstance.newPayment.subscribe({
       next: (data: FileUpload) => {

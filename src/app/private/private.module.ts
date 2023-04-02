@@ -81,6 +81,13 @@ import { PrivateFinanceDebtsComponent } from './pages/private-finance-debts/priv
 import { PrivateSingleFinanceDebtComponent } from './pages/private-single-finance-debt/private-single-finance-debt.component';
 import { PrivateFinancePaidComponent } from './pages/private-finance-paid/private-finance-paid.component';
 import { PrivateSingleFinancePaidComponent } from './pages/private-single-finance-paid/private-single-finance-paid.component';
+import { PrivateFinancePaidItemComponent } from './components/private-finance-paid-item/private-finance-paid-item.component';
+import { PrivateFinancePaidItemChildComponent } from './components/private-finance-paid-item-child/private-finance-paid-item-child.component';
+import { PrivateEditTicketInventoryModalComponent } from './modals/private-edit-ticket-inventory-modal/private-edit-ticket-inventory-modal.component';
+import { PrivateAddPharmacyTicketInventoryModalComponent } from './modals/private-add-pharmacy-ticket-inventory-modal/private-add-pharmacy-ticket-inventory-modal.component';
+import { PrivateFinanceComponent } from './pages/private-finance/private-finance.component';
+import { PrivateFilterFinanceDebtsModalComponent } from './modals/private-filter-finance-debts-modal/private-filter-finance-debts-modal.component';
+import { PrivateDebtPaymentModalsComponent } from './modals/private-debt-payment-modals/private-debt-payment-modals.component';
 
 @NgModule({
   declarations: [
@@ -167,6 +174,13 @@ import { PrivateSingleFinancePaidComponent } from './pages/private-single-financ
     PrivateSingleFinanceDebtComponent,
     PrivateFinancePaidComponent,
     PrivateSingleFinancePaidComponent,
+    PrivateFinancePaidItemComponent,
+    PrivateFinancePaidItemChildComponent,
+    PrivateEditTicketInventoryModalComponent,
+    PrivateAddPharmacyTicketInventoryModalComponent,
+    PrivateFinanceComponent,
+    PrivateFilterFinanceDebtsModalComponent,
+    PrivateDebtPaymentModalsComponent,
   ],
   imports: [
     PrivateRoutingModule,

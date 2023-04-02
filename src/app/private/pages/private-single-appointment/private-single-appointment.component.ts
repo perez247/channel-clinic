@@ -1,3 +1,4 @@
+import { EventBusService } from './../../../shared/services/common/event-bus/event-bus.service';
 import { TicketService } from 'src/app/shared/services/api/ticket/ticket.service';
 import { IConfirmAction, SharedConfirmActionModalComponent } from 'src/app/shared/modals/shared-confirm-action-modal/shared-confirm-action-modal.component';
 import { Component, OnInit } from '@angular/core';
@@ -45,6 +46,7 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
     private router: Router,
     private toast: CustomToastService,
     private modalService: NgbModal,
+    private eventBus: EventBusService,
     ) {
     super();
   }
@@ -87,7 +89,6 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
 
     const sub = modalRef.componentInstance.saved.subscribe({
       next: () => {
-        console.log(this.paginationRequest);
         this.getAppointmentByDate();
       }
     });

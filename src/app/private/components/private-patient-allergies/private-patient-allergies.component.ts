@@ -1,3 +1,4 @@
+import { AppAppointment } from './../../../shared/core/models/app-appointment';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { finalize } from 'rxjs';
@@ -14,6 +15,7 @@ import { PatientService } from 'src/app/shared/services/api/patient/patient.serv
 })
 export class PrivatePatientAllergiesComponent extends SharedUtilityComponent implements OnInit {
 
+  @Input() appointment?: AppAppointment;
   @Output() reload = new EventEmitter<string>();
 
   @Input() user?: AppUser;
@@ -30,6 +32,7 @@ export class PrivatePatientAllergiesComponent extends SharedUtilityComponent imp
   userSections = AppConstants.UserSections;
 
   roles = AppRoles;
+  doctor? = '';
 
   constructor(
     private patientService: PatientService
@@ -38,6 +41,7 @@ export class PrivatePatientAllergiesComponent extends SharedUtilityComponent imp
   }
 
   override ngOnInit(): void {
+    this.doctor = this.appointment ? this.appointment.doctor?.user?.base?.id : this.roles.doctor;
     this.allergies = this.user?.patient?.allergies ?? '';
   }
 

@@ -121,9 +121,11 @@ export class AppUser {
     staffId?: string;
     companyId?: string;
     userId?: string;
+    userSearchId?: string;
     isCompany?: boolean;
     active?: boolean;
     userType?: string;
+    roles?: string[];
 
     patientCompanyName?: string;
     patientCompanyId?: string;
