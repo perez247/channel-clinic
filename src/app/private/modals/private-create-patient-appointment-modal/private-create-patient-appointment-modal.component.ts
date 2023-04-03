@@ -9,7 +9,7 @@ import { SharedUtilityComponent } from "src/app/shared/components/shared-utility
 import { AppUser } from "src/app/shared/core/models/app-user";
 import { ApplicationRoutes } from "src/app/shared/core/routes/app-routes";
 import { AppointmentService } from "src/app/shared/services/api/appointment/appointment.service";
-import { AppFileService } from "src/app/shared/services/app-file/app-file.service";
+import { AppFileService } from "src/app/shared/services/common/app-file/app-file.service";
 import { CustomErrorService } from "src/app/shared/services/common/custom-error/custom-error.service";
 import { CustomToastService } from "src/app/shared/services/common/custom-toast/custom-toast.service";
 import { CreatePatientAppoitmentModalFunctions } from "./private-create-patient-appointment-modal-functions";

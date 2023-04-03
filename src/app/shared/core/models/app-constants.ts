@@ -26,6 +26,8 @@ export class AppConstants {
     ticketList: 'ticketList',
     financeInventory: 'financeInventory',
 
+    settingBilling: 'settingBilling',
+
     tickets: {
       pharmacy: `tickets:${AppTicketTypes.pharmacy}`,
       surgery: `tickets:${AppTicketTypes.surgery}`,

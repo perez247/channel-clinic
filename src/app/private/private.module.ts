@@ -88,6 +88,8 @@ import { PrivateAddPharmacyTicketInventoryModalComponent } from './modals/privat
 import { PrivateFinanceComponent } from './pages/private-finance/private-finance.component';
 import { PrivateFilterFinanceDebtsModalComponent } from './modals/private-filter-finance-debts-modal/private-filter-finance-debts-modal.component';
 import { PrivateDebtPaymentModalsComponent } from './modals/private-debt-payment-modals/private-debt-payment-modals.component';
+import { PrivateSettingsComponent } from './pages/private-settings/private-settings.component';
+import { PrivateBillingSettingComponent } from './components/private-billing-setting/private-billing-setting.component';
 
 @NgModule({
   declarations: [
@@ -181,6 +183,8 @@ import { PrivateDebtPaymentModalsComponent } from './modals/private-debt-payment
     PrivateFinanceComponent,
     PrivateFilterFinanceDebtsModalComponent,
     PrivateDebtPaymentModalsComponent,
+    PrivateSettingsComponent,
+    PrivateBillingSettingComponent,
   ],
   imports: [
     PrivateRoutingModule,

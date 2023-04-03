@@ -1,3 +1,4 @@
+import { PrivateSettingsComponent } from './pages/private-settings/private-settings.component';
 import { PrivateSingleFinancePaidComponent } from './pages/private-single-finance-paid/private-single-finance-paid.component';
 import { PrivateFinancePaidComponent } from './pages/private-finance-paid/private-finance-paid.component';
 import { PrivateFinanceDebtsComponent } from './pages/private-finance-debts/private-finance-debts.component';
@@ -101,6 +102,14 @@ const routes: Routes = [
         component: PrivateTicketsComponent
       },
       {
+        path: `${appRoutes.privateRoute.settings().$name}`,
+        component: PrivateSettingsComponent
+      },
+      {
+        path: `${appRoutes.privateRoute.notfound(':error').$name}`,
+        component: PrivateNotfoundComponent
+      },
+      {
         path: ``,
         component: PrivateFinanceComponent,
         canActivate: [OnlyFinanceRoleGuard],
@@ -134,10 +143,6 @@ const routes: Routes = [
             component: PrivateFinancePaidComponent
           },
         ]
-      },
-      {
-        path: `${appRoutes.privateRoute.notfound(':error').$name}`,
-        component: PrivateNotfoundComponent
       },
     ]
   },

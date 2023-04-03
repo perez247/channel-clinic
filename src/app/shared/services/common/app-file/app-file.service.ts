@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as saveAs from 'file-saver';
-import { UtilityHelpers } from '../../core/functions/utility-helpers';
-import { UserFile } from '../../core/models/files';
+import { UtilityHelpers } from '../../../core/functions/utility-helpers';
+import { UserFile } from '../../../core/models/files';
 
 @Injectable({
   providedIn: 'root'

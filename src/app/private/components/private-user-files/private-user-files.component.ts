@@ -1,4 +1,4 @@
-import { AppFileService } from './../../../shared/services/app-file/app-file.service';
+import { AppFileService } from '../../../shared/services/common/app-file/app-file.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { faFileAlt, faDownload, faTrash } from '@fortawesome/free-solid-svg-icons';

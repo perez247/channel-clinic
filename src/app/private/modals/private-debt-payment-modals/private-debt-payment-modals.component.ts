@@ -1,6 +1,6 @@
 import { CustomToastService } from './../../../shared/services/common/custom-toast/custom-toast.service';
 import { FinancialDebtFilter } from 'src/app/shared/core/models/financial';
-import { AppFileService } from 'src/app/shared/services/app-file/app-file.service';
+import { AppFileService } from 'src/app/shared/services/common/app-file/app-file.service';
 import { SharedUtilityComponent } from './../../../shared/components/shared-utility/shared-utility.component';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';

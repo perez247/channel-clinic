@@ -1,4 +1,4 @@
-import { AppFileService } from './../../../shared/services/app-file/app-file.service';
+import { AppFileService } from '../../../shared/services/common/app-file/app-file.service';
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";

@@ -1,5 +1,5 @@
 import { UserIdPipe } from './../../../shared/pipes/user-id.pipe';
-import { AppFileService } from 'src/app/shared/services/app-file/app-file.service';
+import { AppFileService } from 'src/app/shared/services/common/app-file/app-file.service';
 import { finalize } from 'rxjs';
 import { FinancialService } from 'src/app/shared/services/api/financial/financial.service';
 import { Debt, FinancialDebtFilter, InvoiceCSV } from './../../../shared/core/models/financial';

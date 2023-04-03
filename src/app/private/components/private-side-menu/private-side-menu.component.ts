@@ -9,7 +9,8 @@ import {
   faClipboardUser, faBuilding,
   faWarehouse, faCalendarCheck,
   faTicket, faCoins,
-  faSignature, faSackXmark, faHandHoldingDollar
+  faSignature, faSackXmark, faHandHoldingDollar,
+  faCog
 } from '@fortawesome/free-solid-svg-icons';
 import * as $ from "jquery";
 import { EventBusService } from 'src/app/shared/services/common/event-bus/event-bus.service';
@@ -24,7 +25,7 @@ import { AppConstants } from 'src/app/shared/core/models/app-constants';
 })
 export class PrivateSideMenuComponent extends SharedUtilityComponent implements OnInit, AfterViewInit  {
 
-  fonts = { faSignature, faEllipsisV, faHamburger, faBedPulse, faChartLine, faClipboardUser, faBuilding, faWarehouse, faCalendarCheck, faTicket, faCoins, faSackXmark, faHandHoldingDollar }
+  fonts = { faSignature, faEllipsisV, faHamburger, faBedPulse, faChartLine, faClipboardUser, faBuilding, faWarehouse, faCalendarCheck, faTicket, faCoins, faSackXmark, faHandHoldingDollar, faCog }
 
   openBar = true;
 

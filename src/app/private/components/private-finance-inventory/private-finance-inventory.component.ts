@@ -1,5 +1,5 @@
 import { UserFile } from './../../../shared/core/models/files';
-import { AppFileService } from 'src/app/shared/services/app-file/app-file.service';
+import { AppFileService } from 'src/app/shared/services/common/app-file/app-file.service';
 import { finalize } from 'rxjs';
 import { FinancialService } from 'src/app/shared/services/api/financial/financial.service';
 import { Payment } from './../../../shared/core/models/app-ticket';

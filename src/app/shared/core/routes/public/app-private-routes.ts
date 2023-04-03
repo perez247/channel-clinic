@@ -234,6 +234,16 @@ export class AppPrivateRoute {
     }
 
     /**
+     * @description Settings
+     */
+    public static settings(): IRoutePath {
+      return {
+          $name: `settings`,
+          $absolutePath: `${AppPrivateRoute.$absolutePath}/settings`
+      };
+    }
+
+    /**
      * @description Not found in private
      */
          public static notfound(error?: string): IRoutePath {
@@ -269,6 +279,7 @@ export class AppPrivateRoute {
         Single_finance_tickets: AppPrivateRoute.Single_financeTickets,
         single_finance_debt: AppPrivateRoute.single_financeDebt,
         single_finance_paid: AppPrivateRoute.single_financePaid,
+        settings: AppPrivateRoute.settings,
         notfound: AppPrivateRoute.notfound,
       };
     }
@@ -290,6 +301,7 @@ export interface IAppPrivateRoute {
   finance_contracts: () => IRoutePath;
   finance_debts: () => IRoutePath;
   finance_paid: () => IRoutePath;
+  settings: () => IRoutePath;
   single_patient: (id?: string) => IRoutePath;
   single_staff: (id?: string) => IRoutePath;
   single_company: (id?: string) => IRoutePath;
