@@ -68,6 +68,7 @@ export interface TicketInventory {
   admissionStartDate?: string
   admissionEndDate: any
   base: Base
+  pricePerItem: number
 }
 
 export interface SurgeryTicketPersonnel {

@@ -17,7 +17,6 @@ import { TimeoutError } from 'rxjs';
 export class AppErrorHandler implements ErrorHandler {
 
     constructor(
-      // @Inject(CustomToastService) private toastService: CustomToastService
       private eventBus: EventBusService,
       private zone: NgZone
       ) {}
@@ -29,12 +28,11 @@ export class AppErrorHandler implements ErrorHandler {
       if (typeof(error) === 'string') {
         this.zone.run(() => {
           toast.error(error);
-          this.eventBus.emit({ key: EventBusActions.toast, value: { messsage: error, status: 'error' } } as EventBusData<IToastConfig>);
+          // this.eventBus.emit({ key: EventBusActions.toast, value: { messsage: error, status: 'error' } } as EventBusData<IToastConfig>);
         })
       }
 
-      else if (error instanceof HttpErrorResponse)
-      {
+      else if (error instanceof HttpErrorResponse) {
         this.zone.run(() => {
           UtilityHelpers.showError(error, toast);
         });
@@ -50,6 +48,7 @@ export class AppErrorHandler implements ErrorHandler {
 
       else {
         this.zone.run(() => {
+          console.log(error);
           toast.error('Application unable to load, kindly refresh page');
         })
       }

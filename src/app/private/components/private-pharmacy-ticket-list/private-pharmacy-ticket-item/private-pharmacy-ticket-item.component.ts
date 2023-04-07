@@ -43,8 +43,9 @@ export class PrivatePharmacyTicketItemComponent implements OnInit, OnChanges {
       return;
     }
 
-    this.ticketInventory.currentPrice = (item?.pricePerItem ?? 0) * (this.ticketInventory?.prescribedQuantity ?? 0);
-    this.ticketInventory.totalPrice = (item?.pricePerItem ?? 0) * (this.ticketInventory?.prescribedQuantity ?? 0);
+    this.ticketInventory.pricePerItem = item?.pricePerItem ?? 0;
+    this.ticketInventory.currentPrice = (this.ticketInventory.pricePerItem ?? 0) * (this.ticketInventory?.prescribedQuantity ?? 0);
+    this.ticketInventory.totalPrice = (this.ticketInventory.pricePerItem ?? 0) * (this.ticketInventory?.prescribedQuantity ?? 0);
   }
 
   setToDefault(): void {

@@ -4,7 +4,8 @@
           <fa-icon [icon]="fonts.faCog" class="p-1 text-light"></fa-icon>
       </span>
       <div class="placeholder-glow ms-5 ps-3">
-        &nbsp;
+        <span class="h3 me-1">Settings</span>
+        <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
       </div>
   </div>
 </div>
