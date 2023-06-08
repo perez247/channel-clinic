@@ -35,6 +35,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     NgbToastModule,
     NgbDatepickerModule,
     NgbToastModule,
+    NgbNavModule,
 
     // Image cropper
     ImageCropperModule,
@@ -53,6 +54,7 @@ exports: [
     NgbToastModule,
     NgbDatepickerModule,
     NgbToastModule,
+    NgbNavModule,
 
     // Image cropper
     ImageCropperModule,

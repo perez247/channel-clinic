@@ -75,7 +75,7 @@
 		</ng-template>
 
 		<ng-template ngbPanelContent>
-      <app-private-patient-allergies [user]="patient" (reload)="getPatient($event)"></app-private-patient-allergies>
+      <app-private-patient-allergies [patient]="patient.patient" (reload)="getPatient($event)"></app-private-patient-allergies>
 		</ng-template>
 
 	</ngb-panel>

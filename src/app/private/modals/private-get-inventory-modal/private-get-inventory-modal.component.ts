@@ -1,19 +1,20 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ITicketInventory, AppTicketTypes } from 'src/app/shared/core/models/app-ticket';
+import { InventoryFilter, AppInventory } from 'src/app/shared/core/models/inventory';
 import { CustomErrorService } from 'src/app/shared/services/common/custom-error/custom-error.service';
-import { PrivateAddPharmacyTicketInventoryFunctions } from './private-add-pharmacy-ticket-inventory-modal-functions';
-import { AppTicketTypes, ITicketInventory, TicketInventory } from 'src/app/shared/core/models/app-ticket';
-import { AppInventory, InventoryFilter } from 'src/app/shared/core/models/inventory';
+import { PrivateGetInventoryFunctions } from './private-get-inventory-functions';
 
 @Component({
-  selector: 'app-private-add-pharmacy-ticket-inventory-modal',
-  templateUrl: './private-add-pharmacy-ticket-inventory-modal.component.html',
-  styleUrls: ['./private-add-pharmacy-ticket-inventory-modal.component.scss']
+  selector: 'app-private-get-inventory-modal',
+  templateUrl: './private-get-inventory-modal.component.html',
+  styleUrls: ['./private-get-inventory-modal.component.scss']
 })
-export class PrivateAddPharmacyTicketInventoryModalComponent implements OnInit {
+export class PrivateGetInventoryModalComponent implements OnInit {
 
   @Input() appInventory?: ITicketInventory;
+  @Input() type: string = AppTicketTypes.pharmacy;
 
   @Output() itemSaved = new EventEmitter();
 
@@ -27,12 +28,12 @@ export class PrivateAddPharmacyTicketInventoryModalComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.filter.appInventoryType = [AppTicketTypes.pharmacy];
+    this.filter.appInventoryType = [this.type];
     this.initializeForm();
   }
 
   initializeForm(): void {
-    this.form = PrivateAddPharmacyTicketInventoryFunctions.createForm(this.fb, this.appInventory);
+    this.form = PrivateGetInventoryFunctions.createForm(this.fb, this.appInventory);
   }
 
   updateInventoryName(inventory: AppInventory): void {

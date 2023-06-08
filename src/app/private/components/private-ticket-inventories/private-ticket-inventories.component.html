@@ -16,15 +16,27 @@
   </div>
 </div>
 
-<app-private-pharmacy-ticket-item
-*ngFor="let ticketInventory of ticket?.ticketInventories"
-[ticket]="ticket"
-[ticketInventory]="ticketInventory"
-[inventoryItems]="inventoryItems"
-></app-private-pharmacy-ticket-item>
+
+<ng-container *ngIf="ticket.appInventoryType === types.pharmacy">
+  <app-private-pharmacy-inventory-item
+  *ngFor="let ticketInventory of ticket?.ticketInventories"
+  [ticket]="ticket"
+  [ticketInventory]="ticketInventory"
+  [inventoryItems]="inventoryItems"
+  ></app-private-pharmacy-inventory-item>
+</ng-container>
+
+<ng-container *ngIf="ticket.appInventoryType === types.lab || ticket.appInventoryType === types.radiology">
+  <app-private-lab-inventory-item
+  *ngFor="let ticketInventory of ticket?.ticketInventories"
+  [ticket]="ticket"
+  [ticketInventory]="ticketInventory"
+  [inventoryItems]="inventoryItems"
+  ></app-private-lab-inventory-item>
+</ng-container>
 
 <div class="mt-4 text-end">
-  <button appHasRole [roles]="[roles.admin, roles.pharmacy]" [operator]="'or'" *ngIf="!ticket.sentToFinance" [disabled]="isLoading" (click)="confirmSendToFinance()" class="btn btn-sm btn-primary">
+  <button appHasRole [roles]="[roles.admin, roles.pharmacy]" [operator]="'or'" *ngIf="!ticket.sentToFinance" [disabled]="isLoading" (click)="sendToFinance()" class="btn btn-sm btn-primary">
     Send to finance
     <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
   </button>
@@ -34,7 +46,7 @@
     <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
   </button>
 
-  <button appHasRole [roles]="[roles.admin, roles.pharmacy]" [operator]="'or'"  *ngIf="ticket.cost && ticket.appTicketStatus === 'ongoing'" [disabled]="isLoading" (click)="confirmConcludeTicket()" class="btn btn-sm btn-primary">
+  <button appHasRole [roles]="[roles.admin, roles.pharmacy]" [operator]="'or'"  *ngIf="ticket.cost && ticket.appTicketStatus === 'ongoing'" [disabled]="isLoading" (click)="concludeTicket()" class="btn btn-sm btn-primary">
     Conclude
     <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
   </button>

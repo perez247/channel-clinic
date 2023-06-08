@@ -16,6 +16,7 @@ export class TicketFilter {
   sentToFinance?: boolean;
   appTicketStatus?: string;
   paymentStatus?: string[];
+  beforeDateTime?: string;
 }
 
 export interface AppTicket {
@@ -69,6 +70,7 @@ export interface TicketInventory {
   admissionEndDate: any
   base: Base
   pricePerItem: number
+  itemsUsed: AppInventory[]
 }
 
 export interface SurgeryTicketPersonnel {

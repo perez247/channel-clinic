@@ -11,8 +11,8 @@ import { AppPagination, PaginationRequest, PaginationResponse } from "src/app/sh
 import { TicketService } from "src/app/shared/services/api/ticket/ticket.service";
 import { CustomErrorService } from "src/app/shared/services/common/custom-error/custom-error.service";
 import { CustomToastService } from "src/app/shared/services/common/custom-toast/custom-toast.service";
-import { PrivateAddPharmacyTicketInventoryModalComponent } from "../../private-add-pharmacy-ticket-inventory-modal/private-add-pharmacy-ticket-inventory-modal.component";
 import { SharedCreatePharmacyTicketFunctions } from "./private-create-pharmacy-ticket-functions";
+import { PrivateGetInventoryModalComponent } from "../../private-get-inventory-modal/private-get-inventory-modal.component";
 
 @Component({
   selector: 'app-private-create-pharmacy-ticket-modal',
@@ -99,10 +99,9 @@ export class PrivateCreatePharmacyTicketModalComponent extends SharedUtilityComp
 
   saveTicketInventory(appTicket: any)
   {
-    const modalRef = this.modalService.open(PrivateAddPharmacyTicketInventoryModalComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(PrivateGetInventoryModalComponent, { size: 'lg' });
     modalRef.componentInstance.appInventory = appTicket;
-
-    // console.log(modalRef.componentInstance.itemSaved);
+    modalRef.componentInstance.type = AppTicketTypes.pharmacy;
 
     const sub = modalRef.componentInstance.itemSaved.subscribe({
       next: (data: ITicketInventory) => {

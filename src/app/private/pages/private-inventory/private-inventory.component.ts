@@ -75,13 +75,17 @@ export class PrivateInventoryComponent extends SharedUtilityComponent implements
     this.getInventories();
   }
 
-  openFilterPatients() {
+  openFilterInventory() {
     const modalRef = this.modalService.open(PrivateFilterInventoryModalComponent);
-    modalRef.componentInstance.filter = this.filter;
+    const filter = { ...this.filter } as any;
+    filter.appInventoryType = this.filter.appInventoryType && this.filter.appInventoryType.length > 0 ? this.filter.appInventoryType[0] : null;
+    modalRef.componentInstance.filter = filter;
 
     const sub = modalRef.componentInstance.newFilter.subscribe({
-      next: (filter: InventoryFilter) => {
-        this.filter = filter;
+      next: (filter: any) => {
+        let newFilter = { ...filter } as any;
+        newFilter.appInventoryType = filter.appInventoryType ? [filter.appInventoryType] : null;
+        this.filter = newFilter;
         this.pageChanged(1);
       }
     });

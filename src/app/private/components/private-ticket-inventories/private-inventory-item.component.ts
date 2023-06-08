@@ -1,14 +1,13 @@
-import { AppInventory, AppInventoryItem } from './../../../../shared/core/models/inventory';
-import { TicketInventory } from './../../../../shared/core/models/app-ticket';
-import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
-import { AppTicket } from 'src/app/shared/core/models/app-ticket';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { faCheckCircle, faClock, faPencilAlt, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { AppTicket, TicketInventory } from 'src/app/shared/core/models/app-ticket';
+import { AppInventoryItem } from 'src/app/shared/core/models/inventory';
 
 @Component({
-  selector: 'app-private-pharmacy-ticket-item',
-  templateUrl: './private-pharmacy-ticket-item.component.html',
-  styleUrls: ['./private-pharmacy-ticket-item.component.scss']
+  selector: 'app-private-inventory-item',
+  templateUrl: './private-inventory-item.component.html'
 })
-export class PrivatePharmacyTicketItemComponent implements OnInit, OnChanges {
+export class PrivateInventoryItemComponent implements  OnInit, OnChanges {
 
   @Input() ticket: AppTicket = {} as AppTicket;
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
@@ -21,7 +20,6 @@ export class PrivatePharmacyTicketItemComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit(): void {
-    // this.calculateItem();
   }
 
   ngOnChanges(): void {

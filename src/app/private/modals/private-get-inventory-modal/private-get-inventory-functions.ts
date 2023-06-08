@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { AppTicket } from "src/app/shared/core/models/app-ticket";
 import { CustomValidator } from 'src/app/shared/validations/custom-validators';
 
-export class PrivateAddPharmacyTicketInventoryFunctions {
+export class PrivateGetInventoryFunctions {
 
   public static createForm(fb: FormBuilder, appinventory?: ITicketInventory): FormGroup
   {

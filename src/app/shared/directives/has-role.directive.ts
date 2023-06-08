@@ -1,12 +1,12 @@
 import { Subscription } from 'rxjs';
-import { SharedUtilityComponent } from './../components/shared-utility/shared-utility.component';
 import { AppUser } from 'src/app/shared/core/models/app-user';
 import { EventBusService } from './../services/common/event-bus/event-bus.service';
 import { Directive, Input, OnInit, OnDestroy, ElementRef, Renderer2 } from '@angular/core';
 import { EventBusActions } from '../services/common/event-bus/event-bus-action';
 
 @Directive({
-  selector: '[appHasRole]'
+  selector: '[appHasRole]',
+  exportAs: 'appHasRole'
 })
 export class HasRoleDirective implements OnInit, OnDestroy {
 

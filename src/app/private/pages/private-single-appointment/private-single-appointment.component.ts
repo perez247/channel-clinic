@@ -26,7 +26,7 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
 
   fonts = { faCalendar, faPlus, faGears };
   userSections = AppConstants.UserSections;
-  currentSection = this.userSections.companyDetails;
+  currentSection = this.userSections.vitals;
 
   appointment?: AppAppointment;
   appointments: AppAppointment[] = [];
@@ -73,7 +73,7 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
 
           this.paginationResponse = data;
           this.appointments = data.result ?? [];
-          this.appointment = this.appointments[0];
+          this.appointment = new AppAppointment(this.appointments[0]);
         },
         error: (error) => {
           throw error;

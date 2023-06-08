@@ -99,7 +99,7 @@ export class PrivateCreatePatientAppointmentModalComponent extends SharedUtility
     const appointmentDate = moment(d.appointmentDate).toDate();
     appointmentDate.setHours(d.appointmentTime.hour);
     appointmentDate.setMinutes(d.appointmentTime.minute);
-    // appointmentDate.setTime(appointmentDate.getTime() + (d.appointmentTime.hour*60*60*1000) + (d.appointmentTime.minute*60*1000));
+
     d.appointmentDate = appointmentDate;
     const sub = this.appointmentService.createPatientAppointment(d)
       .pipe(finalize(() => this.isLoading = false))
