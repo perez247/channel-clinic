@@ -153,6 +153,36 @@ export class AppPrivateRoute {
       };
     }
 
+     /**
+     * @description Admissions
+     */
+     public static admissions(): IRoutePath {
+      return {
+          $name: `admissions`,
+          $absolutePath: `${AppPrivateRoute.$absolutePath}/admissions`
+      };
+    }
+
+    /**
+     * @description Single admission
+     */
+    public static single_admission(id: string = ':id'): IRoutePath {
+      return {
+          $name: `admissions/${id}`,
+          $absolutePath: `${AppPrivateRoute.$absolutePath}/admissions/${id}`
+      };
+    }
+
+    /**
+     * @description admission section
+     */
+    public static admission_section(sectionName: string = ':sectionName', id: string = ':id'): IRoutePath {
+      return {
+          $name: `admissions/${sectionName}/${id}`,
+          $absolutePath: `${AppPrivateRoute.$absolutePath}/admissions/${sectionName}/${id}`
+      };
+    }
+
     /**
      * @description Finance
      */
@@ -265,6 +295,7 @@ export class AppPrivateRoute {
         inventories: AppPrivateRoute.inventories,
         appointments: AppPrivateRoute.appointments,
         tickets: AppPrivateRoute.tickets,
+        admissions: AppPrivateRoute.admissions,
         finance: AppPrivateRoute.finance,
         finance_tickets: AppPrivateRoute.financeTickets,
         finance_contracts: AppPrivateRoute.financeContracts,
@@ -276,6 +307,8 @@ export class AppPrivateRoute {
         single_inventory: AppPrivateRoute.single_inventory,
         single_appointment: AppPrivateRoute.single_appointment,
         single_ticket: AppPrivateRoute.single_ticket,
+        single_admission: AppPrivateRoute.single_admission,
+        admission_sectionName: AppPrivateRoute.admission_section,
         Single_finance_tickets: AppPrivateRoute.Single_financeTickets,
         single_finance_debt: AppPrivateRoute.single_financeDebt,
         single_finance_paid: AppPrivateRoute.single_financePaid,
@@ -296,6 +329,7 @@ export interface IAppPrivateRoute {
   inventories: () => IRoutePath;
   appointments: () => IRoutePath;
   tickets: () => IRoutePath;
+  admissions: () => IRoutePath;
   finance: () => IRoutePath;
   finance_tickets: () => IRoutePath;
   finance_contracts: () => IRoutePath;
@@ -308,6 +342,8 @@ export interface IAppPrivateRoute {
   single_inventory: (id?: string) => IRoutePath;
   single_appointment: (id?: string) => IRoutePath;
   single_ticket: (id?: string) => IRoutePath;
+  single_admission: (id?: string) => IRoutePath;
+  admission_sectionName: (sectionName?: string, id?: string) => IRoutePath;
   Single_finance_tickets: (id?: string) => IRoutePath;
   single_finance_debt: (id?: string) => IRoutePath;
   single_finance_paid: (id?: string) => IRoutePath;

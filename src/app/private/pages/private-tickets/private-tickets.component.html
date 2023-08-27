@@ -17,6 +17,9 @@
           </button>
           <ul class="dropdown-menu" aria-labelledby="more-action">
             <li><a (click)="openFilterTicketModal()" class="dropdown-item pointer" >Filter</a></li>
+            <li
+            appHasRole [roles]="[roles.admin, roles.admission]"
+            ><a (click)="openCreateTicket('admission')" class="dropdown-item pointer" >Create Emergency Admission</a></li>
           </ul>
         </div>
   </div>

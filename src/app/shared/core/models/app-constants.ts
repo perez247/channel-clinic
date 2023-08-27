@@ -49,6 +49,10 @@ export class AppConstants {
     AppInventoryType: 'AppInventoryType',
     SurgeryTicketStatus: 'SurgeryTicketStatus'
   }
+
+  public static readonly TicketFrequency = [
+    'Once', 'Daily', 'Weekly', 'Monthly','Yearly'
+  ]
 }
 
 

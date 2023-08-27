@@ -53,7 +53,11 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
   }
 
   override ngOnInit(): void {
-    this.ticket.ticketInventories.forEach(x => x.prescribedQuantity = 1);
+    this.ticket.ticketInventories.forEach(x => {
+      if (Number(x.prescribedQuantity) <= 0) {
+        x.prescribedQuantity = 1;
+      }
+    });
     this.appStatuses = this.eventBus.getState().lookUps.value?.filter(x => x.type === AppConstants.LookUpType.AppTicketStatus) ?? [];
     this.getIndividualCompany();
   }
@@ -93,14 +97,17 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
           ticketInventoryId: x.base.id,
           appTicketStatus: x.appTicketStatus,
           prescribedQuantity: x.prescribedQuantity ? x.prescribedQuantity : 0,
-          departmentDescription: x.departmentDescription
+          departmentDescription: x.departmentDescription,
+          admissionStartDate: x.admissionStartDate
         }
       })
     }
 
     this.isLoading = true;
 
-    const sub = this.ticketService.sendTicketsToFinance(data, this.ticket.appInventoryType)
+    let inventoryType = this.setInventory();
+
+    const sub = this.ticketService.sendTicketsToFinance(data, inventoryType)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: (data) => {
@@ -216,16 +223,18 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
           concludedDate: new Date(),
           appTicketStatus: x.appTicketStatus === 'canceled' ? x.appTicketStatus : 'concluded',
           labRadiologyTestResult: x.labRadiologyTestResult,
+          surgeryTestResult: x.surgeryTestResult,
           itemsUsed : x.itemsUsed,
-          proof: x.proof
+          proof: x.proof,
+          totalPrice: x.totalPrice,
+          admissionEndDate: x.admissionEndDate
         }
       }),
     }
 
     this.isLoading = true;
 
-    let inventoryType = this.ticket.appInventoryType;
-    inventoryType = this.ticket.appInventoryType === AppTicketTypes.radiology ? AppTicketTypes.lab : this.ticket.appInventoryType;
+    let inventoryType = this.setInventory();
 
     const sub = this.ticketService.concludeTicket(data, inventoryType)
       .pipe(finalize(() => this.isLoading = false))
@@ -240,6 +249,22 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
       });
 
     this.subscriptions.push(sub);
+  }
+
+  private setInventory(): string
+  {
+    let inventoryType = this.ticket.appInventoryType;
+
+    switch (inventoryType) {
+      case AppTicketTypes.radiology:
+      // case AppTicketTypes.surgery:
+        inventoryType = AppTicketTypes.lab;
+        break;
+      default:
+        break;
+    }
+
+    return inventoryType;
   }
 
 }

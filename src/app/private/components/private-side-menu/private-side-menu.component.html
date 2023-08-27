@@ -4,10 +4,10 @@
   <div style="width: 100%;">
 
 
-    <div class="ps-3 title bg-dark d-flex justify-content-start align-items-center">
+    <div class="title bg-dark d-flex flex-column justify-content-center align-items-center py-4">
 
-      <div class="dropdown">
-        <img appDisplayProfileImage [imgSrc]="currentUser?.profile" class="img-fluid rounded-circle me-3 dropdown-toggle" role="button" id="profileInfo" data-bs-toggle="dropdown" aria-expanded="false">
+      <div class="dropdown m-auto">
+        <img appDisplayProfileImage [imgSrc]="currentUser?.profile" class="img-fluid rounded-circle dropdown-toggle" role="button" id="profileInfo" data-bs-toggle="dropdown" aria-expanded="false">
 
         <ul class="dropdown-menu" aria-labelledby="profileInfo">
           <li><a [routerLink]="['/' + appRroutes.privateRoute.single_staff(currentUser?.base?.id).$absolutePath]" class="dropdown-item" href="#">My Profile</a></li>
@@ -16,8 +16,8 @@
         </ul>
       </div>
 
-      <div>
-        <span class="text-white">{{ currentUser?.lastName }}</span>
+      <div class="text-center w-100 mt-2">
+        <span class="text-white">{{ currentUser?.lastName }} {{ currentUser?.firstName }}</span>
         <small class="d-block text-light">{{ currentUser?.staff?.position }}</small>
       </div>
     </div>
@@ -26,7 +26,7 @@
       <fa-icon [icon]="fonts.faChartLine" class="pe-1"></fa-icon> Dashboard
     </a>
     <a href="#" class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.patients().$absolutePath]" routerLinkActive="active-tab">
-      <fa-icon [icon]="fonts.faBedPulse" class="pe-1"></fa-icon> Patients
+      <fa-icon [icon]="fonts.faHospitalUser" class="pe-1"></fa-icon> Patients
     </a>
 
     <a href="#" class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.staff().$absolutePath]" routerLinkActive="active-tab">
@@ -49,9 +49,17 @@
     </a>
 
     <a href="#"
+      appHasRole [roles]="[roles.admin, roles.pharmacy, roles.lab, roles.radiology, roles.surgery, roles.admission]"
       class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.tickets().$absolutePath]" routerLinkActive="active-tab">
       <fa-icon [icon]="fonts.faTicket" class="pe-1"></fa-icon> Tickets
     </a>
+
+    <a href="#"
+      appHasRole [roles]="[roles.admin, roles.pharmacy, roles.lab, roles.radiology, roles.surgery, roles.admission]"
+      class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.admissions().$absolutePath]" routerLinkActive="active-tab">
+      <fa-icon [icon]="fonts.faBed" class="pe-1"></fa-icon> Admissions
+    </a>
+
     <a
       appHasRole [roles]="[roles.admin, roles.finance]"
       class="d-block ps-4"

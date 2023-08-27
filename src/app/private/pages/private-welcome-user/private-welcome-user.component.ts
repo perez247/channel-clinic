@@ -3,6 +3,7 @@ import { EventBusService } from './../../../shared/services/common/event-bus/eve
 import { Component, OnInit } from '@angular/core';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-private-welcome-user',
@@ -16,12 +17,26 @@ export class PrivateWelcomeUserComponent implements OnInit {
 
   currentUser?: AppUser;
 
+  countDown = 10;
+
   constructor(
     private eventBus: EventBusService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.currentUser = this.eventBus.getState().user.value ?? {} as AppUser;
+    this.redirectAfter5Seconds();
+  }
+
+  redirectAfter5Seconds(): void {
+    const interval = setInterval(() => {
+      this.countDown--;
+      if (this.countDown <= 0) {
+        clearInterval(interval);
+        this.router.navigate(['/' + this.appRoutes.privateRoute.dashboard().$absolutePath]);
+      }
+    }, 1000);
   }
 
 }

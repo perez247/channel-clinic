@@ -2,7 +2,7 @@ import { ApplicationRoutes } from './../../../shared/core/routes/app-routes';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppPagination, PaginationRequest, PaginationResponse } from './../../../shared/core/models/pagination';
 import { Component, OnInit } from '@angular/core';
-import { faBedPulse, faEllipsisV, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faHospitalUser, faEllipsisV, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { finalize } from 'rxjs';
 import { AppUser, UserFilter } from 'src/app/shared/core/models/app-user';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
@@ -20,7 +20,7 @@ import { CustomToastService } from 'src/app/shared/services/common/custom-toast/
 })
 export class PrivatePatientsComponent extends SharedUtilityComponent implements OnInit {
 
-  fonts = { faBedPulse, faEllipsisV, faChevronDown }
+  fonts = { faHospitalUser, faEllipsisV, faChevronDown }
 
   routes = ApplicationRoutes.generateRoutes();
 

@@ -42,7 +42,6 @@ export class PrivateAddViewPatientVitalModalComponent extends SharedUtilityCompo
   {
     this.isLoading = true;
     const data = { patientId : this.patientId, data: this.vital };
-    console.log(data);
     const sub = this.patientService.addVital(data)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({

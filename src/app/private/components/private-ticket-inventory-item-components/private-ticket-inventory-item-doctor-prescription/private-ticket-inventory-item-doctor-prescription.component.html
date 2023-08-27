@@ -1,0 +1,17 @@
+<div class="card-header">
+  <div class="row">
+    <div class="col-2">
+      <strong>Doctor's Prescription</strong>
+    </div>
+    <div class="col-10">
+      <div class="border-bottom pb-2" *ngIf="ticketInventory.times">
+        <strong>Dosage: </strong> <span>{{ticketInventory.dosage}}</span> |
+        <strong>Times: </strong> <span>{{ticketInventory.times}}</span> |
+        <strong>Frequency: </strong> <span>{{ticketInventory.frequency}}</span>
+      </div>
+      <div>
+        {{ ticketInventory.doctorsPrescription }}
+      </div>
+    </div>
+  </div>
+</div>

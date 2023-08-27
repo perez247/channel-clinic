@@ -5,14 +5,13 @@ import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import {
   faEllipsisV, faHamburger,
-  faBedPulse, faChartLine,
+  faHospitalUser, faChartLine,
   faClipboardUser, faBuilding,
   faWarehouse, faCalendarCheck,
   faTicket, faCoins,
   faSignature, faSackXmark, faHandHoldingDollar,
-  faCog
+  faCog, faBed
 } from '@fortawesome/free-solid-svg-icons';
-import * as $ from "jquery";
 import { EventBusService } from 'src/app/shared/services/common/event-bus/event-bus.service';
 import { EventBusActions } from 'src/app/shared/services/common/event-bus/event-bus-action';
 import { AppUser } from 'src/app/shared/core/models/app-user';
@@ -25,7 +24,7 @@ import { AppConstants } from 'src/app/shared/core/models/app-constants';
 })
 export class PrivateSideMenuComponent extends SharedUtilityComponent implements OnInit, AfterViewInit  {
 
-  fonts = { faSignature, faEllipsisV, faHamburger, faBedPulse, faChartLine, faClipboardUser, faBuilding, faWarehouse, faCalendarCheck, faTicket, faCoins, faSackXmark, faHandHoldingDollar, faCog }
+  fonts = { faSignature, faEllipsisV, faHamburger, faHospitalUser, faChartLine, faClipboardUser, faBuilding, faWarehouse, faCalendarCheck, faTicket, faCoins, faSackXmark, faHandHoldingDollar, faCog, faBed }
 
   openBar = true;
 

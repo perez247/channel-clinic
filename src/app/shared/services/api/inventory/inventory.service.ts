@@ -31,4 +31,8 @@ export class InventoryService {
   getInventoryItemPrices(data: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/inventory-item-prices`, data);
   }
+
+  updateSurgeryInventory(data: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/surgery-inventory`, data);
+  }
 }

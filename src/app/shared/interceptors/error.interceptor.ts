@@ -81,6 +81,8 @@ import { UtilityHelpers } from '../core/functions/utility-helpers';
 
                     if (error.status === 404) {
 
+                      console.log(error);
+
                         const errorMessage = UtilityHelpers.showError(error, this.notify);
 
                         if (this.router.url.includes('private'))

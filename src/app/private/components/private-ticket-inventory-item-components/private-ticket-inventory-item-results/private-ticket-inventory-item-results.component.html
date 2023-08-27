@@ -1,0 +1,30 @@
+<div class="card-header">
+  <div class="row">
+    <div class="col-2">
+      <strong>Result</strong>
+    </div>
+    <div class="col-10 row">
+      <div class="col-4">
+        <span *ngIf="!ticketInventory.concludedDate">
+          <fa-icon class="text-warning" [icon]="fonts.faClock"></fa-icon>
+          Pending
+          <fa-icon (click)="addResultModal()" class="text-primary mx-1 pointer" [icon]="fonts.faPencilAlt"></fa-icon>
+        </span>
+        <span *ngIf="ticketInventory.concludedDate">
+          <fa-icon class="text-success" [icon]="fonts.faCheckCircle"></fa-icon>
+          Ready
+          <fa-icon (click)="addResultModal()" class="text-primary mx-1 pointer" [icon]="fonts.faMagnifyingGlass"></fa-icon>
+        </span>
+      </div>
+      <div class="col-2">
+        <strong>Items used</strong>
+      </div>
+      <div class="col-4">
+        <span>{{ticketInventory.itemsUsed?.length ?? 0}}</span>
+        <fa-icon *ngIf="!ticketInventory.concludedDate" (click)="addItemsUsed()" class="text-primary mx-1 pointer" [icon]="fonts.faPencilAlt"></fa-icon>
+        <fa-icon *ngIf="ticketInventory.concludedDate" (click)="addItemsUsed()" class="text-primary mx-1 pointer" [icon]="fonts.faMagnifyingGlass"></fa-icon>
+      </div>
+    </div>
+
+  </div>
+</div>

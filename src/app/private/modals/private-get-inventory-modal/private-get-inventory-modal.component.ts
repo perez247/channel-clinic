@@ -5,6 +5,7 @@ import { ITicketInventory, AppTicketTypes } from 'src/app/shared/core/models/app
 import { InventoryFilter, AppInventory } from 'src/app/shared/core/models/inventory';
 import { CustomErrorService } from 'src/app/shared/services/common/custom-error/custom-error.service';
 import { PrivateGetInventoryFunctions } from './private-get-inventory-functions';
+import { AppConstants } from 'src/app/shared/core/models/app-constants';
 
 @Component({
   selector: 'app-private-get-inventory-modal',
@@ -21,6 +22,10 @@ export class PrivateGetInventoryModalComponent implements OnInit {
   form: FormGroup = {} as any;
   filter: InventoryFilter = new InventoryFilter();
 
+  canShowTimeAndFrequency = false;
+
+  frequencies = AppConstants.TicketFrequency;
+
   constructor(
     public activeModal: NgbActiveModal,
     private fb: FormBuilder,
@@ -29,11 +34,12 @@ export class PrivateGetInventoryModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.filter.appInventoryType = [this.type];
+    this.canShowTimeAndFrequency = this.type == AppTicketTypes.pharmacy //|| this.type == AppTicketTypes.lab || this.type == AppTicketTypes.radiology;
     this.initializeForm();
   }
 
   initializeForm(): void {
-    this.form = PrivateGetInventoryFunctions.createForm(this.fb, this.appInventory);
+    this.form = PrivateGetInventoryFunctions.createForm(this.fb, this.canShowTimeAndFrequency, this.appInventory);
   }
 
   updateInventoryName(inventory: AppInventory): void {

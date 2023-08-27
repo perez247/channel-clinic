@@ -1,0 +1,17 @@
+<div class="card-header">
+  <div class="row">
+    <div class="col-2">
+      <strong>Item</strong>
+    </div>
+    <div class="col-10 row">
+      <div class="col-6">{{ ticketInventory.inventory.name }}</div>
+      <div class="col-6">
+        <select [disabled]="ticket.cost != null" class="form-control" [(ngModel)]="ticketInventory.appTicketStatus">
+          <option [value]="'ongoing'" >Ongoing</option>
+          <option [value]="'canceled'" >Canceled</option>
+          <option *ngIf="ticketInventory.concludedDate" [value]="'concluded'" >Concluded</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,19 +1,22 @@
 
 <div  class="public-box">
-    <div class="d-flex justify-content-center d-flex align-items-center">
+    <div class="d-flex justify-content-center d-flex align-items-center text-white">
 
-        <span class="title-text text-white">
-            <span class="d-block">Hello</span>
-            <span>{{ currentUser?.lastName }}!</span>
+      <div>
+        <span class="title-text">
+          <span class="d-block">Hello</span>
+          <span>{{ currentUser?.lastName }}!</span>
         </span>
+        <span class="d-block">Redirect in {{ countDown }}</span>
+      </div>
     </div>
 
 </div>
 
 
-<div class="text-end explore">
-    <a [routerLink]="['/' + appRoutes.privateRoute.dashboard().$absolutePath]" class="text-white" >
-      <span class="d-flex justify-content-center d-flex align-items-center pointer">
+<div class="text-end explore d-flex justify-content-between text-white">
+    <a [routerLink]="['/' + appRoutes.privateRoute.dashboard().$absolutePath]" class="text-white">
+      <span class="pointer">
         <span class="h6 pt-1">Explore</span>
         <fa-icon [icon]="fonts.faAngleDoubleRight" size="2x"  class="ms-1"></fa-icon>
       </span>

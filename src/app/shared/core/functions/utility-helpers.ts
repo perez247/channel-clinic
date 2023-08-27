@@ -72,4 +72,14 @@ export class UtilityHelpers
 
     return '';
   }
+
+  public static isUUID (uuid: string) {
+    let s = "" + uuid;
+
+    let is = s.match('^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$');
+    if (is === null) {
+      return false;
+    }
+    return true;
+  }
 }

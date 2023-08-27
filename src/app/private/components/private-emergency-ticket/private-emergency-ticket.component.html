@@ -1,0 +1,35 @@
+
+
+<div class="card mt-4 shadow">
+  <div class="card-header position-relative">
+    <div class="dropstart ticketOption">
+      <button class="btn" type="button" id="ticketMoreOptions" data-bs-toggle="dropdown" aria-expanded="false">
+        <fa-icon [icon]="fonts.faEllipsisV" class="text-dark"></fa-icon>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="ticketMoreOptions">
+
+          <div>
+            <li><hr class="dropdown-divider"></li>
+            <li><span (click)="editTicket()" class="dropdown-item pointer">Edit</span></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><span (click)="deleteTicket()" class="dropdown-item pointer text-danger" >Delete</span></li>
+          </div>
+      </ul>
+    </div>
+
+    <strong class="d-block pointer">
+      {{ ticket?.appInventoryType }}
+    </strong>
+  </div>
+
+  <div class="card-body">
+    <p class="card-text border-bottom">{{ ticket?.overallDescription | trimSentence : 100 }}</p>
+    <span *ngFor="let inventory of ticketInventories">
+      <span class="badge bg-primary me-2">
+        {{ inventory?.inventoryName }}
+      </span>
+    </span>
+  </div>
+
+</div>
+

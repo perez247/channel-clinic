@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { faCheckCircle, faClock, faPencilAlt, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
 import { AppTicket, TicketInventory } from 'src/app/shared/core/models/app-ticket';
 import { AppInventoryItem } from 'src/app/shared/core/models/inventory';
 
@@ -7,7 +8,7 @@ import { AppInventoryItem } from 'src/app/shared/core/models/inventory';
   selector: 'app-private-inventory-item',
   templateUrl: './private-inventory-item.component.html'
 })
-export class PrivateInventoryItemComponent implements  OnInit, OnChanges {
+export class PrivateInventoryItemComponent extends SharedUtilityComponent implements OnInit, OnChanges {
 
   @Input() ticket: AppTicket = {} as AppTicket;
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
@@ -17,9 +18,8 @@ export class PrivateInventoryItemComponent implements  OnInit, OnChanges {
 
   pricePerItem = 0;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() {
+    super();
   }
 
   ngOnChanges(): void {

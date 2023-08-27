@@ -15,7 +15,9 @@ import { TicketService } from 'src/app/shared/services/api/ticket/ticket.service
 })
 export class PrivatePreviousTicketsComponent extends SharedUtilityComponent implements OnInit {
 
-  @Input() appointment?: AppAppointment;
+  // @Input() appointment?: AppAppointment;
+  @Input() patientId?: string = '';
+  @Input() beforeDateTime?: string = '';
 
   @Output() reload = new EventEmitter<string>();
 
@@ -37,8 +39,8 @@ export class PrivatePreviousTicketsComponent extends SharedUtilityComponent impl
   }
 
   override ngOnInit(): void {
-    this.filter.beforeDateTime = this.appointment?.appointmentDate?.toString();
-    this.filter.patientId = this.appointment?.patient?.base?.id;
+    this.filter.beforeDateTime = this.beforeDateTime;
+    this.filter.patientId = this.patientId;
     this.filter.full = true;
     this.paginationRequest = new PaginationRequest<TicketFilter>(this.appPagination, this.filter);
     this.getTickets();
@@ -54,17 +56,17 @@ export class PrivatePreviousTicketsComponent extends SharedUtilityComponent impl
           this.tickets = data.result || [];
         },
         error: (error) => {
-          console.log(error);
+          throw error;
         }
       });
 
     this.subscriptions.push(sub);
   }
 
-  addFilter(type: string): void {
+  addFilter(type: any): void {
 
     if (type == 'all') {
-      this.filter.appInventoryType = undefined;
+      this.filter.appInventoryType = '';
     } else {
       this.filter.appInventoryType = type
     }

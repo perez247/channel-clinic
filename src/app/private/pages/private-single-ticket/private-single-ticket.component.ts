@@ -61,7 +61,7 @@ export class PrivateSingleTicketComponent extends SharedUtilityComponent impleme
       .subscribe({
         next: (data) => {
           if (data.totalItems <= 0) {
-            this.toast.error('Ticket not found');
+            this.toast.error('Ticket not found.');
             this.router.navigate([this.routes.privateRoute.tickets().$absolutePath]);
             return;
           }

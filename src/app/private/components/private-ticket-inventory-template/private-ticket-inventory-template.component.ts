@@ -12,8 +12,9 @@ import { IConfirmAction, SharedConfirmActionModalComponent } from 'src/app/share
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoles } from 'src/app/shared/core/models/app-roles';
 import { AppAppointment } from 'src/app/shared/core/models/app-appointment';
-import { PrivateCreatePharmacyTicketModalComponent } from '../../modals/private-create-ticket-modal/private-create-pharmacy-ticket-modal/private-create-pharmacy-ticket-modal.component';
 import { Confirmable } from 'src/app/shared/decorators/confirm-action-method-decorator';
+import { PrivateCreateTicketModalComponent } from '../../modals/private-create-ticket-modal/private-create-ticket-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-private-ticket-inventory-template',
@@ -39,6 +40,7 @@ export class PrivateTicketInventoryTemplateComponent extends SharedUtilityCompon
     private ticketService: TicketService,
     private errorService: CustomErrorService,
     private modalService: NgbModal,
+    private router: Router
   ) {
     super();
   }
@@ -105,17 +107,39 @@ export class PrivateTicketInventoryTemplateComponent extends SharedUtilityCompon
   }
 
   editTicket(): void {
-    const modalRef = this.modalService.open(PrivateCreatePharmacyTicketModalComponent, { size: 'lg' });
+    const ticketInventories = this.ticket?.ticketInventories.map(x => {
+      return {
+        ticketInventoryId: x.base.id,
+        inventoryId: x.inventory.base?.id,
+        inventoryName: x.inventory.name,
+        doctorsPrescription: x.doctorsPrescription,
+        times: x.times,
+        dosage: x.dosage,
+        frequency: x.frequency,
+      } as ITicketInventory
+    });
+
+    const modalRef = this.modalService.open(PrivateCreateTicketModalComponent, { size: 'lg' });
     modalRef.componentInstance.ticket = this.ticket;
     modalRef.componentInstance.appointment = this.appointment;
+    modalRef.componentInstance.ticketInventories = ticketInventories
     const sub = modalRef.componentInstance.saved.subscribe({
       next: (action: boolean) => {
-        if (action)
-        {
+        if (action) {
           this.deleteTicket();
+        } else if (action == false) {
+          this.reload.emit();
         }
+      },
+      error: (error: any) => {
+        console.log(error);
       }
     });
     this.subscriptions.push(sub);
   }
+
+  viewTicket(): void {
+    console.log(this.router.url);
+  }
+
 }

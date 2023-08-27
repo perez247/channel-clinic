@@ -16,6 +16,7 @@ import { CustomToastService } from 'src/app/shared/services/common/custom-toast/
 import { PrivateCreateTicketModalComponent } from '../../modals/private-create-ticket-modal/private-create-ticket-modal.component';
 import { PrivateUpdateAppointmentModalComponent } from '../../modals/private-update-appointment-modal/private-update-appointment-modal.component';
 import { AppRoles } from 'src/app/shared/core/models/app-roles';
+import { AppUser } from 'src/app/shared/core/models/app-user';
 
 @Component({
   selector: 'app-private-single-appointment',
@@ -38,6 +39,8 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
   routes = ApplicationRoutes.generateRoutes();
 
   roles = AppRoles;
+
+  vitalPatients?: AppUser;
 
   constructor(
     private appointmentService: AppointmentService,
@@ -74,6 +77,8 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
           this.paginationResponse = data;
           this.appointments = data.result ?? [];
           this.appointment = new AppAppointment(this.appointments[0]);
+
+          this.appointment.patient!.user!.patient = this.appointment.patient;
         },
         error: (error) => {
           throw error;

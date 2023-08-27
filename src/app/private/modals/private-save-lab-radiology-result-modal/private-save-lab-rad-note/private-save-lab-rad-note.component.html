@@ -1,7 +1,16 @@
 
 
-<angular-editor maxlength="10000" [placeholder]="'Enter results here...'" [(ngModel)]="ticketInventory.labRadiologyTestResult" [config]="editorConfig"></angular-editor>
-<small class="d-block text-end">
-    {{ticketInventory.labRadiologyTestResult?.length ?? 0}}/10000
-</small>
+<div *ngIf="ticket.appInventoryType === type.surgery">
+  <angular-editor maxlength="10000" [placeholder]="'Enter results here...'" [(ngModel)]="ticketInventory.surgeryTestResult" [config]="editorConfig"></angular-editor>
+  <small class="d-block text-end">
+      {{ticketInventory.surgeryTestResult?.length ?? 0}}/10000
+  </small>
+</div>
+
+<div *ngIf="ticket.appInventoryType === type.lab || ticket.appInventoryType === type.radiology">
+  <angular-editor maxlength="10000" [placeholder]="'Enter results here...'" [(ngModel)]="ticketInventory.labRadiologyTestResult" [config]="editorConfig"></angular-editor>
+  <small class="d-block text-end">
+      {{ticketInventory.labRadiologyTestResult?.length ?? 0}}/10000
+  </small>
+</div>
 

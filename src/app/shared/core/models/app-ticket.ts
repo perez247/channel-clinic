@@ -5,7 +5,7 @@ import { AppInventory } from "./inventory";
 
 export class TicketFilter {
   appointmentId?: string;
-  appInventoryType?: string;
+  appInventoryType?: 'admission' | 'pharmacy' | 'lab' | 'surgery' | 'radiology' | '';
   patientId?: string;
   patientName?: string;
   doctorId?: string;
@@ -16,7 +16,7 @@ export class TicketFilter {
   sentToFinance?: boolean;
   appTicketStatus?: string;
   paymentStatus?: string[];
-  beforeDateTime?: string;
+  beforeDateTime?: any;
 }
 
 export interface AppTicket {
@@ -58,18 +58,22 @@ export interface TicketInventory {
   departmentDescription?: string
   financeDescription?: string
   prescribedQuantity?: number
-  surgeryDate?: string
+  surgeryDate?: any
   surgeryTicketStatus: string
   surgeryTicketPersonnels: SurgeryTicketPersonnel[]
   prescribedSurgeryDescription?: string
+  surgeryTestResult: string
   prescribedLabRadiologyFeature?: string
   dateOfLabTest?: string
   labRadiologyTestResult: any
   prescribedAdmission?: string
-  admissionStartDate?: string
+  admissionStartDate?: any
   admissionEndDate: any
   base: Base
   pricePerItem: number
+  times: number;
+  dosage: number;
+  frequency: string;
   itemsUsed: AppInventory[]
 }
 
@@ -81,6 +85,8 @@ export interface SurgeryTicketPersonnel {
   summaryOfSurgery: any
   isHeadPersonnel?: boolean
   isPatient?: boolean
+  id: any;
+  fullName: string;
 }
 
 export interface Payment {
@@ -110,6 +116,10 @@ export interface AppCost {
 export interface ITicketInventory {
   doctorsPrescription: string,
   inventoryId: string,
+  ticketInventoryId: string,
   inventoryName: string,
+  times: number;
+  dosage: number;
+  frequency: string;
 }
 

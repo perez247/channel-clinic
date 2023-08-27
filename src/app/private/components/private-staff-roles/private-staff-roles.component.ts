@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AppUser } from 'src/app/shared/core/models/app-user';
 import { AppConstants, ILookUp } from 'src/app/shared/core/models/app-constants';
 import { AppRoles } from 'src/app/shared/core/models/app-roles';
+import { UtilityHelpers } from 'src/app/shared/core/functions/utility-helpers';
 
 @Component({
   selector: 'app-private-staff-roles',
@@ -50,7 +51,7 @@ export class PrivateStaffRolesComponent extends SharedUtilityComponent implement
 
     this.user?.userRoles?.forEach(a => {
       this.userRoles[a] = true;
-    })
+    });
   }
 
   edit(): void {
@@ -65,7 +66,7 @@ export class PrivateStaffRolesComponent extends SharedUtilityComponent implement
   beginUpdate(): void {
     const data: string[] = [];
     Object.keys(this.userRoles).forEach(x => {
-      if (this.userRoles[x]) {
+      if (this.userRoles[x] && !UtilityHelpers.isUUID(x)) {
         data.push(x);
       }
     });

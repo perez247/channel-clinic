@@ -1,0 +1,13 @@
+<div class="card-header">
+  <div class="row">
+    <div class="col-2">
+      <strong>Available Quantity</strong>
+    </div>
+    <div class="col-10">
+      {{ ticketInventory.inventory.quantity }}
+      <span *ngIf="(ticketInventory?.inventory?.quantity ?? 0) <= (ticketInventory?.inventory?.howLow ?? 0)" class="text-danger">
+        Low on stock
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div *ngIf="this.ticket.sentToFinance">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-2">
+        <strong>Price (N)</strong>
+      </div>
+      <div class="col-10 row">
+        <div class="col-4">
+          <input [value]="this.ticketInventory.currentPrice" step=".01" disabled class="form-control">
+        </div>
+        <div class="col-2">
+          <strong>Concluded Price (N)</strong>
+        </div>
+        <div class="col-4">
+          <input type="number" [disabled]="inventoryItems.length <= 0" [(ngModel)]="this.ticketInventory.totalPrice" step=".01" class="form-control">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

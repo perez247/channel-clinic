@@ -1,0 +1,26 @@
+<section *ngIf="isLoading" class="vh-100 w-100 d-flex justify-content-center align-items-center">
+  <app-shared-loading size="xl"></app-shared-loading>
+</section>
+
+<section *ngIf="!isLoading">
+
+  <section>
+    <span class="h4 d-block border-bottom mb-4 pb-2">
+      Admission: {{ admissionRoom }} | {{ sectionName }}
+    </span>
+  </section>
+
+  <div class="mb-2 d-flex">
+    <span class="d-block p-4 bg-primary shadow icon-set me-5">
+      <fa-icon [icon]="fonts.faPills" class="pe-1 text-white" [size]="'2x'"></fa-icon>
+    </span>
+    <div>
+      <app-private-patient-info
+      [user]="dashboard.patient.user"
+      [company]="dashboard.patient.company"
+      ></app-private-patient-info>
+    </div>
+  </div>
+
+</section>
+

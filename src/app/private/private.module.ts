@@ -46,11 +46,6 @@ import { PrivateFilterInventoryModalComponent } from './modals/private-filter-in
 import { PrivateFilterPatientsModalComponent } from './modals/private-filter-patients-modal/private-filter-patients-modal.component';
 import { PrivateFilterStaffModalComponent } from './modals/private-filter-staff-modal/private-filter-staff-modal.component';
 import { PrivateAddViewPatientVitalModalComponent } from './modals/private-add-view-patient-vital-modal/private-add-view-patient-vital-modal.component';
-import { PrivateCreateSurgeryTicketModalComponent } from './modals/private-create-ticket-modal/private-create-surgery-ticket-modal/private-create-surgery-ticket-modal.component';
-import { PrivateCreateAdmissionTicketModalComponent } from './modals/private-create-ticket-modal/private-create-admission-ticket-modal/private-create-admission-ticket-modal.component';
-import { PrivateCreateLabTicketModalComponent } from './modals/private-create-ticket-modal/private-create-lab-ticket-modal/private-create-lab-ticket-modal.component';
-import { PrivateCreatePharmacyTicketModalComponent } from './modals/private-create-ticket-modal/private-create-pharmacy-ticket-modal/private-create-pharmacy-ticket-modal.component';
-import { PrivateCreateRadiologyTicketModalComponent } from './modals/private-create-ticket-modal/private-create-radiology-ticket-modal/private-create-radiology-ticket-modal.component';
 import { PrivateCreateTicketModalComponent } from './modals/private-create-ticket-modal/private-create-ticket-modal.component';
 import { PrivateFilterAppointmentsModalComponent } from './modals/private-filter-appointments-modal/private-filter-appointments-modal.component';
 import { PrivateUploadFilesModalComponent } from './modals/private-upload-files-modal/private-upload-files-modal.component';
@@ -99,6 +94,25 @@ import { PrivateSaveLabRadNoteComponent } from './modals/private-save-lab-radiol
 import { PrivateSaveLabRadProofComponent } from './modals/private-save-lab-radiology-result-modal/private-save-lab-rad-proof/private-save-lab-rad-proof.component';
 import { PrivateInventoryItemComponent } from './components/private-ticket-inventories/private-inventory-item.component';
 import { PrivateAddItemUsedModalComponent } from './modals/private-add-item-used-modal/private-add-item-used-modal.component';
+import { PrivateSurgeryInventoryItemComponent } from './components/private-ticket-inventories/private-surgery-inventory-item/private-surgery-inventory-item.component';
+import { PrivateSaveSurgeryStaffDateModalComponent } from './modals/private-save-surgery-staff-date-modal/private-save-surgery-staff-date-modal.component';
+import { PrivateAdmissionInventoryItemComponent } from './components/private-ticket-inventories/private-admission-inventory-item/private-admission-inventory-item.component';
+import { PrivateTicketInventoryItemStatusComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-status/private-ticket-inventory-item-status.component';
+import { PrivateTicketInventoryItemDoctorPrescriptionComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-doctor-prescription/private-ticket-inventory-item-doctor-prescription.component';
+import { PrivateTicketInventoryItemDepartmentNoteComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-department-note/private-ticket-inventory-item-department-note.component';
+import { PrivateTicketInventoryItemAvailableQuantityComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-available-quantity/private-ticket-inventory-item-available-quantity.component';
+import { PrivateTicketInventoryItemQuantityToGiveComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-quantity-to-give/private-ticket-inventory-item-quantity-to-give.component';
+import { PrivateTicketInventoryItemPriceComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-price/private-ticket-inventory-item-price.component';
+import { PrivateTicketInventoryItemStaffDateComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-staff-date/private-ticket-inventory-item-staff-date.component';
+import { PrivateTicketInventoryItemResultsComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-results/private-ticket-inventory-item-results.component';
+import { PrivateTicketInventoryItemAdmissionDatesComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-admission-dates/private-ticket-inventory-item-admission-dates.component';
+import { PrivateAddEmergencyTicketsComponent } from './modals/private-add-emergency-tickets/private-add-emergency-tickets.component';
+import { PrivateEmergencyTicketComponent } from './components/private-emergency-ticket/private-emergency-ticket.component';
+import { PrivateAdmissionsComponent } from './pages/private-admissions/private-admissions.component';
+import { PrivateSingleAdmissionComponent } from './pages/private-single-admission/private-single-admission.component';
+import { PrivateGeneralAdmissionTicketOverviewComponent } from './components/private-general-admission-ticket-overview/private-general-admission-ticket-overview.component';
+import { PrivatePatientInfoComponent } from './components/private-patient-info/private-patient-info.component';
+import { PrivateAdmissionSectionComponent } from './pages/private-admission-section/private-admission-section.component';
 
 @NgModule({
   declarations: [
@@ -115,11 +129,6 @@ import { PrivateAddItemUsedModalComponent } from './modals/private-add-item-used
     PrivateFilterPatientsModalComponent,
     PrivateFilterStaffModalComponent,
     PrivateAddViewPatientVitalModalComponent,
-    PrivateCreateSurgeryTicketModalComponent,
-    PrivateCreateAdmissionTicketModalComponent,
-    PrivateCreateLabTicketModalComponent,
-    PrivateCreatePharmacyTicketModalComponent,
-    PrivateCreateRadiologyTicketModalComponent,
     PrivateCreateTicketModalComponent,
     PrivateFilterAppointmentsModalComponent,
     PrivateUploadFilesModalComponent,
@@ -203,6 +212,25 @@ import { PrivateAddItemUsedModalComponent } from './modals/private-add-item-used
     AddInventoryDependenciesModalComponent,
     PrivateInventoryItemComponent,
     PrivateAddItemUsedModalComponent,
+    PrivateSurgeryInventoryItemComponent,
+    PrivateSaveSurgeryStaffDateModalComponent,
+    PrivateAdmissionInventoryItemComponent,
+    PrivateTicketInventoryItemStatusComponent,
+    PrivateTicketInventoryItemDoctorPrescriptionComponent,
+    PrivateTicketInventoryItemDepartmentNoteComponent,
+    PrivateTicketInventoryItemAvailableQuantityComponent,
+    PrivateTicketInventoryItemQuantityToGiveComponent,
+    PrivateTicketInventoryItemPriceComponent,
+    PrivateTicketInventoryItemStaffDateComponent,
+    PrivateTicketInventoryItemResultsComponent,
+    PrivateTicketInventoryItemAdmissionDatesComponent,
+    PrivateAddEmergencyTicketsComponent,
+    PrivateEmergencyTicketComponent,
+    PrivateAdmissionsComponent,
+    PrivateSingleAdmissionComponent,
+    PrivateGeneralAdmissionTicketOverviewComponent,
+    PrivatePatientInfoComponent,
+    PrivateAdmissionSectionComponent,
   ],
   imports: [
     PrivateRoutingModule,

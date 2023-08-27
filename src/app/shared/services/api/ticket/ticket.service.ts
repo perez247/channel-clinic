@@ -43,4 +43,8 @@ export class TicketService {
   deleteTicket(data: any): Observable<void> {
     return this.http.request<void>('delete', `${this.apiUrl}/app-ticket`, { body: data });
   }
+
+  createEmergencyTicket(data: any): Observable<{ticketId: string, appointmentId: string}> {
+    return this.http.post<{ticketId: string, appointmentId: string}>(`${this.apiUrl}/emergency-ticket`, data);
+  }
 }

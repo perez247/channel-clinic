@@ -1,0 +1,42 @@
+<div class="card mb-3" [ngClass]="{'bg-info': ticketInventory.appTicketStatus === 'canceled'}" >
+
+  <app-private-ticket-inventory-item-status
+    [ticket]="ticket"
+    [ticketInventory]="ticketInventory"
+  ></app-private-ticket-inventory-item-status>
+
+  <app-private-ticket-inventory-item-doctor-prescription
+    [ticketInventory]="ticketInventory">
+  </app-private-ticket-inventory-item-doctor-prescription>
+
+  <app-private-ticket-inventory-item-department-note
+    [ticket]="ticket"
+    [ticketInventory]="ticketInventory">
+  </app-private-ticket-inventory-item-department-note>
+
+  <app-private-ticket-inventory-item-available-quantity
+    [ticketInventory]="ticketInventory">
+  </app-private-ticket-inventory-item-available-quantity>
+
+  <app-private-ticket-inventory-item-quantity-to-give
+    [ticket]="ticket"
+    [ticketInventory]="ticketInventory"
+    (onBlur)="calculateItem()">
+  </app-private-ticket-inventory-item-quantity-to-give>
+
+  <app-private-ticket-inventory-item-price
+    [ticket]="ticket"
+    [ticketInventory]="ticketInventory"
+    [inventoryItems]="inventoryItems">
+  </app-private-ticket-inventory-item-price>
+
+  <app-private-ticket-inventory-item-admission-dates
+    [ticket]="ticket"
+    [ticketInventory]="ticketInventory">
+  </app-private-ticket-inventory-item-admission-dates>
+
+  <div *ngIf="this.ticket.sentToFinance && ticket.cost && ticketInventory.appTicketStatus !== 'canceled'">
+
+  </div>
+
+</div>

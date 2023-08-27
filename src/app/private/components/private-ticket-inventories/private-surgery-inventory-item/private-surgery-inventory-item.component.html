@@ -1,0 +1,37 @@
+<div class="card mb-3" [ngClass]="{'bg-info': ticketInventory.appTicketStatus === 'canceled'}" >
+
+  <app-private-ticket-inventory-item-status
+    [ticket]="ticket"
+    [ticketInventory]="ticketInventory"
+  ></app-private-ticket-inventory-item-status>
+
+  <app-private-ticket-inventory-item-doctor-prescription
+  [ticketInventory]="ticketInventory">
+  </app-private-ticket-inventory-item-doctor-prescription>
+
+  <app-private-ticket-inventory-item-department-note
+    [ticket]="ticket"
+    [ticketInventory]="ticketInventory">
+  </app-private-ticket-inventory-item-department-note>
+
+  <app-private-ticket-inventory-item-price
+    [ticket]="ticket"
+    [ticketInventory]="ticketInventory"
+    [inventoryItems]="inventoryItems">
+  </app-private-ticket-inventory-item-price>
+
+  <div *ngIf="this.ticket.sentToFinance && ticket.cost && ticketInventory.appTicketStatus !== 'canceled'">
+
+    <app-private-ticket-inventory-item-staff-date
+      [ticket]="ticket"
+      [ticketInventory]="ticketInventory">
+    </app-private-ticket-inventory-item-staff-date>
+
+    <app-private-ticket-inventory-item-results
+      [ticket]="ticket"
+      [ticketInventory]="ticketInventory">
+    </app-private-ticket-inventory-item-results>
+
+  </div>
+
+</div>

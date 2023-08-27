@@ -48,7 +48,7 @@
           </td>
           <td>
             <fa-icon [icon]="fonts.faNairaSign"></fa-icon>
-            {{inventoryItem.pricePerItem}}
+            {{inventoryItem.pricePerItem | currency: ' '}}
           </td>
           <!-- <td> -->
             <!-- <fa-icon [icon]="fonts.faPencil" class="bg-primary text-white pointer p-1 me-4"></fa-icon> -->

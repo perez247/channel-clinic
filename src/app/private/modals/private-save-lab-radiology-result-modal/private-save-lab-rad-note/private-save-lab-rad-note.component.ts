@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { TicketInventory } from 'src/app/shared/core/models/app-ticket';
+import { AppTicket, AppTicketTypes, TicketInventory } from 'src/app/shared/core/models/app-ticket';
 
 @Component({
   selector: 'app-private-save-lab-rad-note',
@@ -9,18 +9,22 @@ import { TicketInventory } from 'src/app/shared/core/models/app-ticket';
 })
 export class PrivateSaveLabRadNoteComponent implements OnInit {
 
+  @Input() ticket: AppTicket = {} as AppTicket;
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
+
+  type = AppTicketTypes;
 
   constructor() { }
 
-  editorConfig: AngularEditorConfig = {
-    editable: this.ticketInventory.concludedDate ? false : true,
-    spellcheck: true,
-    height: '25rem',
-    minHeight: '5rem',
-  };
+  editorConfig: AngularEditorConfig = {};
 
   ngOnInit(): void {
+    this.editorConfig = {
+      editable: this.ticketInventory.concludedDate ? false : true,
+      spellcheck: true,
+      height: '25rem',
+      minHeight: '5rem',
+    };
   }
 
 }

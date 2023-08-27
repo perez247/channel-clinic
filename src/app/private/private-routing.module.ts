@@ -27,6 +27,9 @@ import { PrivateSingleInventoryComponent } from './pages/private-single-inventor
 import { PrivateSingleAppointmentComponent } from './pages/private-single-appointment/private-single-appointment.component';
 import { PrivateFinanceComponent } from './pages/private-finance/private-finance.component';
 import { OnlyFinanceRoleGuard } from '../shared/guards/only-finance-role.guard';
+import { PrivateSingleAdmissionComponent } from './pages/private-single-admission/private-single-admission.component';
+import { PrivateAdmissionsComponent } from './pages/private-admissions/private-admissions.component';
+import { PrivateAdmissionSectionComponent } from './pages/private-admission-section/private-admission-section.component';
 
 const appRoutes = ApplicationRoutes.generateRoutes();
 const routes: Routes = [
@@ -100,6 +103,18 @@ const routes: Routes = [
       {
         path: `${appRoutes.privateRoute.tickets().$name}`,
         component: PrivateTicketsComponent
+      },
+      {
+        path: `${appRoutes.privateRoute.admission_sectionName().$name}`,
+        component: PrivateAdmissionSectionComponent
+      },
+      {
+        path: `${appRoutes.privateRoute.single_admission().$name}`,
+        component: PrivateSingleAdmissionComponent
+      },
+      {
+        path: `${appRoutes.privateRoute.admissions().$name}`,
+        component: PrivateAdmissionsComponent
       },
       {
         path: `${appRoutes.privateRoute.settings().$name}`,

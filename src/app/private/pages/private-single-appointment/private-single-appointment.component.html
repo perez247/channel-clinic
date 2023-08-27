@@ -43,7 +43,7 @@
 
   <div *ngIf="appointment">
 
-    <div class="dropdown">
+    <div class="dropdown pointer">
       <span class="p-3 bg-primary shadow pointer" role="button" id="ticketAddMenu" data-bs-toggle="dropdown" aria-expanded="false">
         <fa-icon [icon]="fonts.faGears" class="pe-1 text-light"></fa-icon>
       </span>
@@ -55,6 +55,12 @@
           <li><a class="dropdown-item" (click)="openAddNewTicket('pharmacy')">Create Pharmacy Ticket</a></li>
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" (click)="openAddNewTicket('lab')">Create Lab Ticket</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" (click)="openAddNewTicket('radiology')">Create Radiology Ticket</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" (click)="openAddNewTicket('surgery')">Create Surgery Ticket</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" (click)="openAddNewTicket('admission')">Create Admission Ticket</a></li>
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" (click)="confirmSendAllToDepartment()">Send all tickets to departments</a></li>
         </div>
@@ -143,7 +149,8 @@
 
       <app-private-previous-tickets
         *ngIf="appointment && !isLoading"
-        [appointment]="appointment"
+        [beforeDateTime]="appointment?.appointmentDate?.toString()"
+        [patientId]="appointment?.patient?.base?.id"
         (reload)="getAppointmentByDate()" >
       </app-private-previous-tickets>
 
