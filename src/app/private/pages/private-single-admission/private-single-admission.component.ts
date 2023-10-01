@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/shared/services/api/ticket/ticket.service';
-import { faPills, faFlask, faXRay, faSyringe } from '@fortawesome/free-solid-svg-icons';
+import { faPills, faFlask, faXRay, faSyringe, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
 import { AdmissionService } from 'src/app/shared/services/api/admission/admission.service';
 import { ActivatedRoute } from '@angular/router';
@@ -24,8 +24,8 @@ export class PrivateSingleAdmissionComponent extends SharedUtilityComponent impl
     super()
    }
 
-  fonts = { faPills, faFlask, faXRay, faSyringe }
-  ticketId: string | null = '';
+  fonts = { faPills, faFlask, faXRay, faSyringe, faArrowLeft }
+  ticketId = '';
   dashboard: AdmissionStats = {} as AdmissionStats;
 
   userSections = AppConstants.UserSections;
@@ -44,7 +44,7 @@ export class PrivateSingleAdmissionComponent extends SharedUtilityComponent impl
   listenForRoute(): void {
     const sub = this.route.paramMap.subscribe({
       next: (d) => {
-        this.ticketId = d.get('id');
+        this.ticketId = d.get('id') ?? '';
         this.getStats('');
       }
     });

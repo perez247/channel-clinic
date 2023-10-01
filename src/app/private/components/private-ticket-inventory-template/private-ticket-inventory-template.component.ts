@@ -132,7 +132,7 @@ export class PrivateTicketInventoryTemplateComponent extends SharedUtilityCompon
         }
       },
       error: (error: any) => {
-        console.log(error);
+        throw error;
       }
     });
     this.subscriptions.push(sub);

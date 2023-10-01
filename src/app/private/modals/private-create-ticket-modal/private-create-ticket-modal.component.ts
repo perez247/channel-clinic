@@ -54,52 +54,13 @@ export class PrivateCreateTicketModalComponent extends SharedUtilityComponent im
   }
 
   override ngOnInit(): void {
-    // if (this.ticket)
-    // {
-    //   const id = this.ticket.base.id;
-    //   this.filterForTicket.ticketId = id;
-    //   this.filterForTicket.full = true;
-    //   this.paginationRequest = new PaginationRequest<TicketFilter>(this.appPagination, this.filterForTicket);
-    //   this.fetchTicket();
-    // } else {
-    //   this.initializeForm(this.type);
-    // }
     this.initializeForm(this.type);
-
   }
 
   initializeForm(type: string): void
   {
     this.filter.appInventoryType = [type];
     this.form = PrivateCreateTicketFunctions.createForm(this.fb, this.ticket, type);
-  }
-
-  fetchTicket(): void {
-    this.isLoading = true;
-    const sub = this.ticketService.getTickets(this.paginationRequest)
-      .pipe(finalize(() => this.isLoading = false))
-      .subscribe({
-        next: (data) => {
-
-          if (data.totalItems <= 0) {
-            this.toast.error('Ticket not found');
-            this.activeModal.close();
-            return;
-          }
-
-          this.paginationResponse = data;
-          this.tickets = data.result ?? [];
-          this.ticket = this.tickets[0];
-          this.ticketInventories = this.ticket.ticketInventories.map(x => {
-            return { inventoryId: x.inventory.base?.id, inventoryName: x.inventory.name, doctorsPrescription: x.doctorsPrescription } as ITicketInventory
-          });
-          this.initializeForm(this.type);
-        },
-        error: (error) => {
-          throw error;
-        }
-      });
-    this.subscriptions.push(sub);
   }
 
   saveTicketInventory(appTicket: any)

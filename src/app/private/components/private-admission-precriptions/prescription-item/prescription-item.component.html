@@ -1,0 +1,66 @@
+
+<section class="position-relative px-3 ">
+
+  <div>
+    <app-private-staff-info [user]="admissionPrescription?.doctor" ></app-private-staff-info>
+  </div>
+
+  <span class="d-block mt-2">{{admissionPrescription?.overallDescription}}</span>
+
+  <span class="d-block">
+    <a data-bs-toggle="collapse" href="#tickets" role="button" aria-expanded="false" aria-controls="tickets">
+      {{admissionPrescription?.ticketInventories?.length}} prescriptions
+    </a>
+    <span>
+      <span
+      [ngClass]="{
+        'bg-warning': admissionPrescription?.appTicketStatus == 'ongoing',
+        'bg-success': admissionPrescription?.appTicketStatus == 'concluded',
+        'bg-danger': admissionPrescription?.appTicketStatus == 'canceled'
+      }"
+      class="badge ms-2">
+        <span *ngIf="admissionPrescription?.appTicketStatus == 'ongoing'">Not concluded</span>
+        <span *ngIf="admissionPrescription?.appTicketStatus == 'concluded'">concluded</span>
+        <span *ngIf="admissionPrescription?.appTicketStatus == 'canceled'">closed</span>
+      </span>
+    </span>
+
+
+    <div *ngIf="admissionPrescription?.appTicketStatus == 'ongoing'" class="dropdown d-inline-block ms-2 ">
+      <strong *ngIf="isLoading"> <app-shared-loading></app-shared-loading> </strong>
+      <a *ngIf="!isLoading"  href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <fa-icon [icon]="fonts.faEllipsisV"></fa-icon>
+      </a>
+
+      <ul class="dropdown-menu pointer">
+        <li (click)="updatePrescription()" ><a class="dropdown-item">Edit</a></li>
+        <li (click)="concludeStatus()" ><a class="dropdown-item">Conclude</a></li>
+        <li ><hr class="dropdown-divider"></li>
+        <li (click)="deletePrescription()" ><a class="dropdown-item text-danger"><strong>Delete</strong></a></li>
+      </ul>
+    </div>
+  </span>
+
+  <div class="row">
+    <div class="col">
+      <div class="collapse multi-collapse" id="tickets">
+        <div class="border-top mt-2 pt-2 ">
+          <div class="mb-1 pb-1 border-bottom" *ngFor="let inventory of admissionPrescription?.ticketInventories">
+            <fa-icon (click)="logExecution(inventory)" *ngIf="admissionPrescription?.appTicketStatus == 'concluded'" class="pointer text-success" [icon]="fonts.faPlusCircle"></fa-icon>
+
+            <span class="badge bg-primary mx-2">
+
+              {{ inventory?.inventory?.name }}
+              <span *ngIf="inventory?.inventory?.appInventoryType === 'pharmacy'">
+                | {{ inventory?.dosage }} - {{ inventory?.times }} times - {{ inventory?.frequency }}
+              </span>
+            </span>
+            <div>
+              {{ inventory?.doctorsPrescription }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

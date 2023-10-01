@@ -1,10 +1,13 @@
 import { AdmissionService } from './../../../shared/services/api/admission/admission.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faPills } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faFlask, faPills, faSyringe, faXRay, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
 import { AdmissionStats } from 'src/app/shared/core/models/app-admission-stats';
+import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
+import { PrivateCreateTicketModalComponent } from '../../modals/private-create-ticket-modal/private-create-ticket-modal.component';
 
 @Component({
   selector: 'app-private-admission-section',
@@ -15,16 +18,27 @@ export class PrivateAdmissionSectionComponent extends SharedUtilityComponent imp
 
   constructor(
     private admissionService: AdmissionService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalService: NgbModal,
   ) {
     super();
   }
 
-  fonts = { faPills }
-  ticketId: string | null = '';
+  fonts: any = {
+    pharmacy: { name: faPills, css: 'bg-primary' },
+    lab: { name: faFlask, css: 'bg-success' },
+    radiology: { name: faXRay, css: 'bg-danger' },
+    surgery: { name: faSyringe, css: 'bg-warning' },
+  };
+
+  backIcon = faArrowLeft;
+
+  ticketId?: string;
   admissionRoom? = '';
-  sectionName: string | null = '';
+  sectionName = '';
   dashboard: AdmissionStats = {} as AdmissionStats;
+
+  routes = ApplicationRoutes.generateRoutes();
 
   override ngOnInit(): void {
     this.listenForRoute();
@@ -33,8 +47,8 @@ export class PrivateAdmissionSectionComponent extends SharedUtilityComponent imp
   listenForRoute(): void {
     const sub = this.route.paramMap.subscribe({
       next: (d) => {
-        this.ticketId = d.get('id');
-        this.sectionName = d.get('sectionName');
+        this.ticketId = d.get('id') ?? '';
+        this.sectionName = d.get('sectionName') ?? '';
         this.getStats();
       }
     });
@@ -50,7 +64,6 @@ export class PrivateAdmissionSectionComponent extends SharedUtilityComponent imp
         next: (data) => {
           this.dashboard = data;
           this.admissionRoom = this.dashboard.ticketInventories[0].inventory.name;
-          console.log(this.dashboard);
         },
         error: (error) => {
           throw error;

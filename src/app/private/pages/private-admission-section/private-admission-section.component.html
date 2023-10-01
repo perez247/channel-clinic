@@ -2,25 +2,36 @@
   <app-shared-loading size="xl"></app-shared-loading>
 </section>
 
-<section *ngIf="!isLoading">
+<section *ngIf="!isLoading && dashboard.patient">
 
   <section>
-    <span class="h4 d-block border-bottom mb-4 pb-2">
+    <span class="h4 d-block border-bottom mb-4">
+      <a [routerLink]="['/' + routes.privateRoute.single_admission(ticketId).$absolutePath]">
+        <fa-icon [icon]="backIcon" class="pe-2"></fa-icon>
+      </a>
+
       Admission: {{ admissionRoom }} | {{ sectionName }}
     </span>
   </section>
 
-  <div class="mb-2 d-flex">
-    <span class="d-block p-4 bg-primary shadow icon-set me-5">
-      <fa-icon [icon]="fonts.faPills" class="pe-1 text-white" [size]="'2x'"></fa-icon>
+  <div class="mb-2 d-flex border-bottom mb-4 py-4">
+    <span class="d-block p-4 shadow icon-set me-5" [ngClass]="fonts[sectionName].css">
+      <fa-icon [icon]="fonts[sectionName].name" class="pe-1 text-white" [size]="'2x'"></fa-icon>
     </span>
-    <div>
+    <div *ngIf="dashboard.patient">
       <app-private-patient-info
       [user]="dashboard.patient.user"
       [company]="dashboard.patient.company"
       ></app-private-patient-info>
     </div>
   </div>
+
+  <app-private-admission-precriptions
+    *ngIf="ticketId"
+    [sectionName]="sectionName"
+    [ticketId]="ticketId">
+  </app-private-admission-precriptions>
+
 
 </section>
 

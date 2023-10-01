@@ -6,12 +6,16 @@
 <section *ngIf="!isLoading">
 
   <section>
-    <span class="h4 d-block border-bottom mb-4 pb-2">
+    <span class="h4 d-block border-bottom mb-4">
+      <a [routerLink]="['/' + routes.privateRoute.admissions().$absolutePath]">
+        <fa-icon [icon]="fonts.faArrowLeft" class="pe-2"></fa-icon>
+      </a>
+
       Admission: {{ admissionRoom }}
     </span>
   </section>
 
-  <div class="mb-2 d-flex">
+  <div class="mb-2 d-flex border-bottom mb-4 py-4">
     <div>
       <app-private-patient-info
       [user]="dashboard.patient.user"
@@ -28,7 +32,7 @@
   <section class="w-100 row pt-4">
 
     <div class="col-lg-6 my-5">
-      <div [routerLink]="['/' + routes.privateRoute.admission_sectionName('pharmacy', (ticketId ?? '')).$absolutePath]" appHoverClass hover-class="shadow" class="card pointer">
+      <div [routerLink]="['/' + routes.privateRoute.admission_sectionName('pharmacy', (ticketId)).$absolutePath]" appHoverClass hover-class="shadow" class="card pointer">
         <div class="card-body position-relative text-end">
           <span class="d-block p-4 bg-primary shadow icon-set">
             <fa-icon [icon]="fonts.faPills" class="pe-1 text-white" [size]="'4x'"></fa-icon>
@@ -42,7 +46,7 @@
     </div>
 
     <div class="col-lg-6 my-5">
-      <div [routerLink]="['/' + routes.privateRoute.admission_sectionName('lab', (ticketId ?? '')).$absolutePath]" appHoverClass hover-class="shadow" class="card pointer">
+      <div [routerLink]="['/' + routes.privateRoute.admission_sectionName('lab', (ticketId)).$absolutePath]" appHoverClass hover-class="shadow" class="card pointer">
         <div class="card-body position-relative text-end">
           <span class="d-block p-4 bg-success shadow icon-set">
             <fa-icon [icon]="fonts.faFlask" class="pe-1 text-white" [size]="'4x'"></fa-icon>
@@ -56,7 +60,7 @@
     </div>
 
     <div class="col-lg-6 my-5">
-      <div [routerLink]="['/' + routes.privateRoute.admission_sectionName('radiology', (ticketId ?? '')).$absolutePath]" appHoverClass hover-class="shadow" class="card pointer">
+      <div [routerLink]="['/' + routes.privateRoute.admission_sectionName('radiology', (ticketId)).$absolutePath]" appHoverClass hover-class="shadow" class="card pointer">
         <div class="card-body position-relative text-end">
           <span class="d-block p-4 bg-danger shadow icon-set">
             <fa-icon [icon]="fonts.faXRay" class="pe-1 text-white" [size]="'4x'"></fa-icon>
@@ -70,7 +74,7 @@
     </div>
 
     <div class="col-lg-6 my-5">
-      <div [routerLink]="['/' + routes.privateRoute.admission_sectionName('surgery', (ticketId ?? '')).$absolutePath]" appHoverClass hover-class="shadow" class="card pointer">
+      <div [routerLink]="['/' + routes.privateRoute.admission_sectionName('surgery', (ticketId)).$absolutePath]" appHoverClass hover-class="shadow" class="card pointer">
         <div class="card-body position-relative text-end">
           <span class="d-block p-4 bg-warning shadow icon-set">
             <fa-icon [icon]="fonts.faSyringe" class="pe-1 text-white" [size]="'4x'"></fa-icon>

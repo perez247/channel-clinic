@@ -85,7 +85,6 @@ export class PrivateTicketInventoryItemAdmissionDatesComponent extends SharedUti
   }
 
   setnewCost(): void {
-    console.log(this.totalPrice);
     this.ticketInventory.totalPrice = this.totalPrice * (this.ticketInventory?.prescribedQuantity ?? 0) * this.duration;
   }
 

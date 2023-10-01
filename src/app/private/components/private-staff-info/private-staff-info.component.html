@@ -1,0 +1,12 @@
+<img appDisplayProfileImage [imgSrc]="user?.profile" class="float-start img-fluid m-auto mini-profile rounded-circle">
+
+<span class="ps-2">
+  <a [routerLink]="['/' + routes.privateRoute.single_patient(user?.base?.id).$absolutePath]" >
+    {{user?.firstName}}
+    {{user?.lastName}}
+    {{user?.otherName}}
+  </a>
+  <small class="ps-5 ms-2 d-block">
+    {{ user?.base?.id | userId }}
+  </small>
+</span>

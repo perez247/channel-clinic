@@ -1,0 +1,57 @@
+<div class="modal-content">
+  <div class="modal-header c-bg-primary">
+      <h5 class="modal-title">Log prescription executed</h5>
+    <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body c-bg-secondary">
+
+    <form [formGroup]="form">
+
+      <div class="row">
+
+        <div class="form-group col-12">
+          <label class="form-control-label mb-2 d-block"><strong>Prescription</strong></label>
+          <input class="form-control" formControlName="name" />
+        </div>
+
+        <div class="form-group col-6">
+
+          <label class="form-control-label mb-2 d-block"><strong>Date</strong></label>
+
+          <div class="input-group mb-3">
+            <input readonly formControlName="timeGiven" type="text" class="form-control" ngbDatepicker #d="ngbDatepicker">
+            <button (click)="d.toggle()" class="btn btn-primary" type="button">
+              <fa-icon [icon]="fonts.faCalendar" class="text-light"></fa-icon>
+            </button>
+          </div>
+          <app-custom-error-message [errorMessage]="errorService.getError(form, 'timeGiven')"></app-custom-error-message>
+
+        </div>
+
+        <div class="form-group col-md-6 position-relative text-center">
+          <app-custom-error-message [errorMessage]="errorService.getError(form, 'time')"></app-custom-error-message>
+          <label class="form-control-label mb-2 d-block" for="time"><strong>Time</strong></label>
+          <div class="d-flex justify-content-center">
+            <ngb-timepicker formControlName="time" [meridian]="true"></ngb-timepicker>
+          </div>
+          <app-custom-error-message [errorMessage]="errorService.getError(form, 'time')"></app-custom-error-message>
+
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+  <div class="modal-footer c-bg-primary justify-content-between">
+    <button (click)="save()" [disabled]="isLoading || form.invalid" type="button" class="btn btn-primary">
+      Save
+      <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+    </button>
+    <div>
+      <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

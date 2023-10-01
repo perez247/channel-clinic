@@ -1,6 +1,6 @@
 import { AppUser } from 'src/app/shared/core/models/app-user';
 import { EventBusService } from './../../../shared/services/common/event-bus/event-bus.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './private-welcome-user.component.html',
   styleUrls: ['./private-welcome-user.component.scss']
 })
-export class PrivateWelcomeUserComponent implements OnInit {
+export class PrivateWelcomeUserComponent implements OnInit, OnDestroy {
 
   fonts = { faAngleDoubleRight }
   appRoutes = ApplicationRoutes.generateRoutes();
@@ -18,6 +18,8 @@ export class PrivateWelcomeUserComponent implements OnInit {
   currentUser?: AppUser;
 
   countDown = 10;
+
+  interval: any;
 
   constructor(
     private eventBus: EventBusService,
@@ -30,13 +32,16 @@ export class PrivateWelcomeUserComponent implements OnInit {
   }
 
   redirectAfter5Seconds(): void {
-    const interval = setInterval(() => {
+    this.interval = setInterval(() => {
       this.countDown--;
       if (this.countDown <= 0) {
-        clearInterval(interval);
+        clearInterval(this.interval);
         this.router.navigate(['/' + this.appRoutes.privateRoute.dashboard().$absolutePath]);
       }
     }, 1000);
   }
 
+  ngOnDestroy(): void {
+      clearInterval(this.interval);
+  }
 }

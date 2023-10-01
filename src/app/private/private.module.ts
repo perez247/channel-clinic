@@ -113,6 +113,11 @@ import { PrivateSingleAdmissionComponent } from './pages/private-single-admissio
 import { PrivateGeneralAdmissionTicketOverviewComponent } from './components/private-general-admission-ticket-overview/private-general-admission-ticket-overview.component';
 import { PrivatePatientInfoComponent } from './components/private-patient-info/private-patient-info.component';
 import { PrivateAdmissionSectionComponent } from './pages/private-admission-section/private-admission-section.component';
+import { PrivateAdmissionPrecriptionsComponent } from './components/private-admission-precriptions/private-admission-precriptions.component';
+import { PrescriptionItemComponent } from './components/private-admission-precriptions/prescription-item/prescription-item.component';
+import { PrivateStaffInfoComponent } from './components/private-staff-info/private-staff-info.component';
+import { PrivateExecutePrescriptionModalComponent } from './modals/private-execute-prescription-modal/private-execute-prescription-modal.component';
+import { LoggedPrescriptionsComponent } from './components/private-admission-precriptions/logged-prescriptions/logged-prescriptions.component';
 
 @NgModule({
   declarations: [
@@ -231,6 +236,11 @@ import { PrivateAdmissionSectionComponent } from './pages/private-admission-sect
     PrivateGeneralAdmissionTicketOverviewComponent,
     PrivatePatientInfoComponent,
     PrivateAdmissionSectionComponent,
+    PrivateAdmissionPrecriptionsComponent,
+    PrescriptionItemComponent,
+    PrivateStaffInfoComponent,
+    PrivateExecutePrescriptionModalComponent,
+    LoggedPrescriptionsComponent,
   ],
   imports: [
     PrivateRoutingModule,
