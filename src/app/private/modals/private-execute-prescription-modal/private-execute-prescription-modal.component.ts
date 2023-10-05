@@ -1,7 +1,7 @@
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
 import { TicketInventory } from './../../../shared/core/models/app-ticket';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { AdmissionService } from 'src/app/shared/services/api/admission/admission.service';
 import { Confirmable } from 'src/app/shared/decorators/confirm-action-method-decorator';
 import { finalize } from 'rxjs';
@@ -32,12 +32,12 @@ export class PrivateExecutePrescriptionModalComponent extends SharedUtilityCompo
     private fb: FormBuilder,
     public errorService: CustomErrorService,
     private toast: CustomToastService,
+    private calendar: NgbCalendar,
     ) {
     super();
   }
 
   override ngOnInit(): void {
-    console.log(this.ticketInventory);
     this.initializeForm();
   }
 
@@ -59,7 +59,6 @@ export class PrivateExecutePrescriptionModalComponent extends SharedUtilityCompo
     date = date.minutes(d.time.minute);
     // d.timeGiven = new Date(date.year(), date.month(), date.date(), d.time.hour, d.time.minute).toISOString();
     d.timeGiven =  date.format('MM/DD/YYYY HH:mm:ss A')
-    console.log(d, date);
     const sub = this.admissionService.executePrescription(d)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({

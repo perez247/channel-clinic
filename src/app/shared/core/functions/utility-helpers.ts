@@ -1,5 +1,6 @@
 import { CustomToastService } from 'src/app/shared/services/common/custom-toast/custom-toast.service';
 import { AppServerError } from "../models/jwtToken";
+import { AppPagination, PaginationRequest, PaginationResponse } from '../models/pagination';
 
 export interface IFileStatus {
     isSuccess?: boolean;
@@ -82,4 +83,17 @@ export class UtilityHelpers
     }
     return true;
   }
+
+  public static initializePagination<T, Tfilter>(initialFilter: Tfilter) {
+    let elements: T[] = [];
+    let appPagination = new AppPagination();
+    let filter: Tfilter = initialFilter;
+    let paginationRequest = new PaginationRequest<Tfilter>(appPagination, filter);
+    let paginationResponse = new PaginationResponse<T[]>();
+
+    return {
+      elements, appPagination, filter, paginationRequest, paginationResponse
+    }
+  }
+
 }

@@ -77,6 +77,13 @@ export interface TicketInventory {
   itemsUsed: AppInventory[]
 }
 
+export class TicketInventoryFilter {
+  appTicketId?: string;
+  prescriptionId?: string;
+  isTickets?: boolean;
+  isPrescriptions?: boolean;
+}
+
 export interface SurgeryTicketPersonnel {
   base: Base
   personnel: AppUser

@@ -86,11 +86,12 @@ export class PrivateInventoryItemsComponent extends SharedUtilityComponent imple
       .pipe(finalize(() => this.isLoading = false ))
       .subscribe({
         next: (data) => {
-          this.paginationRequest.pagination!.pageNumber = 1;
+          const pagination = this.paginationRequest.getPagination();
+          this.paginationRequest.setPagination({ ...pagination, pageNumber : 1 } as AppPagination );
           this.getInventories()
         },
         error: (error) => {
-          console.log(error);
+          throw error;
         }
       });
 
