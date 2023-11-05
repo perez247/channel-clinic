@@ -1,5 +1,5 @@
 import { TicketInventory } from "./app-ticket";
-import { AppUser, Base } from "./app-user";
+import { Base, Staff } from "./app-user";
 
 export class AdmissionPrescription {
   appInventoryType?: string;
@@ -8,5 +8,5 @@ export class AdmissionPrescription {
   base?: Base
   overallDescription?: string;
   ticketInventories?: TicketInventory[];
-  doctor?: AppUser
+  doctor?: Staff
 }

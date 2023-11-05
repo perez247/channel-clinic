@@ -5,7 +5,7 @@
     <div class="dropdown">
         <button [disabled]="isLoading" class="btn btn-primary btn-sm text-white dropdown-toggle" type="button" id="more-action" data-bs-toggle="dropdown" aria-expanded="false">
           <fa-icon [icon]="fonts.faFilter" class="pe-1 text-light"></fa-icon>
-          <span *ngIf="!isLoading" >{{ displayed.length }}</span>
+          <span *ngIf="!isLoading" >{{ pagination.response.totalItems }}</span>
           <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
         </button>
         <ul class="dropdown-menu pointer" aria-labelledby="more-action">
@@ -15,6 +15,18 @@
       </div>
   </div>
 
-  <app-private-ticket-inventory-template *ngFor="let tick of displayed; trackBy:ticketTrackBy" [ticket]="tick" [appointment]="appointment" [type]="userSections.ticketList" (reload)="getTickets()"></app-private-ticket-inventory-template>
+  <app-private-ticket-inventory-template *ngFor="let tick of pagination.elements; trackBy:ticketTrackBy" [ticket]="tick" [appointment]="appointment" [type]="userSections.ticketList" (reload)="getTickets()"></app-private-ticket-inventory-template>
 
+  <section class="mt-5"  *ngIf="pagination.response.totalItems > 10">
+    <ngb-pagination
+      [(page)]="pagination.response.pageNumber"
+      [pageSize]="pagination.response.pageSize"
+      [collectionSize]="pagination.response.totalItems"
+      (pageChange)="pageChanged($event)"
+      [maxSize]="5"
+      [rotate]="true"
+      [boundaryLinks]="true"
+      >
+    </ngb-pagination>
+  </section>
 </section>

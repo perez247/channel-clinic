@@ -23,24 +23,26 @@ export class AppUser {
     isPatient?: boolean;
     isCompany?: boolean;
 
-    hasRole(roles: string[] = [], and: boolean): boolean {
+    hasClaim(roles: string[] = [], and: boolean): boolean {
 
       if (roles.length <= 0) { return false }
 
-      let hasRole: boolean[] = [];
+      let confirmed: boolean[] = [];
+      const d = this.userRoles || [];
+      const userClaims = [...d, this.base?.id || '']
       roles.forEach(x => {
-        var role = this.userRoles?.find(a => a === x);
+        var role = userClaims.find(a => a === x);
         if (role) {
-          hasRole.push(true);
+          confirmed.push(true);
         } else {
-          hasRole.push(false);
+          confirmed.push(false);
         }
       });
 
       if (and) {
-        return hasRole.every(Boolean);
+        return confirmed.every(Boolean);
       } else {
-        return hasRole.some(Boolean);
+        return confirmed.some(Boolean);
       }
     }
   }

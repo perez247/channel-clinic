@@ -36,6 +36,7 @@ export class PrivateGeneralTicketOverviewComponent implements OnInit {
   }
 
   getFirstAdmission(): string | undefined {
+    console.log(this.ticket?.ticketInventories);
     return this.ticket?.ticketInventories[0]?.inventory.name;
   }
 }

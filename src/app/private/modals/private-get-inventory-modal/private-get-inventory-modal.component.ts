@@ -22,9 +22,11 @@ export class PrivateGetInventoryModalComponent implements OnInit {
   form: FormGroup = {} as any;
   filter: InventoryFilter = new InventoryFilter();
 
-  canShowTimeAndFrequency = false;
+  isPharmacy = true;
 
   frequencies = AppConstants.TicketFrequency;
+
+  durations = Array.from({length: 30}, (_, i) => i + 1);
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -34,12 +36,12 @@ export class PrivateGetInventoryModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.filter.appInventoryType = [this.type];
-    this.canShowTimeAndFrequency = this.type == AppTicketTypes.pharmacy //|| this.type == AppTicketTypes.lab || this.type == AppTicketTypes.radiology;
+    this.isPharmacy = this.type == AppTicketTypes.pharmacy //|| this.type == AppTicketTypes.lab || this.type == AppTicketTypes.radiology;
     this.initializeForm();
   }
 
   initializeForm(): void {
-    this.form = PrivateGetInventoryFunctions.createForm(this.fb, this.canShowTimeAndFrequency, this.appInventory);
+    this.form = PrivateGetInventoryFunctions.createForm(this.fb, this.appInventory);
   }
 
   updateInventoryName(inventory: AppInventory): void {
@@ -56,7 +58,13 @@ export class PrivateGetInventoryModalComponent implements OnInit {
   }
 
   save(): void {
-    this.itemSaved.emit(this.form.value);
+    const d = this.form.value;
+
+    if (d.frequency == 'Once') {
+      d.duration = 1;
+    }
+
+    this.itemSaved.emit(d);
     this.activeModal.close();
   }
 }

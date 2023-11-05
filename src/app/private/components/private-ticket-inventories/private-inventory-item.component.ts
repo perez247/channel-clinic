@@ -29,26 +29,33 @@ export class PrivateInventoryItemComponent extends SharedUtilityComponent implem
   }
 
   calculateItem(): void {
-    if (this.inventoryItems.length <= 0) {
-      this.setToDefault();
-      return;
-    }
+    // if (this.inventoryItems.length <= 0) {
+    //   this.setToDefault();
+    //   return;
+    // }
 
-    const item = this.inventoryItems.find(x => x?.inventory?.base?.id === this.ticketInventory.inventory.base?.id);
+    // const item = this.inventoryItems.find(x => x?.inventory?.base?.id === this.ticketInventory.inventory.base?.id);
 
-    if (!item) {
-      this.setToDefault();
-      return;
-    }
+    // if (!item) {
+    //   this.setToDefault();
+    //   return;
+    // }
 
-    this.ticketInventory.pricePerItem = item?.pricePerItem ?? 0;
-    this.ticketInventory.currentPrice = (this.ticketInventory.pricePerItem ?? 0) * (this.ticketInventory?.prescribedQuantity ?? 0);
-    this.ticketInventory.totalPrice = (this.ticketInventory.pricePerItem ?? 0) * (this.ticketInventory?.prescribedQuantity ?? 0);
+    // this.ticketInventory.pricePerItem = item?.pricePerItem ?? 0;
+    // this.ticketInventory.currentPrice = (this.ticketInventory.pricePerItem ?? 0) * (this.ticketInventory?.prescribedQuantity ?? 0);
+    // this.ticketInventory.totalPrice = (this.ticketInventory.pricePerItem ?? 0) * (this.ticketInventory?.prescribedQuantity ?? 0);
   }
 
   setToDefault(): void {
     this.ticketInventory.currentPrice = 0
     this.ticketInventory.totalPrice = 0
+  }
+
+  resetTicketInventory(ticketInventory: TicketInventory): void {
+    this.ticketInventory = null as any;
+    setTimeout(() => {
+      this.ticketInventory = ticketInventory;
+    }, 300);
   }
 
 }

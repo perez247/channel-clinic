@@ -16,7 +16,7 @@
               Action
           </button>
           <ul class="dropdown-menu" aria-labelledby="more-action">
-            <li><a class="dropdown-item pointer" (click)="openFilter()" >Filter</a></li>
+            <li><a class="dropdown-item pointer" (click)="openFilter()">Filter</a></li>
           </ul>
         </div>
   </div>
@@ -51,6 +51,9 @@
                 </span>
                 <span class="d-block">
                   {{ pay.base?.dateCreated | date : 'short' }}
+                </span>
+                <span>
+                  {{ pay.description }}
                 </span>
               </div>
             </div>

@@ -10,5 +10,6 @@ export class PrivateTicketInventoryItemStatusComponent {
 
   @Input() ticket: AppTicket = {} as AppTicket;
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
+  @Input() isAdmission = false;
 
 }

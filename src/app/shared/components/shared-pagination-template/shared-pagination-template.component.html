@@ -1,0 +1,12 @@
+
+
+  <ngb-pagination
+    [(page)]="pagination.response.pageNumber"
+    [pageSize]="pagination.response.pageSize"
+    [collectionSize]="pagination.response.totalItems"
+    (pageChange)="pageHasChanged($event)"
+    [maxSize]="5"
+    [rotate]="true"
+    [boundaryLinks]="true"
+    >
+  </ngb-pagination>

@@ -9,7 +9,6 @@ import { AppInventoryItem } from 'src/app/shared/core/models/inventory';
 })
 export class PrivateTicketInventoryItemPriceComponent {
 
-  @Input() ticket: AppTicket = {} as AppTicket;
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
   @Input() inventoryItems: AppInventoryItem[] = [];
 

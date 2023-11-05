@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { TicketInventory } from 'src/app/shared/core/models/app-ticket';
+import { PaginationResponse } from 'src/app/shared/core/models/pagination';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -36,7 +38,11 @@ export class InventoryService {
     return this.http.put<any>(`${this.apiUrl}/surgery-inventory`, data);
   }
 
-  getTicketInventories(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/ticket-inventories`, data);
+  getTicketInventories(data: any): Observable<PaginationResponse<TicketInventory[]>> {
+    return this.http.post<PaginationResponse<TicketInventory[]>>(`${this.apiUrl}/ticket-inventories`, data);
+  }
+
+  updateTicketInventory(data: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/ticket-inventory`, data);
   }
 }

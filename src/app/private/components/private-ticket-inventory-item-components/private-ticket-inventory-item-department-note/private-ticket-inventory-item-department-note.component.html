@@ -4,7 +4,7 @@
       <strong>Dept note</strong>
     </div>
     <div class="col-10">
-      <textarea [disabled]="this.ticket.sentToFinance" [(ngModel)]="ticketInventory.departmentDescription" type="text" class="form-control"></textarea>
+      <textarea [disabled]="noteDisabled" [(ngModel)]="ticketInventory.departmentDescription" type="text" class="form-control"></textarea>
     </div>
   </div>
 </div>

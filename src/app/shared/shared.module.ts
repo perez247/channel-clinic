@@ -26,6 +26,7 @@ import { SharedToastComponent } from './components/shared-toast/shared-toast.com
 import { PaidDebtPipe } from './pipes/paid-debt.pipe';
 import { UserIdPipe } from './pipes/user-id.pipe';
 import { SharedViewImageComponent } from './modals/shared-view-image/shared-view-image.component';
+import { SharedPaginationTemplateComponent } from './components/shared-pagination-template/shared-pagination-template.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { SharedViewImageComponent } from './modals/shared-view-image/shared-view
     ContractDetailPipe,
     SharedToastComponent,
     SharedViewImageComponent,
+    SharedPaginationTemplateComponent,
   ],
   imports: [
     CommonModule,
@@ -88,6 +90,7 @@ import { SharedViewImageComponent } from './modals/shared-view-image/shared-view
     SharedInventoryAutocompleteComponent,
     SharedToastComponent,
     SharedViewImageComponent,
+    SharedPaginationTemplateComponent,
 
     // Directives
     DisplayProfileImageDirective,

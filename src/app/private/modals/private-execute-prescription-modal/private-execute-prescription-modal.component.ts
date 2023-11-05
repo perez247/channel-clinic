@@ -1,5 +1,6 @@
+import { AppTicketTypes } from 'src/app/shared/core/models/app-ticket';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
-import { TicketInventory } from './../../../shared/core/models/app-ticket';
+import { AppTicket, TicketInventory } from './../../../shared/core/models/app-ticket';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbActiveModal, NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { AdmissionService } from 'src/app/shared/services/api/admission/admission.service';
@@ -11,6 +12,7 @@ import { faCalendar, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { CustomErrorService } from 'src/app/shared/services/common/custom-error/custom-error.service';
 import { CustomToastService } from 'src/app/shared/services/common/custom-toast/custom-toast.service';
 import * as moment from 'moment';
+import { AppInventoryItem } from 'src/app/shared/core/models/inventory';
 
 @Component({
   selector: 'app-private-execute-prescription-modal',
@@ -19,12 +21,17 @@ import * as moment from 'moment';
 })
 export class PrivateExecutePrescriptionModalComponent extends SharedUtilityComponent implements OnInit {
 
-  @Input() ticketInventory?: TicketInventory;
+  @Input() ticketInventory: TicketInventory = {} as TicketInventory;
+  @Input() ticket: AppTicket = {} as AppTicket;
   @Output() saved = new EventEmitter();
 
   form: FormGroup = {} as any;
 
   fonts = { faCalendar, faTrashAlt }
+
+  types = AppTicketTypes;
+
+  inventoryItems: AppInventoryItem[] = [];
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -53,12 +60,12 @@ export class PrivateExecutePrescriptionModalComponent extends SharedUtilityCompo
   })
   save(): void {
     this.isLoading = true;
-    const d = {...this.form.value};
+    const d = {...this.ticketInventory, ...this.form.value};
     let date = moment(d.timeGiven);
     date = date.hours(d.time.hour);
     date = date.minutes(d.time.minute);
     // d.timeGiven = new Date(date.year(), date.month(), date.date(), d.time.hour, d.time.minute).toISOString();
-    d.timeGiven =  date.format('MM/DD/YYYY HH:mm:ss A')
+    d.timeGiven =  date.format('MM/DD/YYYY HH:mm:ss A');
     const sub = this.admissionService.executePrescription(d)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
@@ -68,6 +75,8 @@ export class PrivateExecutePrescriptionModalComponent extends SharedUtilityCompo
           this.activeModal.close();
         }
       });
+
+    this.subscriptions.push(sub);
   }
 
 }

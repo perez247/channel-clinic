@@ -11,6 +11,7 @@ export class PrivateSaveLabRadNoteComponent implements OnInit {
 
   @Input() ticket: AppTicket = {} as AppTicket;
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
+  @Input() isAdmission = false;
 
   type = AppTicketTypes;
 
@@ -20,11 +21,27 @@ export class PrivateSaveLabRadNoteComponent implements OnInit {
 
   ngOnInit(): void {
     this.editorConfig = {
-      editable: this.ticketInventory.concludedDate ? false : true,
+      editable: this.getCanEdit(),
       spellcheck: true,
       height: '25rem',
       minHeight: '5rem',
     };
+  }
+
+  getCanEdit(): boolean {
+    if (this.isAdmission && !this.ticketInventory.updated) {
+      return true;
+    }
+
+    if (this.isAdmission && this.ticketInventory.updated) {
+      return false;
+    }
+
+    if (this.ticketInventory.concludedDate) {
+      return false;
+    }
+
+    return true;
   }
 
 }

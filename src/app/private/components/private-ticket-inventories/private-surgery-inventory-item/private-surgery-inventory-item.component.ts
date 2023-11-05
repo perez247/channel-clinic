@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PrivateLabInventoryItemComponent } from '../private-lab-inventory-item/private-lab-inventory-item.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AppTicketTypes } from 'src/app/shared/core/models/app-ticket';
 
 @Component({
   selector: 'app-private-surgery-inventory-item',
@@ -9,9 +10,18 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PrivateSurgeryInventoryItemComponent extends PrivateLabInventoryItemComponent {
 
+  @Input() isAdmissionExecution = false;
+
+  updatingTicket = ''
+
+  types = AppTicketTypes;
   constructor(
   ) {
     super();
+  }
+
+  notifyForUpdate(): void {
+    this.updatingTicket = Math.random().toString();
   }
 
 }

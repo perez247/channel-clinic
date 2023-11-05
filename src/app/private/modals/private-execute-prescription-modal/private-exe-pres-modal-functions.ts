@@ -14,7 +14,6 @@ export class PrivateExePresFunction {
 
     return fb.group({
       ticketInventoryId: [ticketInventory?.base.id],
-      name: [{ disabled: true, value: ticketInventory?.inventory.name }],
       timeGiven: [d, [CustomValidator.CustomRequired('Date given')]],
       time: [{ hour, minute }, [CustomValidator.CustomRequired('Time')]],
     });

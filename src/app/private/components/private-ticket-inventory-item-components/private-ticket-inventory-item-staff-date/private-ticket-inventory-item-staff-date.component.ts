@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { faCheckCircle, faClock, faPencilAlt, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs';
@@ -14,10 +14,15 @@ import { CustomToastService } from 'src/app/shared/services/common/custom-toast/
   templateUrl: './private-ticket-inventory-item-staff-date.component.html',
   styleUrls: ['./private-ticket-inventory-item-staff-date.component.scss']
 })
-export class PrivateTicketInventoryItemStaffDateComponent extends SharedUtilityComponent {
+export class PrivateTicketInventoryItemStaffDateComponent extends SharedUtilityComponent implements OnInit, OnChanges {
 
   @Input() ticket: AppTicket = {} as AppTicket;
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
+  @Input() updateTicketInventory = '';
+
+  oldSurgeryDate = '';
+  oldPersonnel= '';
+  firstTime = true;
 
   fonts = { faCheckCircle, faClock, faPencilAlt, faMagnifyingGlass };
 
@@ -29,6 +34,38 @@ export class PrivateTicketInventoryItemStaffDateComponent extends SharedUtilityC
     super();
   }
 
+  override ngOnInit(): void {
+    this.ticketInventory.surgeryTicketPersonnels = this.ticketInventory.surgeryTicketPersonnels ? this.ticketInventory.surgeryTicketPersonnels : [];
+    this.setValues();
+  }
+
+  ngOnChanges(): void {
+
+    if(this.firstTime) { this.firstTime = false; return; }
+
+    if (this.canUpdate()) {
+      this.updateStaffAndDate();
+    }
+  }
+
+  setValues(): void {
+    this.oldPersonnel = JSON.stringify(this.ticketInventory.surgeryTicketPersonnels);
+    this.oldSurgeryDate = this.ticketInventory.surgeryDate;
+  }
+
+  canUpdate(): boolean {
+    if (this.oldPersonnel != JSON.stringify(this.ticketInventory.surgeryTicketPersonnels)) {
+      return true;
+    }
+
+    if (this.oldSurgeryDate != this.ticketInventory.surgeryDate)
+    {
+      return true;
+    }
+
+    return false;
+  }
+
   saveStaffAndDate(): void {
     const modalRef = this.modalService.open(PrivateSaveSurgeryStaffDateModalComponent, { size: 'lg' });
     const component: PrivateSaveSurgeryStaffDateModalComponent = modalRef.componentInstance;
@@ -36,10 +73,6 @@ export class PrivateTicketInventoryItemStaffDateComponent extends SharedUtilityC
     component.ticketInventory = this.ticketInventory;
   }
 
-  @Confirmable({
-    title: 'Update surgery staff and date',
-    html: 'Are you sure you want to update surgery staff and date'
-  })
   updateStaffAndDate(): void {
 
     this.isLoading = true;
@@ -59,7 +92,6 @@ export class PrivateTicketInventoryItemStaffDateComponent extends SharedUtilityC
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: (data) => {
-          console.log(data);
           this.toastService.success('Surgery updated successfully');
         },
         error: (error) => {

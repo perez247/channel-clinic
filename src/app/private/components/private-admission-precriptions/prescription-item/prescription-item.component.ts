@@ -19,6 +19,7 @@ import { PrivateExecutePrescriptionModalComponent } from 'src/app/private/modals
 export class PrescriptionItemComponent extends SharedUtilityComponent implements OnInit {
 
   @Input() admissionPrescription?: AdmissionPrescription;
+  @Input() ticket: AppTicket = {} as AppTicket;
   @Output() reload = new EventEmitter();
   @Output() reloadLogged = new EventEmitter();
 
@@ -33,7 +34,6 @@ export class PrescriptionItemComponent extends SharedUtilityComponent implements
      }
 
   override ngOnInit(): void {
-    // console.log(this.admissionPrescription);
   }
 
   updatePrescription(): void {
@@ -53,6 +53,7 @@ export class PrescriptionItemComponent extends SharedUtilityComponent implements
         times: x.times,
         dosage: x.dosage,
         frequency: x.frequency,
+        duration: x.duration
       } as ITicketInventory
     });
 
@@ -140,6 +141,8 @@ export class PrescriptionItemComponent extends SharedUtilityComponent implements
     const component: PrivateExecutePrescriptionModalComponent = modalRef.componentInstance;
 
     component.ticketInventory = ticketInventory;
+    component.ticketInventory.prescribedQuantity = ticketInventory.dosage;
+    component.ticket = this.ticket;
 
     const sub = component.saved.subscribe({
       next: () => {

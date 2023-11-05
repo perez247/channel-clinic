@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { PrivateInventoryItemComponent } from '../private-inventory-item.component';
 
 @Component({
@@ -7,6 +7,8 @@ import { PrivateInventoryItemComponent } from '../private-inventory-item.compone
   styleUrls: ['./private-lab-inventory-item.component.scss']
 })
 export class PrivateLabInventoryItemComponent extends PrivateInventoryItemComponent {
+
+  @Input() isAdmission = false;
 
   constructor(
   ) {

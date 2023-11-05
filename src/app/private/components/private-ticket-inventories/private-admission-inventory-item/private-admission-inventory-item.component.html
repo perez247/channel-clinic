@@ -1,9 +1,14 @@
-<div class="card mb-3" [ngClass]="{'bg-info': ticketInventory.appTicketStatus === 'canceled'}" >
+<div *ngIf="ticketInventory" class="card mb-3" [ngClass]="{'bg-info': ticketInventory.appTicketStatus === 'canceled'}" >
 
   <app-private-ticket-inventory-item-status
     [ticket]="ticket"
     [ticketInventory]="ticketInventory"
   ></app-private-ticket-inventory-item-status>
+
+  <app-private-ticket-inventory-item-additional-note
+  [ticketInventory]="ticketInventory"
+  >
+  </app-private-ticket-inventory-item-additional-note>
 
   <app-private-ticket-inventory-item-doctor-prescription
     [ticketInventory]="ticketInventory">
@@ -21,11 +26,12 @@
   <app-private-ticket-inventory-item-quantity-to-give
     [ticket]="ticket"
     [ticketInventory]="ticketInventory"
+    [inventoryItems]="inventoryItems"
     (onBlur)="calculateItem()">
   </app-private-ticket-inventory-item-quantity-to-give>
 
   <app-private-ticket-inventory-item-price
-    [ticket]="ticket"
+    *ngIf="ticket.sentToFinance"
     [ticketInventory]="ticketInventory"
     [inventoryItems]="inventoryItems">
   </app-private-ticket-inventory-item-price>
@@ -34,6 +40,12 @@
     [ticket]="ticket"
     [ticketInventory]="ticketInventory">
   </app-private-ticket-inventory-item-admission-dates>
+
+  <app-private-update-ticket-inventory
+    [ticketInventory]="ticketInventory"
+    (reset)="resetTicketInventory($event)"
+  >
+  </app-private-update-ticket-inventory>
 
   <div *ngIf="this.ticket.sentToFinance && ticket.cost && ticketInventory.appTicketStatus !== 'canceled'">
 

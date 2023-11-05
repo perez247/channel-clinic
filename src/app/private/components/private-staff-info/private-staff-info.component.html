@@ -1,12 +1,12 @@
-<img appDisplayProfileImage [imgSrc]="user?.profile" class="float-start img-fluid m-auto mini-profile rounded-circle">
+<img appDisplayProfileImage [imgSrc]="staff?.user?.profile" class="float-start img-fluid m-auto mini-profile rounded-circle">
 
 <span class="ps-2">
-  <a [routerLink]="['/' + routes.privateRoute.single_patient(user?.base?.id).$absolutePath]" >
-    {{user?.firstName}}
-    {{user?.lastName}}
-    {{user?.otherName}}
+  <a [routerLink]="['/' + routes.privateRoute.single_staff(staff?.user?.base?.id).$absolutePath]" >
+    {{staff?.user?.firstName}}
+    {{staff?.user?.lastName}}
+    <!-- {{user?.otherName}} -->
   </a>
   <small class="ps-5 ms-2 d-block">
-    {{ user?.base?.id | userId }}
+    {{ staff?.position }}
   </small>
 </span>

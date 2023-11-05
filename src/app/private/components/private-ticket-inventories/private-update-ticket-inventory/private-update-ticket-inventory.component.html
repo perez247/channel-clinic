@@ -1,0 +1,7 @@
+
+<div *ngIf="!canUpdate" class="card-header d-flex justify-content-end">
+  <button [disabled]="isLoading" (click)="updateTicketInventory()" class="btn btn-sm btn-primary">
+    Save
+    <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+  </button>
+</div>

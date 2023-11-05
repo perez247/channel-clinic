@@ -10,6 +10,8 @@ import { PrivateInventoryItemComponent } from '../private-inventory-item.compone
 })
 export class PrivatePharmacyInventoryItemComponent extends PrivateInventoryItemComponent {
 
+  @Input() isAdmission = false;
+
   constructor() {
     super();
   }

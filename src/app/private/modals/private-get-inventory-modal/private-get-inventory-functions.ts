@@ -1,22 +1,19 @@
 import { ITicketInventory, TicketInventory } from './../../../shared/core/models/app-ticket';
 import { AppInventory } from './../../../shared/core/models/inventory';
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { AppConstants } from 'src/app/shared/core/models/app-constants';
 import { AppTicket } from "src/app/shared/core/models/app-ticket";
 import { CustomValidator } from 'src/app/shared/validations/custom-validators';
 
 export class PrivateGetInventoryFunctions {
 
-  public static createForm(fb: FormBuilder,  canShowTimeAndFrequency: boolean, appinventory?: ITicketInventory): FormGroup
+  public static createForm(fb: FormBuilder, appinventory?: ITicketInventory): FormGroup
   {
 
     const hasId = appinventory?.inventoryId;
 
     if (!hasId) {
-      const addDosage = canShowTimeAndFrequency ? {
-        times: [null, [CustomValidator.CustomRequired('Times')]],
-        dosage: [null, [CustomValidator.CustomRequired('Dosage')]],
-        frequency: [null, [CustomValidator.CustomRequired('Frequency')]],
-      } : {};
+      const addDosage = PrivateGetInventoryFunctions.getData(false, appinventory);
 
       return fb.group({
         inventoryName: [null],
@@ -26,11 +23,7 @@ export class PrivateGetInventoryFunctions {
       });
     }
     else {
-      const addDosage = canShowTimeAndFrequency ? {
-        times: [appinventory.times, [CustomValidator.CustomRequired('Times')]],
-        dosage: [appinventory.dosage, [CustomValidator.CustomRequired('Dosage')]],
-        frequency: [appinventory.frequency, [CustomValidator.CustomRequired('Frequency')]],
-      } : {};
+      const addDosage = PrivateGetInventoryFunctions.getData(true, appinventory);
 
       return fb.group({
         inventoryName: [{value: appinventory?.inventoryName, disabled: true}],
@@ -40,6 +33,15 @@ export class PrivateGetInventoryFunctions {
       });
     }
 
+  }
+
+  static getData(hasId: boolean, appinventory?: ITicketInventory): any {
+    return {
+      times: [hasId ? appinventory?.times : 1, [CustomValidator.CustomRequired('Times')]],
+      dosage: [hasId? appinventory?.dosage : 1, [CustomValidator.CustomRequired('Dosage')]],
+      duration: [hasId? appinventory?.duration : 1, [CustomValidator.CustomRequired('Duration')]],
+      frequency: [hasId? appinventory?.frequency: 'Once', [CustomValidator.CustomRequired('Frequency')]],
+    };
   }
 
 }

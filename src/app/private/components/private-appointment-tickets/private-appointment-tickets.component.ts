@@ -6,7 +6,7 @@ import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility
 import { AppAppointment } from 'src/app/shared/core/models/app-appointment';
 import { AppConstants } from 'src/app/shared/core/models/app-constants';
 import { AppTicket, AppTicketTypes, TicketFilter } from 'src/app/shared/core/models/app-ticket';
-import { AppPagination, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
+import { AppPagination, PaginationContext, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
 import { TicketService } from 'src/app/shared/services/api/ticket/ticket.service';
 import { CustomToastService } from 'src/app/shared/services/common/custom-toast/custom-toast.service';
 
@@ -26,12 +26,7 @@ export class PrivateAppointmentTicketsComponent extends SharedUtilityComponent i
 
   fonts = { faCalendar, faFilter };
 
-  tickets: AppTicket[] = [];
-  displayed: AppTicket[] = [];
-
-  appPagination = new AppPagination();
-  filter = new TicketFilter();
-  paginationRequest = new PaginationRequest<TicketFilter>(this.appPagination, this.filter);
+  pagination = new PaginationContext<AppTicket, TicketFilter>();
 
   constructor(
     private ticketService: TicketService,
@@ -40,23 +35,21 @@ export class PrivateAppointmentTicketsComponent extends SharedUtilityComponent i
    }
 
   override ngOnInit(): void {
-    this.filter.appointmentId = this.appointment?.base?.id;
-    this.filter.full = true;
-    this.appPagination.pageSize = 50;
-    this.paginationRequest = new PaginationRequest<TicketFilter>(this.appPagination, this.filter);
+    this.pagination.request?.setFilter({ appointmentId: this.appointment?.base?.id, full: true });
     this.getTickets();
   }
 
   getTickets(): void {
     this.isLoading = true;
-    const sub = this.ticketService.getTickets(this.paginationRequest)
+    const sub = this.ticketService.getTickets(this.pagination.request)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: (data) => {
-          this.tickets = data.result || [];
-          this.displayed = [...this.tickets];},
+          this.pagination.setResponse(data, false);
+        },
         error: (error) => {
           console.log(error);
+          throw new error;
         }
       });
 
@@ -70,11 +63,16 @@ export class PrivateAppointmentTicketsComponent extends SharedUtilityComponent i
    addFilter(type: string): void {
 
     if (type == 'all') {
-      this.displayed = [...this.tickets];
-      return;
+      this.pagination.request?.setFilter({ appInventoryType: "" });
+    } else {
+      this.pagination.request?.setFilter({ appInventoryType: type as any });
     }
 
-      const d = this.tickets?.filter(x => x.appInventoryType === type);
-      this.displayed = [...d];
+      this.getTickets();
    }
+
+   pageChanged(e: number) {
+    this.pagination.request?.setPagination({ pageNumber: e } as AppPagination);
+    this.getTickets();
+  }
 }

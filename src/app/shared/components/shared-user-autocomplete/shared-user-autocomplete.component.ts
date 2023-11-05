@@ -35,9 +35,9 @@ export class SharedUserAutocompleteComponent  extends SharedUtilityComponent imp
   }
 
   override ngOnInit(): void {
-  this.setFilter();
-  this.filter.roles = this.roles || [];
-  this.paginationRequest = new PaginationRequest<UserFilter>(this.appPagination, this.filter);
+    this.setFilter();
+    this.filter.roles = this.roles || [];
+    this.paginationRequest = new PaginationRequest<UserFilter>(this.appPagination, this.filter);
     this.checkForChanges();
   }
 

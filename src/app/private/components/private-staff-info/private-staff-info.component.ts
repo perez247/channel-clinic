@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AppUser } from 'src/app/shared/core/models/app-user';
+import { AppUser, Staff } from 'src/app/shared/core/models/app-user';
 import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
 
 @Component({
@@ -9,7 +9,7 @@ import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
 })
 export class PrivateStaffInfoComponent implements OnInit {
 
-  @Input() user?: AppUser;
+  @Input() staff?: Staff;
 
   routes = ApplicationRoutes.generateRoutes();
 

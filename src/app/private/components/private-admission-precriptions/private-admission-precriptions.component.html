@@ -10,7 +10,7 @@
       <button *ngIf="index > 0" class="left-btn"><fa-icon size="2x" (click)="nextPreviousPrescription(-1)" [icon]="fonts.faChevronCircleLeft"></fa-icon></button>
       <button *ngIf="index < paginationResponse.totalItems - 1" (click)="nextPreviousPrescription(1)" class="right-btn"><fa-icon size="2x" [icon]="fonts.faChevronCircleRight"></fa-icon></button>
 
-      <app-prescription-item *ngIf="selected" (reload)="getPrescriptions(true)" (reloadLogged)="reloadLoggedPrescriptions()" [admissionPrescription]="selected" ></app-prescription-item>
+      <app-prescription-item *ngIf="selected" [ticket]="ticket" (reload)="getPrescriptions(true)" (reloadLogged)="reloadLoggedPrescriptions()" [admissionPrescription]="selected" ></app-prescription-item>
     </ng-container>
 
     <ng-container *ngIf="paginationResponse.totalItems <= 0" >
@@ -21,7 +21,7 @@
   </section>
 
   <section>
-    <app-logged-prescriptions *ngIf="selected" [prescription]="selected" [update]="loggedPrescriptionUpdate"></app-logged-prescriptions>
+    <app-logged-prescriptions *ngIf="selected" [prescription]="selected" [update]="loggedPrescriptionUpdate" [ticket]="ticket"></app-logged-prescriptions>
   </section>
 
 </section>

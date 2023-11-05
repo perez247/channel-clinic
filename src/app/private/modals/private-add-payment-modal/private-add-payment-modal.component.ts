@@ -38,8 +38,12 @@ export class PrivateAddPaymentModalComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  fileChangeEvent(event: any): void {
-    const file = event.target.files[0];
+  async fileChangeEvent(event: any): Promise<void> {
+    let file: File = event.target.files[0];
+
+    if (file.size > 200000) {
+      file = await UtilityHelpers.resizeAndCompressImage(file);
+    }
 
     this.viewModel.fileStatus = UtilityHelpers.validateFile(file);
 
@@ -53,13 +57,12 @@ export class PrivateAddPaymentModalComponent implements OnInit {
   }
 
   addPayment(): void {
-
     const data = this.viewModel.addPayment();
 
     if (!data) { return; }
 
     this.newPayment.emit(data);
-    this.activeModal.close()
+    this.activeModal.close();
   }
 
 }

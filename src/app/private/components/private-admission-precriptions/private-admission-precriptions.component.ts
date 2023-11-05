@@ -8,6 +8,7 @@ import { AdmissionService } from 'src/app/shared/services/api/admission/admissio
 import { AppPagination, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
 import { AdmissionPrescriptionFilter } from 'src/app/shared/core/models/admission-prescription-filter';
 import { AdmissionPrescription } from 'src/app/shared/core/models/admission-prescription';
+import { AppTicket } from 'src/app/shared/core/models/app-ticket';
 
 @Component({
   selector: 'app-private-admission-precriptions',
@@ -17,7 +18,7 @@ import { AdmissionPrescription } from 'src/app/shared/core/models/admission-pres
 export class PrivateAdmissionPrecriptionsComponent extends SharedUtilityComponent implements OnChanges {
 
   @Input() sectionName: string = '';
-  @Input() ticketId: string = '';
+  @Input() ticket: AppTicket = {} as AppTicket;
 
   fonts = { faPlus, faPlusCircle, faChevronCircleLeft, faChevronCircleRight }
 
@@ -41,7 +42,8 @@ export class PrivateAdmissionPrecriptionsComponent extends SharedUtilityComponen
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.filter.ticketId = this.ticketId;
+    this.filter.ticketId = this.ticket.base.id;
+    this.filter.appInventoryType = this.sectionName as any;
     this.paginationRequest = new PaginationRequest<AdmissionPrescriptionFilter>(this.appPagination, this.filter);
     this.getPrescriptions(true);
   }
@@ -112,7 +114,7 @@ export class PrivateAdmissionPrecriptionsComponent extends SharedUtilityComponen
   }
 
   private createPrescription(data: any): void {
-    data.ticketId = this.ticketId;
+    data.ticketId = this.ticket.base.id;
     data.appTicketStatus = 'ongoing';
     this.isCreatingPrescription = true;
     const sub = this.admissionService.createPrescription(data)

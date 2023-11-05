@@ -12,6 +12,7 @@ export class PrivateSaveLabRadiologyResultModalComponent {
 
   @Input() ticket: AppTicket = {} as AppTicket;
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
+  @Input() isAdmission = false;
 
   constructor(
     public activeModal: NgbActiveModal,

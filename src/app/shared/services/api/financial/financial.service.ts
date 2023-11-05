@@ -20,6 +20,17 @@ export class FinancialService {
     .pipe(timeout(environment.timeOut));
   }
 
+  getBillTotal(data: any): Observable<any> {
+    const params = '?' + new URLSearchParams(data).toString();
+    return this.http.get<any>(`${this.apiUrl}/get-total-bill${params}`)
+    .pipe(timeout(environment.timeOut));
+  }
+
+  billClient(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/bill-client`, data)
+    .pipe(timeout(environment.timeOut));
+  }
+
   updatePatientPayment(data: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/update-patient-payment`, data)
     .pipe(timeout(environment.timeOut));

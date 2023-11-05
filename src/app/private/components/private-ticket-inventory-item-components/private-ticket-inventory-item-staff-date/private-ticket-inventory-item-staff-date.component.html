@@ -4,19 +4,19 @@
         <strong>Staff/Date</strong>
       </div>
       <div class="col-10 row">
-        <div class="col-6">
+        <div class="col-12">
           <span>
             {{ ticketInventory.surgeryTicketPersonnels?.length ?? 0 }}
             <span *ngIf="ticketInventory.surgeryDate"> - {{ticketInventory.surgeryDate | date: 'medium'}} </span>
             <fa-icon *ngIf="!ticketInventory.concludedDate" (click)="saveStaffAndDate()" class="text-primary mx-1 pointer" [icon]="fonts.faPencilAlt"></fa-icon>
           </span>
         </div>
-        <div *ngIf="!ticketInventory.concludedDate" class="col-4">
+        <!-- <div *ngIf="!ticketInventory.concludedDate" class="col-4">
           <button [disabled]="(ticketInventory.surgeryTicketPersonnels?.length ?? 0) <= 0 || isLoading" (click)="updateStaffAndDate()" class="btn btn-sm btn-primary">
             Update
             <app-shared-loading *ngIf="isLoading"></app-shared-loading>
           </button>
-        </div>
+        </div> -->
       </div>
 
     </div>

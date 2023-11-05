@@ -32,8 +32,8 @@ export class TicketService {
     return this.http.post<void>(`${this.apiUrl}/send-to-departments`, data);
   }
 
-  sendTicketsToFinance(data: any, ticketType: string): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/send-${ticketType}-to-finance`, data);
+  sendTicketsToFinance(data: any): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/send-to-finance`, data);
   }
 
   concludeTicket(data: any, ticketType: string): Observable<void> {

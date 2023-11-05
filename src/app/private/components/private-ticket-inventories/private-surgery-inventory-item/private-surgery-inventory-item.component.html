@@ -1,37 +1,64 @@
-<div class="card mb-3" [ngClass]="{'bg-info': ticketInventory.appTicketStatus === 'canceled'}" >
+<div *ngIf="ticketInventory" class="card mb-3" [ngClass]="{'bg-info': ticketInventory.appTicketStatus === 'canceled'}" >
 
   <app-private-ticket-inventory-item-status
     [ticket]="ticket"
     [ticketInventory]="ticketInventory"
+    [isAdmission]="isAdmission"
   ></app-private-ticket-inventory-item-status>
 
+  <app-private-ticket-inventory-item-additional-note
+  [ticketInventory]="ticketInventory"
+  >
+  </app-private-ticket-inventory-item-additional-note>
+
   <app-private-ticket-inventory-item-doctor-prescription
+  *ngIf="!isAdmission"
   [ticketInventory]="ticketInventory">
   </app-private-ticket-inventory-item-doctor-prescription>
 
   <app-private-ticket-inventory-item-department-note
     [ticket]="ticket"
-    [ticketInventory]="ticketInventory">
+    [ticketInventory]="ticketInventory"
+    [isAdmission]="isAdmission">
   </app-private-ticket-inventory-item-department-note>
 
   <app-private-ticket-inventory-item-price
-    [ticket]="ticket"
+    *ngIf="ticket.sentToFinance && !isAdmission"
     [ticketInventory]="ticketInventory"
     [inventoryItems]="inventoryItems">
   </app-private-ticket-inventory-item-price>
 
-  <div *ngIf="this.ticket.sentToFinance && ticket.cost && ticketInventory.appTicketStatus !== 'canceled'">
+  <ng-container *ngIf="!isAdmissionExecution" >
+    <div *ngIf="this.ticket.sentToFinance && ticket.cost && ticketInventory.appTicketStatus !== 'canceled' || (isAdmission)" >
 
-    <app-private-ticket-inventory-item-staff-date
-      [ticket]="ticket"
-      [ticketInventory]="ticketInventory">
-    </app-private-ticket-inventory-item-staff-date>
+      <app-private-ticket-inventory-item-staff-date
+        [ticket]="ticket"
+        [ticketInventory]="ticketInventory"
+        [updateTicketInventory]="updatingTicket"
+        >
+      </app-private-ticket-inventory-item-staff-date>
 
-    <app-private-ticket-inventory-item-results
-      [ticket]="ticket"
-      [ticketInventory]="ticketInventory">
-    </app-private-ticket-inventory-item-results>
+      <app-private-ticket-inventory-item-results
+        [ticket]="ticket"
+        [ticketInventory]="ticketInventory">
+      </app-private-ticket-inventory-item-results>
 
-  </div>
+    </div>
+  </ng-container>
+
+  <app-private-ticket-inventory-item-basic-info
+  [ticketInventory]="ticketInventory"
+  >
+  </app-private-ticket-inventory-item-basic-info>
+
+  <ng-container *ngIf="!isAdmissionExecution" >
+    <app-private-update-ticket-inventory
+      *ngIf="!isAdmission || ticketInventory.inventory.appInventoryType === types.surgery"
+      [ticketInventory]="ticketInventory"
+      (reset)="resetTicketInventory($event)"
+      (updating)="notifyForUpdate()"
+    >
+    </app-private-update-ticket-inventory>
+  </ng-container>
 
 </div>

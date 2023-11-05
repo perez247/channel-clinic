@@ -6,10 +6,11 @@
     {{user?.lastName}}
     {{user?.otherName}}
   </a>
-  <small class="ps-5 ms-2 d-block">
+  <!-- <small class="ps-5 ms-2 d-block">
     {{ user?.base?.id | userId }}
-  </small>
-  <small class="d-block border-top mt-3 pt-1">
+  </small> -->
+  <!-- <small class="d-block border-top mt-3 pt-1"> -->
+  <small class="ps-5 ms-2 d-block">
     <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_company(company?.user?.base?.id).$absolutePath]">
       {{company?.name}}
     </a>

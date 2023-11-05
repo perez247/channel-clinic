@@ -16,9 +16,9 @@
 
     <strong class="d-block">
       {{ ticket?.appInventoryType }}
-      <span *ngIf="ticket?.appInventoryType === 'admission'">
+      <!-- <span *ngIf="ticket?.appInventoryType === 'admission'">
        ({{ getFirstAdmission() }})
-      </span>
+      </span> -->
       -
       {{ ticket?.base?.dateCreated | date : 'medium' }}
 

@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import * as moment from 'moment';
+import { lastValueFrom } from 'rxjs';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
 import { AppTicket, TicketInventory } from 'src/app/shared/core/models/app-ticket';
+import { InventoryService } from 'src/app/shared/services/api/inventory/inventory.service';
 
 @Component({
   selector: 'app-private-ticket-inventory-item-admission-dates',
@@ -24,18 +26,21 @@ export class PrivateTicketInventoryItemAdmissionDatesComponent extends SharedUti
 
   totalPrice = 0;
 
-  constructor() {
+  constructor(
+    private inventoryService: InventoryService
+  ) {
     super();
   }
 
-  override ngOnInit(): void {
+  override async ngOnInit(): Promise<void> {
     this.totalPrice = this.ticketInventory.totalPrice;
-    this.setDates();
+    await this.setDates();
   }
 
-  setDates(): void {
-    if (!this.ticket.sentToFinance) {
+  async setDates(): Promise<void> {
+    if (!this.ticket.sentToFinance && !this.ticketInventory.admissionStartDate) {
       this.ticketInventory.admissionStartDate = new Date();
+      await this.quicklyUpdateAdmissionStartDate();
     } else {
       if (!this.ticketInventory.admissionEndDate) {
         this.ticketInventory.admissionEndDate = new Date();
@@ -88,4 +93,10 @@ export class PrivateTicketInventoryItemAdmissionDatesComponent extends SharedUti
     this.ticketInventory.totalPrice = this.totalPrice * (this.ticketInventory?.prescribedQuantity ?? 0) * this.duration;
   }
 
+  async quicklyUpdateAdmissionStartDate(): Promise<void> {
+    this.isLoading = true;
+    const d = this.ticketInventory;
+    await lastValueFrom(this.inventoryService.updateTicketInventory({ ...d, ticketInventoryId: d?.base.id }));
+    this.isLoading = false;
+  }
 }

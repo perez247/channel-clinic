@@ -96,4 +96,44 @@ export class UtilityHelpers
     }
   }
 
+  static async resizeAndCompressImage(file: File, max_width: number = 1000, max_height: number = 1000) {
+
+    const img = new Image();
+    window.URL = window.URL || window.webkitURL;
+    var blobURL = window.URL.createObjectURL(file);
+    img.src = blobURL;
+    await img.decode();
+
+    var canvas = document.createElement('canvas');
+
+    var width = img.width;
+    var height = img.height;
+
+    // calculate the width and height, constraining the proportions
+    if (width > height) {
+      if (width > max_width) {
+        //height *= max_width / width;
+        height = Math.round(height *= max_width / width);
+        width = max_width;
+      }
+    } else {
+      if (height > max_height) {
+        //width *= max_height / height;
+        width = Math.round(width *= max_height / height);
+        height = max_height;
+      }
+    }
+
+    // resize the canvas and draw the image data into it
+    canvas.width = width;
+    canvas.height = height;
+    var ctx = canvas.getContext("2d");
+    ctx?.drawImage(img, 0, 0, width, height);
+
+    const base64 = canvas.toDataURL("image/jpeg",0.7); // get the data from canvas as 70% JPG (can be also PNG, etc.)
+    const blob = await fetch(base64).then(res => res.blob());
+
+    return new File([blob], Math.random().toString(), { type: blob.type });
+
+  }
 }

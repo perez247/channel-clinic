@@ -74,7 +74,12 @@ export interface TicketInventory {
   times: number;
   dosage: number;
   frequency: string;
-  itemsUsed: AppInventory[]
+  duration: number;
+  itemsUsed: AppInventory[];
+  updated: string;
+  additionalNote: string;
+  staff: Staff;
+  timeGiven: string;
 }
 
 export class TicketInventoryFilter {
@@ -128,5 +133,6 @@ export interface ITicketInventory {
   times: number;
   dosage: number;
   frequency: string;
+  duration: number;
 }
 

@@ -118,6 +118,9 @@ import { PrescriptionItemComponent } from './components/private-admission-precri
 import { PrivateStaffInfoComponent } from './components/private-staff-info/private-staff-info.component';
 import { PrivateExecutePrescriptionModalComponent } from './modals/private-execute-prescription-modal/private-execute-prescription-modal.component';
 import { LoggedPrescriptionsComponent } from './components/private-admission-precriptions/logged-prescriptions/logged-prescriptions.component';
+import { PrivateUpdateTicketInventoryComponent } from './components/private-ticket-inventories/private-update-ticket-inventory/private-update-ticket-inventory.component';
+import { PrivateTicketInventoryItemBasicInfoComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-basic-info/private-ticket-inventory-item-basic-info.component';
+import { PrivateTicketInventoryItemAdditionalNoteComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-additional-note/private-ticket-inventory-item-additional-note.component';
 
 @NgModule({
   declarations: [
@@ -241,6 +244,9 @@ import { LoggedPrescriptionsComponent } from './components/private-admission-pre
     PrivateStaffInfoComponent,
     PrivateExecutePrescriptionModalComponent,
     LoggedPrescriptionsComponent,
+    PrivateUpdateTicketInventoryComponent,
+    PrivateTicketInventoryItemBasicInfoComponent,
+    PrivateTicketInventoryItemAdditionalNoteComponent,
   ],
   imports: [
     PrivateRoutingModule,

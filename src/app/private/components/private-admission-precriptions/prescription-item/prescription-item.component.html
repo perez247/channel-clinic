@@ -2,7 +2,7 @@
 <section class="position-relative px-3 ">
 
   <div>
-    <app-private-staff-info [user]="admissionPrescription?.doctor" ></app-private-staff-info>
+    <app-private-staff-info [staff]="admissionPrescription?.doctor" ></app-private-staff-info>
   </div>
 
   <span class="d-block mt-2">{{admissionPrescription?.overallDescription}}</span>
@@ -51,9 +51,8 @@
             <span class="badge bg-primary mx-2">
 
               {{ inventory?.inventory?.name }}
-              <span *ngIf="inventory?.inventory?.appInventoryType === 'pharmacy'">
-                | {{ inventory?.dosage }} - {{ inventory?.times }} times - {{ inventory?.frequency }}
-              </span>
+              | {{ inventory?.dosage }} - {{ inventory?.times }} times - {{ inventory?.frequency }}
+
             </span>
             <div>
               {{ inventory?.doctorsPrescription }}

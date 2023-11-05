@@ -13,6 +13,7 @@ import { CustomErrorService } from 'src/app/shared/services/common/custom-error/
 export class PrivateAddItemUsedModalComponent implements OnInit {
 
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
+  @Input() isAdmission = false;
 
   leadingForm: AppInventory = {} as AppInventory;
 
