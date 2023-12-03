@@ -32,7 +32,7 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
   userSections = AppConstants.UserSections;
 
   companies: Company[] = [];
-  selectedCompany = null;
+  selectedCompany: string = '';
   selectedCompanyObject: Company = {} as Company;
 
   inventoryItems: AppInventoryItem[] = [];
@@ -59,7 +59,6 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
 
   override ngOnInit(): void {
     this.appStatuses = this.eventBus.getState().lookUps.value?.filter(x => x.type === AppConstants.LookUpType.AppTicketStatus) ?? [];
-    this.getIndividualCompany();
 
     this.pagination.request?.setFilter({ appTicketId: this.ticket?.base?.id, isTickets: true });
 
@@ -67,7 +66,7 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
   }
 
   getIndividualCompany(): void {
-    if (!this.ticket.sentToFinance) { return; }
+    // if (!this.ticket.sentToFinance) { return; }
     this.isLoading = true;
     const sub = this.userService.getIndividualCompany()
       .pipe(finalize(() => this.isLoading = false))
@@ -80,6 +79,8 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
             this.companies.push(company);
           }
           this.companies.push(this.ticket?.patient?.company ?? {});
+
+          this.calculateNewTotal(this.ticket.appointment.company?.base?.id || '')
         }
       });
     this.subscriptions.push(sub);
@@ -97,6 +98,7 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
               x.prescribedQuantity = 1;
             }
           });
+          this.getIndividualCompany();
         },
         error: (error) => {
           throw error;
@@ -111,8 +113,6 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
     html: 'Are you sure you want to send to finance. This cannot be undone'
   })
   sendToFinance(): void {
-
-    if (!this.areQuantitiesValid()) { return; }
 
     const data = {
       ticketId: this.ticket?.base.id
@@ -135,34 +135,13 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
     this.subscriptions.push(sub);
   }
 
-  areQuantitiesValid(): boolean {
-    let valid = true;
-    for (const iterator of this.pagination.elements ?? []) {
-
-      if ((!iterator.prescribedQuantity || iterator.prescribedQuantity <= 0) && iterator.appTicketStatus != 'canceled') {
-        this.toast.error(`"${iterator.inventory.name}" must have quantity greater than 0`);
-        valid = false;
-        break;
-      }
-
-      if ((iterator.prescribedQuantity ?? 0) > (iterator.inventory.quantity ?? 0)) {
-        this.toast.error(`"${iterator.inventory.name}" does not have enough available quantity`);
-        valid = false;
-        break;
-      }
-    }
-
-    if (this.ticket.sentToFinance && !this.selectedCompany) {
-      this.toast.error(`Kindly select a payer`);
-      return false;
-    }
-
-    return valid;
+  setCompanyToCalculateTotal(selected: any): void {
+    this.calculateNewTotal(selected.target.value);
   }
 
-  calculateNewTotal(selected: any): void
+  calculateNewTotal(companyId: string): void
   {
-    this.selectedCompany = selected.target.value;
+    this.selectedCompany = companyId;
 
     if (!this.selectedCompany || this.selectedCompany == 'null') {
       this.inventoryItems = [];
@@ -198,6 +177,8 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
     this.subscriptions.push(sub);
   }
 
+
+
   private getFullTotal(): void {
     const data = {
       companyId: this.selectedCompanyObject.base?.id,
@@ -218,32 +199,6 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
     this.subscriptions.push(sub);
   }
 
-  makeInitialPayment(): void {
-
-    const ticketInventories = this.pagination.elements.filter(x => x.appTicketStatus === 'ongoing');
-
-    if (!this.areQuantitiesValid()) { return; }
-    if (ticketInventories.length <= 0) {
-      this.toast.error('At least one item should be ongoing');
-      return;
-    }
-
-    const modalRef = this.modalService.open(PrivateMakeInitialPaymentComponent, { size: 'xl' });
-    modalRef.componentInstance.ticket = this.ticket;
-    modalRef.componentInstance.inventoryItems = this.inventoryItems;
-    modalRef.componentInstance.payee = this.selectedCompanyObject;
-
-    const sub = modalRef.componentInstance.reload.subscribe({
-      next: () => {
-        this.reload.emit(this.userSections.ticketList);
-      },
-      error: (error: any) => {
-        throw error;
-      }
-    });
-
-    this.subscriptions.push(sub);
-  }
 
   @Confirmable({
     title: 'Bill Client',
@@ -275,24 +230,24 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
 
   @Confirmable({
     title: 'Conclude ticket',
-    html: 'Are you sure you want to conclude the ticket, this means service has been redendered it cannot be undone'
+    html: 'Are you sure you want to conclude the ticket, this means service has been redendered. This action cannot be undone'
   })
   concludeTicket(): void {
     const data = {
       ticketId: this.ticket.base.id,
-      concludeTicketRequest: this.pagination.elements.map(x => {
-        return {
-          inventoryId : x.base.id,
-          concludedDate: new Date(),
-          appTicketStatus: x.appTicketStatus === 'canceled' ? x.appTicketStatus : 'concluded',
-          labRadiologyTestResult: x.labRadiologyTestResult,
-          surgeryTestResult: x.surgeryTestResult,
-          itemsUsed : x.itemsUsed,
-          proof: x.proof,
-          totalPrice: x.totalPrice,
-          admissionEndDate: x.admissionEndDate
-        }
-      }),
+      // concludeTicketRequest: this.pagination.elements.map(x => {
+      //   return {
+      //     inventoryId : x.base.id,
+      //     concludedDate: new Date(),
+      //     appTicketStatus: x.appTicketStatus === 'canceled' ? x.appTicketStatus : 'concluded',
+      //     labRadiologyTestResult: x.labRadiologyTestResult,
+      //     surgeryTestResult: x.surgeryTestResult,
+      //     itemsUsed : x.itemsUsed,
+      //     proof: x.proof,
+      //     totalPrice: x.totalPrice,
+      //     admissionEndDate: x.admissionEndDate
+      //   }
+      // }),
     }
 
     this.isLoading = true;
@@ -333,6 +288,11 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
   pageChanged(e: number) {
     this.pagination.request?.setPagination({ pageNumber: e });
     this.getTicketInventory();
+  }
+
+  getPayer(): string {
+    const payer = this.ticket.payerPayee.find(x => x.payer);
+    return `${payer?.appUser.firstName} ${payer?.appUser.lastName} `;
   }
 }
 

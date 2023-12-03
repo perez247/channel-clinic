@@ -11,7 +11,6 @@ export class PrivateSaveLabRadNoteComponent implements OnInit {
 
   @Input() ticket: AppTicket = {} as AppTicket;
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
-  @Input() isAdmission = false;
 
   type = AppTicketTypes;
 
@@ -29,14 +28,6 @@ export class PrivateSaveLabRadNoteComponent implements OnInit {
   }
 
   getCanEdit(): boolean {
-    if (this.isAdmission && !this.ticketInventory.updated) {
-      return true;
-    }
-
-    if (this.isAdmission && this.ticketInventory.updated) {
-      return false;
-    }
-
     if (this.ticketInventory.concludedDate) {
       return false;
     }

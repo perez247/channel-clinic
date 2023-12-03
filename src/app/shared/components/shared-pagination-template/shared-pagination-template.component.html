@@ -1,5 +1,6 @@
 
 
+<section class="d-flex justify-content-between">
   <ngb-pagination
     [(page)]="pagination.response.pageNumber"
     [pageSize]="pagination.response.pageSize"
@@ -10,3 +11,8 @@
     [boundaryLinks]="true"
     >
   </ngb-pagination>
+
+  <div>
+    <strong>Total:</strong> {{ pagination.response.totalItems }}
+  </div>
+</section>

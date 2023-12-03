@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
+import { faNairaSign } from '@fortawesome/free-solid-svg-icons';
 import { AppRoles } from 'src/app/shared/core/models/app-roles';
 import { AppTicket, TicketInventory } from 'src/app/shared/core/models/app-ticket';
 import { AppInventoryItem } from 'src/app/shared/core/models/inventory';
@@ -22,12 +23,15 @@ export class PrivateTicketInventoryItemQuantityToGiveComponent implements OnChan
 
   roles = AppRoles;
 
+  fonts = { faNairaSign }
+
   ngOnChanges(): void {
     this.setPrice();
   }
 
   blur(): void {
     this.setTotal();
+    this.onBlur.emit();
   }
 
   setPrice(): void {

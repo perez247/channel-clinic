@@ -1,7 +1,7 @@
 import { finalize } from 'rxjs';
 import { faPlus, faPlusCircle, faChevronCircleLeft, faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrivateCreateTicketModalComponent } from '../../modals/private-create-ticket-modal/private-create-ticket-modal.component';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
 import { AdmissionService } from 'src/app/shared/services/api/admission/admission.service';
@@ -76,15 +76,9 @@ export class PrivateAdmissionPrecriptionsComponent extends SharedUtilityComponen
     const component: PrivateCreateTicketModalComponent = modalRef.componentInstance;
 
     component.type = this.sectionName;
-    component.returnData = true;
-
-    const sub = modalRef.componentInstance.saved.subscribe({
-      next: (data: any) => {
-        this.createPrescription(data);
-      }
-    });
-
-    this.subscriptions.push(sub);
+    component.executeInParentComponent = true;
+    component.singleType = true;
+    component.executeAction = this.createPrescription.bind(this);
   }
 
 
@@ -113,15 +107,17 @@ export class PrivateAdmissionPrecriptionsComponent extends SharedUtilityComponen
     this.loggedPrescriptionUpdate = Math.random().toString();
   }
 
-  private createPrescription(data: any): void {
+  private createPrescription(data: any, activeModal: NgbActiveModal, setLoading: (state: boolean) => void): void {
     data.ticketId = this.ticket.base.id;
     data.appTicketStatus = 'ongoing';
     this.isCreatingPrescription = true;
+    setLoading(true);
     const sub = this.admissionService.createPrescription(data)
-      .pipe(finalize(() => this.isCreatingPrescription = false))
+      .pipe(finalize(() => { this.isCreatingPrescription = false; setLoading(false) }))
       .subscribe({
         next: () => {
           this.getPrescriptions(true);
+          activeModal.close();
         },
         error: (error) => {
           throw error;

@@ -18,6 +18,7 @@ export class PrivateGetInventoryFunctions {
       return fb.group({
         inventoryName: [null],
         inventoryId: [null],
+        type: [null],
         ...addDosage,
         doctorsPrescription: [null, [CustomValidator.MinLength(5), CustomValidator.MaxLength(1000)]],
       });
@@ -28,6 +29,7 @@ export class PrivateGetInventoryFunctions {
       return fb.group({
         inventoryName: [{value: appinventory?.inventoryName, disabled: true}],
         inventoryId: [appinventory.inventoryId],
+        type: [appinventory.type],
         ...addDosage,
         doctorsPrescription: [appinventory?.doctorsPrescription, [CustomValidator.MinLength(5), CustomValidator.MaxLength(1000)]],
       });

@@ -13,6 +13,8 @@ export class UserPersonalDetailFunctions {
       otherName: [appUser?.otherName, [CustomValidator.MaxLength(200)]],
       address: [appUser?.address, [CustomValidator.MaxLength(2000)]],
       profile: [appUser?.profile],
+      companyUniqueId: [appUser?.patient?.companyUniqueId, [CustomValidator.MaxLength(255)]],
+      otherInformation: [appUser?.patient?.otherInformation, [CustomValidator.MaxLength(2000)]],
       email: {value: appUser?.email, disabled: true},
       userId: [appUser?.base?.id]
     });

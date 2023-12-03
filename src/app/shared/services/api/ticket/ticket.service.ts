@@ -37,7 +37,8 @@ export class TicketService {
   }
 
   concludeTicket(data: any, ticketType: string): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/conclude-${ticketType}-ticket-inventory`, data);
+    // return this.http.put<void>(`${this.apiUrl}/conclude-${ticketType}-ticket-inventory`, data);
+    return this.http.put<void>(`${this.apiUrl}/conclude-ticket`, data);
   }
 
   deleteTicket(data: any): Observable<void> {

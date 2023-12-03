@@ -1,7 +1,23 @@
 
-<div *ngIf="!canUpdate" class="card-header d-flex justify-content-end">
-  <button [disabled]="isLoading" (click)="updateTicketInventory()" class="btn btn-sm btn-primary">
-    Save
-    <app-shared-loading *ngIf="isLoading"></app-shared-loading>
-  </button>
-</div>
+<section *ngIf="(!canUpdate || ticket?.cost || isAdmission) && !ticketInventory?.concludedDate" class="card-header d-flex justify-content-between">
+
+  <div>
+    <span>&nbsp;</span>
+    <button *ngIf="!ticketInventory?.concludedDate && ticket?.cost && !isAdmission" [disabled]="isLoading" (click)="concludeTicketInventory()" class="btn btn-sm btn-primary">
+      Conclude
+      <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+    </button>
+    <button *ngIf="!ticketInventory?.concludedDate && isAdmission" [disabled]="isLoading" (click)="concludeTicketInventory()" class="btn btn-sm btn-primary">
+      Conclude
+      <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+    </button>
+  </div>
+
+  <div>
+    <span>&nbsp;</span>
+    <button *ngIf="!canUpdate" [disabled]="isLoading" (click)="updateTicketInventory()" class="btn btn-sm btn-primary">
+      Save
+      <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+    </button>
+  </div>
+</section>

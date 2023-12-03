@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { PrivateInventoryItemComponent } from '../private-inventory-item.component';
+import { AppTicketTypes } from 'src/app/shared/core/models/app-ticket';
 
 @Component({
   selector: 'app-private-lab-inventory-item',
@@ -9,6 +10,10 @@ import { PrivateInventoryItemComponent } from '../private-inventory-item.compone
 export class PrivateLabInventoryItemComponent extends PrivateInventoryItemComponent {
 
   @Input() isAdmission = false;
+
+  @Input() isAdmissionExecution = false;
+
+  types = AppTicketTypes;
 
   constructor(
   ) {

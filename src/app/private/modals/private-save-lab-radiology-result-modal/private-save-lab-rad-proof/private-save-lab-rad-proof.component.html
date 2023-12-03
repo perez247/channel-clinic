@@ -2,7 +2,7 @@
 <div class="d-flex justify-content-between p-4 border-bottom mb-3">
   <span>{{ticketInventory.proof?.length ?? 0}}/5</span>
   <button
-    [disabled]="ticketInventory.concludedDate || ticketInventory.proof.length === 5 || (isAdmission && ticketInventory.updated)"
+    [disabled]="ticketInventory.concludedDate || ticketInventory.proof.length === 5"
     (click)="openUploadProfileModal()"
     class="btn btn-sm btn-primary">Add image</button>
 </div>

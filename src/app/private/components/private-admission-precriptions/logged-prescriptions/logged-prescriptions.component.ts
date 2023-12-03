@@ -19,7 +19,7 @@ export class LoggedPrescriptionsComponent extends SharedUtilityComponent impleme
   @Input() update: string = '1';
   @Input() ticket: AppTicket = {} as AppTicket;
 
-  pagination = new PaginationContext<TicketInventory, TicketInventoryFilter>()
+  pagination = new PaginationContext<TicketInventory, TicketInventoryFilter>();
 
   types = AppTicketTypes;
 

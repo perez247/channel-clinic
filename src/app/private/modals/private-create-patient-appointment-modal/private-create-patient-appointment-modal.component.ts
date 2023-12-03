@@ -6,13 +6,14 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 import { finalize } from "rxjs";
 import { SharedUtilityComponent } from "src/app/shared/components/shared-utility/shared-utility.component";
-import { AppUser } from "src/app/shared/core/models/app-user";
+import { AppUser, Company } from "src/app/shared/core/models/app-user";
 import { ApplicationRoutes } from "src/app/shared/core/routes/app-routes";
 import { AppointmentService } from "src/app/shared/services/api/appointment/appointment.service";
 import { AppFileService } from "src/app/shared/services/common/app-file/app-file.service";
 import { CustomErrorService } from "src/app/shared/services/common/custom-error/custom-error.service";
 import { CustomToastService } from "src/app/shared/services/common/custom-toast/custom-toast.service";
 import { CreatePatientAppoitmentModalFunctions } from "./private-create-patient-appointment-modal-functions";
+import { UserService } from "src/app/shared/services/api/user/user.service";
 
 @Component({
   selector: 'app-private-create-patient-appointment-modal',
@@ -29,6 +30,8 @@ export class PrivateCreatePatientAppointmentModalComponent extends SharedUtility
   hour?: number = 0;
   minute?: number = 0;
 
+  companies: Company[] = [];
+
   constructor(
     public activeModal: NgbActiveModal,
     private fb: FormBuilder,
@@ -36,7 +39,8 @@ export class PrivateCreatePatientAppointmentModalComponent extends SharedUtility
     private appointmentService: AppointmentService,
     private router: Router,
     private toast: CustomToastService,
-    private appFileService: AppFileService
+    private appFileService: AppFileService,
+    private userService: UserService,
   ) {
     super();
   }
@@ -50,6 +54,7 @@ export class PrivateCreatePatientAppointmentModalComponent extends SharedUtility
   }
 
   addPatient(patient: AppUser): void {
+    this.getIndividualCompany(patient);
     this.form.patchValue({
       patientId: patient.patient?.base?.id,
       patientName: `${patient.lastName} ${patient.firstName} ${patient.otherName}`,
@@ -58,8 +63,11 @@ export class PrivateCreatePatientAppointmentModalComponent extends SharedUtility
 
   clearpatient(): void {
     this.form.patchValue({
-      patientId: null
+      patientId: null,
+      sponsorId: null,
     });
+
+    this.companies = [];
   }
 
   addDoctor(doctor: AppUser): void {
@@ -114,10 +122,31 @@ export class PrivateCreatePatientAppointmentModalComponent extends SharedUtility
           this.activeModal.close();
         },
         error: (error) => {
-          console.log(error);
+          throw error;
         }
       });
 
+    this.subscriptions.push(sub);
+  }
+
+  getIndividualCompany(userAsPatient: AppUser): void {
+    this.isLoading = true;
+    const sub = this.userService.getIndividualCompany()
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: (data) => {
+          this.companies = [];
+          const user = data.result ? data.result[0] : null;
+          const company = user?.company;
+          if (company && company.base?.id != userAsPatient?.patient?.company?.base?.id) {
+            this.companies.push(company);
+          }
+
+          if (userAsPatient.patient?.company) {
+            this.companies.push(userAsPatient.patient.company || {});
+          }
+        }
+      });
     this.subscriptions.push(sub);
   }
 

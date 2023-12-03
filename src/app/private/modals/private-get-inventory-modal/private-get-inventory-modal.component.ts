@@ -16,6 +16,7 @@ export class PrivateGetInventoryModalComponent implements OnInit {
 
   @Input() appInventory?: ITicketInventory;
   @Input() type: string = AppTicketTypes.pharmacy;
+  @Input() admissionOnly = false;
 
   @Output() itemSaved = new EventEmitter();
 
@@ -48,6 +49,7 @@ export class PrivateGetInventoryModalComponent implements OnInit {
     this.form.patchValue({
       inventoryId: inventory.base?.id,
       inventoryName: inventory.name,
+      type: inventory.appInventoryType
     });
   }
 

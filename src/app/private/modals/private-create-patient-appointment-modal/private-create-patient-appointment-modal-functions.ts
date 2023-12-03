@@ -13,6 +13,7 @@ export class CreatePatientAppoitmentModalFunctions {
     return fb.group({
       patientId: [null, [CustomValidator.CustomRequired('Patient')]],
       patientName: [null],
+      sponsorId: [null, [CustomValidator.CustomRequired('Sponsor')]],
       appointmentDate: [d, [CustomValidator.CustomRequired('Date'), CustomValidator.DateGreaterThanNow()]],
       appointmentTime: [{ hour, minute: 0 }, [CustomValidator.CustomRequired('Time') ]],
       doctorId: [null],

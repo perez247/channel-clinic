@@ -11,7 +11,7 @@
         <fa-icon [icon]="fonts.faArrowLeft" class="pe-2"></fa-icon>
       </a>
 
-      Admission: {{ admissionRoom }}
+      Admission: {{ admissionRoom }} <small style="font-size: 14px;" class="ms-2 mb-2 p-1 lead rounded-1 bg-danger text-white" *ngIf="dashboard.appTicket.cost"> Discharged </small>
     </span>
   </section>
 

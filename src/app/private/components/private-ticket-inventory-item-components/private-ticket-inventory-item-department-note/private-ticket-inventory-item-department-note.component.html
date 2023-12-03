@@ -4,7 +4,9 @@
       <strong>Dept note</strong>
     </div>
     <div class="col-10">
-      <textarea [disabled]="noteDisabled" [(ngModel)]="ticketInventory.departmentDescription" type="text" class="form-control"></textarea>
+      <textarea
+        [disabled]="noteDisabled || ticketInventory.concludedDate"
+        [(ngModel)]="ticketInventory.departmentDescription" type="text" class="form-control"></textarea>
     </div>
   </div>
 </div>

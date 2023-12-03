@@ -52,13 +52,7 @@
         <li appHasRole [roles]="[roles.admin, roles.doctor, roles.nurse]" [operator]="'or'"><a class="dropdown-item" (click)="updateDoctor()" >Change Doctor</a></li>
         <div *ngIf="appointment.isToday()" appHasRole [roles]="[roles.admin, appointment.doctor?.user?.base?.id]" [operator]="'or'">
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" (click)="openAddNewTicket('pharmacy')">Create Pharmacy Ticket</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" (click)="openAddNewTicket('lab')">Create Lab Ticket</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" (click)="openAddNewTicket('radiology')">Create Radiology Ticket</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" (click)="openAddNewTicket('surgery')">Create Surgery Ticket</a></li>
+          <li><a class="dropdown-item" (click)="openAddNewTicket('pharmacy')">Create Ticket</a></li>
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" (click)="openAddNewTicket('admission')">Create Admission Ticket</a></li>
           <li><hr class="dropdown-divider"></li>

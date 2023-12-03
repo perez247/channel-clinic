@@ -1,12 +1,16 @@
-<div class="card-header bg-secondary">
+<div class="card-header text-white  bg-primary">
   <div class="row">
     <div class="col-2">
       <strong>Item</strong>
     </div>
     <div class="col-10 row">
-      <div class="col-6">{{ ticketInventory.inventory.name }} - ({{ ticketInventory.inventory.appInventoryType }})</div>
       <div class="col-6">
-        <select [disabled]="ticket.cost != null || (isAdmission && ticketInventory.updated)" class="form-control" [(ngModel)]="ticketInventory.appTicketStatus">
+        <span *ngIf="ticketInventory.inventory.appInventoryType == types.admission">
+          <fa-icon (click)="updateInventoryType()" *ngIf="!ticketInventory.admissionStartDate" [icon]="fonts.faPencil" class="pe-1 text-light pointer"></fa-icon>
+        </span>
+        {{ ticketInventory.inventory.name }} - ({{ ticketInventory.inventory.appInventoryType }})</div>
+      <div class="col-6">
+        <select [disabled]="ticket.cost != null || ticketInventory.concludedDate" class="form-control" [(ngModel)]="ticketInventory.appTicketStatus">
           <option [value]="'ongoing'" >Ongoing</option>
           <option [value]="'canceled'" >Canceled</option>
           <option *ngIf="ticketInventory.concludedDate" [value]="'concluded'" >Concluded</option>

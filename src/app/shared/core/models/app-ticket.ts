@@ -2,6 +2,7 @@ import { PayerPayee } from './financial';
 import { Company } from 'src/app/shared/core/models/app-user';
 import { AppUser, Base, Patient, Staff, UserContract } from "./app-user";
 import { AppInventory } from "./inventory";
+import { AppAppointment } from './app-appointment';
 
 export class TicketFilter {
   appointmentId?: string;
@@ -22,6 +23,7 @@ export class TicketFilter {
 export interface AppTicket {
   base: Base
   appointmentId: string
+  appointment: AppAppointment
   cost: AppCost
   overallDescription: string
   overallAppointmentDescription: string
@@ -92,6 +94,7 @@ export class TicketInventoryFilter {
 export interface SurgeryTicketPersonnel {
   base: Base
   personnel: AppUser
+  personnelId: string
   surgeryRole: string
   description: string
   summaryOfSurgery: any
@@ -134,5 +137,21 @@ export interface ITicketInventory {
   dosage: number;
   frequency: string;
   duration: number;
+  type: string;
 }
 
+export class TicketHelper {
+  static toITicketInventory(ticketInventory: TicketInventory): ITicketInventory {
+    const data = {} as ITicketInventory;
+    data.doctorsPrescription = ticketInventory.doctorsPrescription || '';
+    data.inventoryId = ticketInventory.inventory.id || '';
+    data.ticketInventoryId = ticketInventory.base.id;
+    data.inventoryName = ticketInventory.inventory.name || '';
+    data.times = ticketInventory.times;
+    data.dosage = ticketInventory.dosage;
+    data.frequency = ticketInventory.frequency;
+    data.duration = ticketInventory.duration;
+    data.type = ticketInventory.inventory.appInventoryType || 'pharmacy';
+    return data;
+  }
+}

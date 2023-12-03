@@ -14,7 +14,6 @@ import { Confirmable } from 'src/app/shared/decorators/confirm-action-method-dec
 export class PrivateSaveLabRadProofComponent implements OnInit {
 
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
-  @Input() isAdmission = false;
 
   fonts = { faTrashAlt }
 

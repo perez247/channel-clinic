@@ -10,11 +10,7 @@ import { AppTicketTypes } from 'src/app/shared/core/models/app-ticket';
 })
 export class PrivateSurgeryInventoryItemComponent extends PrivateLabInventoryItemComponent {
 
-  @Input() isAdmissionExecution = false;
-
   updatingTicket = ''
-
-  types = AppTicketTypes;
   constructor(
   ) {
     super();

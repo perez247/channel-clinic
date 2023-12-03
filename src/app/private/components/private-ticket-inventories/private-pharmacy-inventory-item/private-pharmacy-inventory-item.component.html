@@ -49,6 +49,7 @@
 
   <app-private-update-ticket-inventory
     *ngIf="!isAdmission"
+    [ticket]="ticket"
     [ticketInventory]="ticketInventory"
     (reset)="resetTicketInventory($event)"
   >

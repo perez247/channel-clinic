@@ -8,14 +8,22 @@
       <ul class="dropdown-menu" aria-labelledby="ticketMoreOptions">
         <li>
           <a class="dropdown-item pointer"
-          (click)="viewTicket()"
-          >View</a>
+          [routerLink]="[route]"
+          >View Ticket</a>
         </li>
+        <div *ngIf="ticket?.appInventoryType == appTicketTypes.admission">
+          <li><hr class="dropdown-divider"></li>
+          <li>
+            <a class="dropdown-item pointer"
+            [routerLink]="[admissionRoute]"
+            >View Admission</a>
+          </li>
+        </div>
       </ul>
     </div>
 
     <strong class="d-block">
-      {{ ticket?.appInventoryType }}
+      {{ ticket?.appInventoryType == appTicketTypes.admission ? 'Admission' : 'Appointment' }}
       <!-- <span *ngIf="ticket?.appInventoryType === 'admission'">
        ({{ getFirstAdmission() }})
       </span> -->
@@ -31,7 +39,7 @@
 
       <app-private-patient-info
         [user]="ticket?.patient?.user"
-        [company]="ticket?.patient?.company"
+        [company]="ticket?.appointment?.company"
       ></app-private-patient-info>
 
     </div>

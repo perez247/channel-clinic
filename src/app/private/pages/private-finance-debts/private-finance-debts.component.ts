@@ -98,7 +98,7 @@ export class PrivateFinanceDebtsComponent extends SharedUtilityComponent impleme
     let name = this.filter.patientId ? this.filter.patientName : this.filter.companyName;
     const id = this.filter.patientId ? this.filter.patientId : this.filter.companyId;
     name = `Invoice_${name?.replace(' ', '_')}_${new UserIdPipe().transform(id)}_${new Date().toLocaleDateString()}.csv`
-    this.fileService.downloadAsCSV(invoice, name)
+    this.fileService.downloadAsCSV(invoice, name);
   }
 
   pageChanged(e: number) {

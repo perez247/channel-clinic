@@ -23,6 +23,7 @@ export class AppUser {
     isPatient?: boolean;
     isCompany?: boolean;
 
+
     hasClaim(roles: string[] = [], and: boolean): boolean {
 
       if (roles.length <= 0) { return false }
@@ -70,6 +71,8 @@ export class AppUser {
     user?: AppUser
     patientContract?: UserContract
     base?: Base
+    companyUniqueId?: string;
+    otherInformation?: string;
   }
 
   export class UserContract {

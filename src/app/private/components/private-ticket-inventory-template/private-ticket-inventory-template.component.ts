@@ -1,7 +1,7 @@
-import { ITicketInventory } from './../../../shared/core/models/app-ticket';
+import { AppTicketTypes, ITicketInventory, TicketInventory, TicketInventoryFilter } from './../../../shared/core/models/app-ticket';
 import { ApplicationRoutes } from './../../../shared/core/routes/app-routes';
 import { CustomErrorService } from './../../../shared/services/common/custom-error/custom-error.service';
-import { finalize, throwError } from 'rxjs';
+import { finalize, throwError, lastValueFrom } from 'rxjs';
 import { TicketService } from 'src/app/shared/services/api/ticket/ticket.service';
 import { CustomToastService } from './../../../shared/services/common/custom-toast/custom-toast.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -15,6 +15,8 @@ import { AppAppointment } from 'src/app/shared/core/models/app-appointment';
 import { Confirmable } from 'src/app/shared/decorators/confirm-action-method-decorator';
 import { PrivateCreateTicketModalComponent } from '../../modals/private-create-ticket-modal/private-create-ticket-modal.component';
 import { Router } from '@angular/router';
+import { InventoryService } from 'src/app/shared/services/api/inventory/inventory.service';
+import { PaginationContext } from 'src/app/shared/core/models/pagination';
 
 @Component({
   selector: 'app-private-ticket-inventory-template',
@@ -35,19 +37,21 @@ export class PrivateTicketInventoryTemplateComponent extends SharedUtilityCompon
 
   roles = AppRoles;
 
+  appTicketTypes = AppTicketTypes;
+
   constructor(
     private toast: CustomToastService,
     private ticketService: TicketService,
     private errorService: CustomErrorService,
     private modalService: NgbModal,
-    private router: Router
+    private router: Router,
+    private inventoryService: InventoryService,
   ) {
     super();
   }
 
   override ngOnInit(): void {
   }
-
 
   @Confirmable({
     title: 'Send ticket to department',
@@ -61,7 +65,7 @@ export class PrivateTicketInventoryTemplateComponent extends SharedUtilityCompon
       ticketId: this.ticket?.base.id,
       overallDescription: this.ticket?.overallDescription,
       sent: true,
-      sentToFinance: false,
+      sentToFinance: true,
       appTicketStatus: this.ticket?.appTicketStatus
     };
     const sub = this.ticketService.updateTicket(data)
@@ -69,7 +73,8 @@ export class PrivateTicketInventoryTemplateComponent extends SharedUtilityCompon
       .subscribe({
         next: (data) => {
           this.ticket!.sent = true;
-          this.toast.success(`Ticket sent to the ${this.ticket?.appInventoryType?.replace('tickets:', '')} department`);
+          this.ticket!.sentToFinance = true;
+          this.toast.success(`Ticket sent to the respective departments department`);
         },
         error: (error) => {
           throw error;
@@ -106,8 +111,14 @@ export class PrivateTicketInventoryTemplateComponent extends SharedUtilityCompon
       this.subscriptions.push(sub);
   }
 
-  editTicket(): void {
-    const ticketInventories = this.ticket?.ticketInventories.map(x => {
+  async editTicket(): Promise<void> {
+    this.isLoading = true;
+    const ticketInventoriesFromServer = await this.getTicketInventories();
+    this.isLoading = false;
+
+    if (ticketInventoriesFromServer.length == 0) { return; }
+
+    const ticketInventories = ticketInventoriesFromServer.map(x => {
       return {
         ticketInventoryId: x.base.id,
         inventoryId: x.inventory.base?.id,
@@ -116,6 +127,7 @@ export class PrivateTicketInventoryTemplateComponent extends SharedUtilityCompon
         times: x.times,
         dosage: x.dosage,
         frequency: x.frequency,
+        type: x.inventory.appInventoryType,
       } as ITicketInventory
     });
 
@@ -138,8 +150,18 @@ export class PrivateTicketInventoryTemplateComponent extends SharedUtilityCompon
     this.subscriptions.push(sub);
   }
 
-  viewTicket(): void {
-    console.log(this.router.url);
+  async getTicketInventories(): Promise<TicketInventory[]> {
+    const pagination = new PaginationContext<TicketInventory, TicketInventoryFilter>();
+    pagination.request?.setFilter({ appTicketId: this.ticket?.base.id });
+    pagination.request?.setPagination({ pageSize: 100 });
+
+    try {
+      const data = await lastValueFrom(this.inventoryService.getTicketInventories(pagination.request));
+      return data.result || [];
+    } catch (error) {
+      this.toast.error('Failed to get ticket inventories, kindly try again later')
+      return [];
+    }
   }
 
 }

@@ -55,6 +55,7 @@ export class PrivateInventoryItemComponent extends SharedUtilityComponent implem
     this.ticketInventory = null as any;
     setTimeout(() => {
       this.ticketInventory = ticketInventory;
+      this.recalculate.emit();
     }, 300);
   }
 

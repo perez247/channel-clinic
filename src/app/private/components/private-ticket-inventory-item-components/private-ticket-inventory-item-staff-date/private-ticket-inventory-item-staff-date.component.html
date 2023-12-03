@@ -9,6 +9,7 @@
             {{ ticketInventory.surgeryTicketPersonnels?.length ?? 0 }}
             <span *ngIf="ticketInventory.surgeryDate"> - {{ticketInventory.surgeryDate | date: 'medium'}} </span>
             <fa-icon *ngIf="!ticketInventory.concludedDate" (click)="saveStaffAndDate()" class="text-primary mx-1 pointer" [icon]="fonts.faPencilAlt"></fa-icon>
+            <fa-icon *ngIf="ticketInventory.concludedDate" (click)="saveStaffAndDate()" class="text-primary mx-1 pointer" [icon]="fonts.faMagnifyingGlass"></fa-icon>
           </span>
         </div>
         <!-- <div *ngIf="!ticketInventory.concludedDate" class="col-4">

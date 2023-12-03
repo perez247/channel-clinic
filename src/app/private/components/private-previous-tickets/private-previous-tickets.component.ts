@@ -41,7 +41,7 @@ export class PrivatePreviousTicketsComponent extends SharedUtilityComponent impl
   override ngOnInit(): void {
     this.filter.beforeDateTime = this.beforeDateTime;
     this.filter.patientId = this.patientId;
-    this.filter.full = true;
+    // this.filter.full = true;
     this.paginationRequest = new PaginationRequest<TicketFilter>(this.appPagination, this.filter);
     this.getTickets();
   }

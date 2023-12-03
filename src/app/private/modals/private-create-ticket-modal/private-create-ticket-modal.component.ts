@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { faTrashAlt, faPen, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { AppAppointment } from "src/app/shared/core/models/app-appointment";
-import { AppTicket, ITicketInventory, TicketFilter } from "src/app/shared/core/models/app-ticket";
+import { AppTicket, AppTicketTypes, ITicketInventory, TicketFilter } from "src/app/shared/core/models/app-ticket";
 import { InventoryFilter } from "src/app/shared/core/models/inventory";
 import { AppPagination, PaginationRequest, PaginationResponse } from "src/app/shared/core/models/pagination";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -23,12 +23,18 @@ import { PrivateGetInventoryModalComponent } from "../private-get-inventory-moda
 export class PrivateCreateTicketModalComponent extends SharedUtilityComponent implements OnInit {
 
   @Input() type = 'pharmacy';
+  @Input() singleType = false;
   @Input() ticket?: AppTicket;
   @Input() appointment?: AppAppointment;
+
   @Output() saved = new EventEmitter<any>();
   @Input() ticketInventories: ITicketInventory[] = [];
 
   @Input() returnData = false;
+
+
+  @Input() executeAction?: (data: any, activeModal: NgbActiveModal, setLoading: (state: boolean) => void) => void;
+  @Input() executeInParentComponent = false;
 
   form: FormGroup = {} as any;
 
@@ -41,6 +47,9 @@ export class PrivateCreateTicketModalComponent extends SharedUtilityComponent im
   filterForTicket = new TicketFilter();
   paginationRequest = new PaginationRequest<TicketFilter>(this.appPagination, this.filterForTicket);
   paginationResponse = new PaginationResponse<AppTicket[]>();
+
+  appTicketTypes = AppTicketTypes;
+  allTypesExceptionAdmision = Object.keys(this.appTicketTypes).filter(x => x !== this.appTicketTypes.admission);
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -63,11 +72,18 @@ export class PrivateCreateTicketModalComponent extends SharedUtilityComponent im
     this.form = PrivateCreateTicketFunctions.createForm(this.fb, this.ticket, type);
   }
 
-  saveTicketInventory(appTicket: any)
+  selectionMade(appTicket: any, type: any): void {
+
+    if (!type?.value || type?.value == 'null') { return; }
+
+    this.saveTicketInventory(appTicket, type?.value);
+  }
+
+  saveTicketInventory(appTicket: any, type: any)
   {
     const modalRef = this.modalService.open(PrivateGetInventoryModalComponent, { size: 'lg' });
     modalRef.componentInstance.appInventory = appTicket;
-    modalRef.componentInstance.type = this.type;
+    modalRef.componentInstance.type = type as string;
 
     const sub = modalRef.componentInstance.itemSaved.subscribe({
       next: (data: ITicketInventory) => {
@@ -119,6 +135,15 @@ export class PrivateCreateTicketModalComponent extends SharedUtilityComponent im
       return;
     }
 
+    if (this.executeInParentComponent) {
+      if (this.executeAction) {
+        this.executeAction(data, this.activeModal, this.updateLoading.bind(this));
+      } else {
+        this.toast.error("No action given");
+      }
+      return;
+    }
+
     this.isLoading = true;
     const sub = this.ticketService.saveTicketAndInventory(data)
       .pipe(finalize(() => this.isLoading = false))
@@ -140,5 +165,7 @@ export class PrivateCreateTicketModalComponent extends SharedUtilityComponent im
     this.saved.emit();
   }
 
-
+  updateLoading(state: boolean): void {
+    this.isLoading = state;
+  }
 }

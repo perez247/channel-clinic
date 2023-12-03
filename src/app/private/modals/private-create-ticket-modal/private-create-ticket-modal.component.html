@@ -1,7 +1,7 @@
 <div class="modal-content">
   <div class="modal-header c-bg-primary">
-    <h5 *ngIf="ticket" class="modal-title">Update {{type}} ticket</h5>
-    <h5 *ngIf="!ticket" class="modal-title">Create {{type}} ticket</h5>
+    <h5 *ngIf="ticket" class="modal-title">Update {{singleType ? type : ''}} ticket</h5>
+    <h5 *ngIf="!ticket" class="modal-title">Create {{singleType ? type : ''}} ticket</h5>
     <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
       <i class="fas fa-times"></i>
     </button>
@@ -16,8 +16,19 @@
 
       <div class="row">
         <h6 class="border-bottom">
-          {{type}}
-          <fa-icon (click)="saveTicketInventory(null)" [icon]="fonts.faPlusCircle" class="pe-1 pointer text-primary"></fa-icon>
+          <ng-container *ngIf="singleType">
+            {{type}}
+            <fa-icon (click)="saveTicketInventory(null, type)" [icon]="fonts.faPlusCircle" class="pe-1 pointer text-primary"></fa-icon>
+          </ng-container>
+
+          <ng-container *ngIf="!singleType">
+
+            <select #selection (change)="selectionMade(null, $event.target); selection.value = 'null'">
+              <option [value]="'null'">---</option>
+              <option *ngFor="let item of allTypesExceptionAdmision" [value]="item">Add {{ item }}</option>
+            </select>
+          </ng-container>
+
         </h6>
 
         <div class="py-2 border-bottom scrollable" *ngIf="ticketInventories.length > 0">
@@ -28,7 +39,7 @@
                   <strong>Item</strong>
                 </div>
                 <div class="col-10 position-relative">
-                  {{ inventory.inventoryName}}
+                  {{ inventory.inventoryName}} ({{inventory.type}})
                   <span class="deleteIcon ms-3" (click)="removeTicketInventory(i)"><fa-icon [icon]="fonts.faTrashAlt" class="pe-1 pointer text-danger"></fa-icon></span>
                 </div>
               </div>
@@ -43,7 +54,7 @@
                     <strong>Dosage: </strong> <span>{{inventory.dosage}}</span> |
                     <strong>Times: </strong> <span>{{inventory.times}}</span> |
                     <strong>Frequency: </strong> <span>{{inventory.frequency}}</span>
-                    <span class="deleteIcon ms-3" (click)="saveTicketInventory(inventory)"><fa-icon [icon]="fonts.faPen" class="pe-1 pointer text-primary"></fa-icon></span>
+                    <span class="deleteIcon ms-3" (click)="saveTicketInventory(inventory, inventory.type)"><fa-icon [icon]="fonts.faPen" class="pe-1 pointer text-primary"></fa-icon></span>
                   </div>
                   <div>
                     {{ inventory.doctorsPrescription }}

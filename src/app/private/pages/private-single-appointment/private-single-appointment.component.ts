@@ -92,6 +92,8 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
     modalRef.componentInstance.type = type;
     modalRef.componentInstance.appointment = this.appointment;
 
+    if (type == 'admission') { modalRef.componentInstance.singleType = true; }
+
     const sub = modalRef.componentInstance.saved.subscribe({
       next: () => {
         this.getAppointmentByDate();

@@ -6,7 +6,7 @@
       <div class="placeholder-glow ms-5 ps-3">
         <span *ngIf="!ticket" class="placeholder col-12"></span>
         <span *ngIf="ticket" class="h5 me-1">
-          {{ ticket.appInventoryType }} - {{ ticket.base.dateCreated | date : 'medium' }}
+          {{ ticket.appInventoryType == types.admission ? 'Admission' : 'Appointment'}} - {{ ticket.base.dateCreated | date : 'medium' }}
         </span>
 
         <app-shared-loading *ngIf="!ticket" ></app-shared-loading>
@@ -24,8 +24,8 @@
             </span>
             <strong class="px-2 text-primary">|</strong>
             <strong>Company: </strong>
-            <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_company(ticket.patient.company?.user?.base?.id).$absolutePath]">
-              {{ticket?.patient?.company?.name}}
+            <a class="text-info" [routerLink]="['/' + routes.privateRoute.single_company(ticket.appointment.company?.user?.base?.id).$absolutePath]">
+              {{ticket?.appointment?.company?.name}}
             </a>
             <span class="d-block">
               <strong>Doctor: </strong>
@@ -92,7 +92,7 @@
     </ng-template>
 
 	</ngb-panel>
-  <ngb-panel appHasRole [roles]="[roles.admin, roles.finance]" [operator]="'or'" [id]="userSections.financeInventory" *ngIf="ticket.cost">
+  <!-- <ngb-panel appHasRole [roles]="[roles.admin, roles.finance]" [operator]="'or'" [id]="userSections.financeInventory" *ngIf="ticket.cost">
 
 		<ng-template ngbPanelTitle>
 			Finance - {{ ticket.cost.paymentStatus }}
@@ -102,6 +102,6 @@
       <app-private-finance-inventory (reload)="getTicket($event)" [ticket]="ticket" ></app-private-finance-inventory>
     </ng-template>
 
-	</ngb-panel>
+	</ngb-panel> -->
 </ngb-accordion>
 

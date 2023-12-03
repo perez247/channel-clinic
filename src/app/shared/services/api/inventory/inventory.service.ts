@@ -45,4 +45,8 @@ export class InventoryService {
   updateTicketInventory(data: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/ticket-inventory`, data);
   }
+
+  concludeTicketInventory(data: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/conclude-inventory`, data);
+  }
 }

@@ -14,7 +14,6 @@ export class PrivateTicketInventoryItemResultsComponent {
 
   @Input() ticket: AppTicket = {} as AppTicket;
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
-  @Input() isAdmission = false;
 
   fonts = { faCheckCircle, faClock, faPencilAlt, faMagnifyingGlass };
 
@@ -28,7 +27,6 @@ export class PrivateTicketInventoryItemResultsComponent {
 
     component.ticketInventory = this.ticketInventory;
     component.ticket = this.ticket;
-    component.isAdmission = this.isAdmission;
   }
 
   addItemsUsed(): void {
@@ -36,7 +34,6 @@ export class PrivateTicketInventoryItemResultsComponent {
     const component: PrivateAddItemUsedModalComponent = modalRef.componentInstance;
 
     component.ticketInventory = this.ticketInventory;
-    component.isAdmission = this.isAdmission;
   }
 
 }

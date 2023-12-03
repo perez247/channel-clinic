@@ -5,7 +5,7 @@
     </div>
     <div class="col-10">
       <div class="col-12">
-        <input [disabled]="ticket.cost != null || (isAdmission && ticketInventory.updated)" type="number" (blur)="blur()" [(ngModel)]="ticketInventory.prescribedQuantity" class="form-control">
+        <input [disabled]="ticket.cost != null || (isAdmission && ticketInventory.updated) || ticketInventory.concludedDate" type="number" (blur)="blur()" [(ngModel)]="ticketInventory.prescribedQuantity" class="form-control">
       </div>
       <ng-container *ngIf="!isAdmission">
         <div appHasRole [roles]="[roles.admin, roles.finance]" [operator]="'or'" class="row">
@@ -14,13 +14,27 @@
               <strong>Price per item</strong>
             </div>
             <div class="col-3">
-              <input disabled type="number" [value]="pricePerItem" class="form-control">
+              <span *ngIf="!ticketInventory.currentPrice">
+                <fa-icon [icon]="fonts.faNairaSign"></fa-icon>
+                {{ pricePerItem | currency: ' '}}
+              </span>
+              <span *ngIf="ticketInventory.currentPrice">
+                <fa-icon [icon]="fonts.faNairaSign"></fa-icon>
+                {{ ticketInventory.currentPrice | currency: ' '}}
+              </span>
             </div>
             <div class="col-3 text-right">
               <strong>Total</strong>
             </div>
             <div class="col-3">
-              <input disabled type="number" [value]="sumTotal" class="form-control">
+              <span *ngIf="!ticketInventory.totalPrice">
+                <fa-icon [icon]="fonts.faNairaSign"></fa-icon>
+                {{ sumTotal | currency: ' '}}
+              </span>
+              <span *ngIf="ticketInventory.totalPrice">
+                <fa-icon [icon]="fonts.faNairaSign"></fa-icon>
+                {{ ticketInventory.totalPrice | currency: ' '}}
+              </span>
             </div>
           </div>
         </div>

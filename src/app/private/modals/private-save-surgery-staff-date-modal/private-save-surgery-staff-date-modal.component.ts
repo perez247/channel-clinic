@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { faKitMedical, faNairaSign, faTrash, faPencil, faPlus, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
@@ -12,7 +12,7 @@ import { CustomErrorService } from 'src/app/shared/services/common/custom-error/
   templateUrl: './private-save-surgery-staff-date-modal.component.html',
   styleUrls: ['./private-save-surgery-staff-date-modal.component.scss']
 })
-export class PrivateSaveSurgeryStaffDateModalComponent implements OnInit {
+export class PrivateSaveSurgeryStaffDateModalComponent implements OnInit, AfterViewInit {
 
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
 
@@ -27,20 +27,37 @@ export class PrivateSaveSurgeryStaffDateModalComponent implements OnInit {
 
   constructor(
     public activeModal: NgbActiveModal,
-    public errorService: CustomErrorService
+    public errorService: CustomErrorService,
+    private cdref: ChangeDetectorRef
     ) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     if (!this.ticketInventory.surgeryTicketPersonnels) {
       this.ticketInventory.surgeryTicketPersonnels = [];
     }
 
     if (this.ticketInventory.surgeryDate) {
-      const d = new Date(this.ticketInventory.surgeryDate);
-      this.selectedHour = d.getHours();
+      setTimeout(() => {
+        const d = new Date(this.ticketInventory.surgeryDate);
+        this.ticketInventory.surgeryDate = d;
+        this.selectedHour = d.getHours();
+      }, 100);
     }
 
     this.stillHasHead();
+    setTimeout(() => {
+      this.setPersonnels();
+    }, 100);
+  }
+
+  ngOnInit(): void {
+    this.cdref.detectChanges();
+  }
+
+  setPersonnels(): void {
+    this.ticketInventory.surgeryTicketPersonnels.forEach(user => {
+      user.fullName = `${user.personnel.lastName} ${user.personnel.firstName} ${user.personnel.otherName ? user.personnel.otherName : ''}`;
+    });
   }
 
   addFromSearchToLeading(user: AppUser): void {
@@ -54,7 +71,8 @@ export class PrivateSaveSurgeryStaffDateModalComponent implements OnInit {
     const alreadySaved = this.ticketInventory.surgeryTicketPersonnels.find(x => x.id == this.leadingForm.id);
 
     if (!alreadySaved) {
-      this.ticketInventory.surgeryTicketPersonnels.push(this.leadingForm ?? {});
+      this.leadingForm.personnelId = this.leadingForm.personnel.base?.id || '';
+      this.ticketInventory.surgeryTicketPersonnels.push(this.leadingForm);
       this.stillHasHead();
     }
 

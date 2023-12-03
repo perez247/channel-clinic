@@ -22,7 +22,9 @@ export let AppInjector: Injector;
     BrowserAnimationsModule,
     FontAwesomeModule,
     SharedModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 10000
+    }),
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,

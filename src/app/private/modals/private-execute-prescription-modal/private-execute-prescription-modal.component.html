@@ -25,10 +25,10 @@
 
         </div>
 
-        <div class="form-group col-md-6 position-relative text-center">
-          <app-custom-error-message [errorMessage]="errorService.getError(form, 'time')"></app-custom-error-message>
-          <div class="d-flex justify-content-center">
-            <ngb-timepicker formControlName="time" [meridian]="true"></ngb-timepicker>
+        <div class="form-group col-md-6 position-relative">
+          <label class="form-control-label mb-2 d-block"><strong>Time</strong></label>
+          <div class="d-flex">
+            <ngb-timepicker formControlName="time" [meridian]="true" [spinners]="false"></ngb-timepicker>
           </div>
           <app-custom-error-message [errorMessage]="errorService.getError(form, 'time')"></app-custom-error-message>
 
@@ -50,6 +50,7 @@
         [ticketInventory]="ticketInventory"
         [inventoryItems]="inventoryItems"
         [isAdmission]="true"
+        [isAdmissionExecution]="true"
       ></app-private-lab-inventory-item>
 
       <app-private-surgery-inventory-item

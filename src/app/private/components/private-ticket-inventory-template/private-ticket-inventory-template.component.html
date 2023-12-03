@@ -28,7 +28,7 @@
 
     <strong class="d-block pointer">
       {{ ticket?.base?.dateCreated | date : 'medium' }}
-      | {{ ticket?.appInventoryType }}
+      | {{ ticket?.appInventoryType == appTicketTypes.admission ? 'Admission' : 'Appointment' }}
     </strong>
   </div>
 

@@ -68,13 +68,13 @@ export class PrivateCompanyContractComponent extends SharedUtilityComponent impl
       return;
     }
 
-    if (this.user?.company?.homeCompany) {
-      this.homeCompany = true;
-      this.forIndividual = true;
+    // if (this.user?.company?.homeCompany) {
+    //   this.homeCompany = true;
+    //   this.forIndividual = true;
 
-      this.avaliable.emit(true);
-      return;
-    }
+    //   this.avaliable.emit(true);
+    //   return;
+    // }
 
     this.setContract(this.user?.company?.companyContract);
   }

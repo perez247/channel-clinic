@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faTicket, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
-import { AppTicket } from 'src/app/shared/core/models/app-ticket';
+import { AppTicket, AppTicketTypes } from 'src/app/shared/core/models/app-ticket';
 import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
 
 @Component({
@@ -17,21 +17,35 @@ export class PrivateGeneralTicketOverviewComponent implements OnInit {
 
   routes = ApplicationRoutes.generateRoutes();
 
+  appTicketTypes = AppTicketTypes;
+
+  route = '';
+  admissionRoute = '';
+
   constructor(
     private router: Router
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.setTicketRoute();
+  }
 
-  viewTicket(): void {
+  setTicketRoute(): void {
+
+    this.admissionRoute = `/${this.routes.privateRoute.single_admission(this.ticket?.base.id).$absolutePath}`;
     if (this.router.url === '/private/finance-tickets')
     {
-      this.router.navigate([`/${this.routes.privateRoute.Single_finance_tickets(this.ticket?.base.id).$absolutePath}`])
-    } else if (this.router.url === '/private/admissions')
-    {
-      this.router.navigate([`/${this.routes.privateRoute.single_admission(this.ticket?.base.id).$absolutePath}`])
-    } else {
-      this.router.navigate([`/${this.routes.privateRoute.single_ticket(this.ticket?.base.id).$absolutePath}`])
+      this.route = `/${this.routes.privateRoute.Single_finance_tickets(this.ticket?.base.id).$absolutePath}`;
+      // this.router.navigate([`/${this.routes.privateRoute.Single_finance_tickets(this.ticket?.base.id).$absolutePath}`])
+    }
+    // else if (this.router.url === '/private/admissions')
+    // {
+    //   this.route = `/${this.routes.privateRoute.single_admission(this.ticket?.base.id).$absolutePath}`;
+    //   // this.router.navigate([`/${this.routes.privateRoute.single_admission(this.ticket?.base.id).$absolutePath}`])
+    // }
+    else {
+      this.route = `/${this.routes.privateRoute.single_ticket(this.ticket?.base.id).$absolutePath}`;
+      // this.router.navigate([`/${this.routes.privateRoute.single_ticket(this.ticket?.base.id).$absolutePath}`])
     }
   }
 

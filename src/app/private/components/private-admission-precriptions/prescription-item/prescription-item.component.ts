@@ -1,6 +1,6 @@
 import { faEllipsisV, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdmissionPrescription } from 'src/app/shared/core/models/admission-prescription';
 import { AdmissionService } from 'src/app/shared/services/api/admission/admission.service';
 import { AppTicket, ITicketInventory, TicketInventory } from 'src/app/shared/core/models/app-ticket';
@@ -49,6 +49,7 @@ export class PrescriptionItemComponent extends SharedUtilityComponent implements
         ticketInventoryId: x.base.id,
         inventoryId: x.inventory.base?.id,
         inventoryName: x.inventory.name,
+        type: x.inventory.appInventoryType,
         doctorsPrescription: x.doctorsPrescription,
         times: x.times,
         dosage: x.dosage,
@@ -62,18 +63,9 @@ export class PrescriptionItemComponent extends SharedUtilityComponent implements
     component.ticket = ticket;
     component.ticketInventories = ticketInventories ?? [];
     component.type = this.admissionPrescription?.appInventoryType ?? 'pharmacy';
-    component.returnData = true;
-
-    const sub = modalRef.componentInstance.saved.subscribe({
-      next: (data: any) => {
-        // console.log(data);
-        this.savePrescription(data);
-      },
-      error: (error: any) => {
-        throw error;
-      }
-    });
-    this.subscriptions.push(sub);
+    component.executeInParentComponent = true;
+    component.singleType = true;
+    component.executeAction = this.savePrescription.bind(this);
   }
 
   @Confirmable({
@@ -94,15 +86,21 @@ export class PrescriptionItemComponent extends SharedUtilityComponent implements
     this.savePrescription(data);
   }
 
-  private savePrescription(data: any): void {
+  private savePrescription(data: any, activeModal?: NgbActiveModal, setLoading?: (state: boolean) => void): void {
     data.prescriptionId = this.admissionPrescription?.base?.id;
     this.isLoading = true;
+    if (setLoading) { setLoading(true); }
+    data.appTicketStatus = data.appTicketStatus ? data.appTicketStatus : 'ongoing';
     const sub = this.admissionService.createPrescription(data)
-      .pipe(finalize(() => this.isLoading = false))
+      .pipe(finalize(() => {
+        this.isLoading = false;
+        if (setLoading) { setLoading(false); }
+      }))
       .subscribe({
         next: () => {
           this.reload.emit();
           this.toastService.success("Prescription saved successfully");
+          if (activeModal) { activeModal.close(); }
         },
         error: (error) => {
           throw error;

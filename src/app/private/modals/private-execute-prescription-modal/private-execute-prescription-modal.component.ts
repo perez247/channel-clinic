@@ -70,6 +70,7 @@ export class PrivateExecutePrescriptionModalComponent extends SharedUtilityCompo
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: () => {
+          this.form.reset();
           this.saved.emit();
           this.toast.success('Prescription logged successfully');
           this.activeModal.close();
