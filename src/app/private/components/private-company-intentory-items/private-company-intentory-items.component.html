@@ -3,7 +3,6 @@
   <div class="d-flex justify-content-start align-items-center mb-4">
     <fa-icon [icon]="fonts.faKitMedical" [size]="'2x'" class="pe-1 text-primary"></fa-icon>
     <div>
-      <span class="h6 me-1">{{paginationResponse.totalItems}}</span>
       <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
     </div>
   </div>
@@ -15,9 +14,12 @@
           </button>
           <ul class="dropdown-menu" aria-labelledby="more-action">
             <li
-            appHasRole [roles]="ticketRoles"
-            ><a class="dropdown-item pointer" (click)="addCompanyInventoryItem()">Save Inventory item</a></li>
+              appHasRole [roles]="ticketRoles"
+              ><a class="dropdown-item pointer" (click)="addCompanyInventoryItem()">Save Inventory item</a>
+            </li>
             <li><a class="dropdown-item pointer" (click)="openFilterInventoryItems()" >Filter</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item pointer" (click)="addCompanyBulkFile()">Bulk upload</a></li>
           </ul>
         </div>
   </div>
@@ -36,7 +38,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let inventoryItem of inventoryItems">
+        <tr *ngFor="let inventoryItem of pagination.elements">
           <!-- <th scope="row"> </th>-->
           <td>
             <a class="ps-2" [routerLink]="['/' + routes.privateRoute.single_inventory(inventoryItem?.inventory?.base?.id).$absolutePath]" >
@@ -60,13 +62,7 @@
     </table>
 </section>
 
-<section>
-<ngb-pagination
-  [(page)]="paginationResponse.pageNumber"
-  [pageSize]="paginationResponse.pageSize"
-  [collectionSize]="paginationResponse.totalItems"
-  (pageChange)="pageChanged($event)"
-  >
-</ngb-pagination>
+<section *ngIf="pagination.response.totalItems > 10">
+  <app-shared-pagination-template [pagination]="pagination" (pageChanged)="pageChanged($event)" ></app-shared-pagination-template>
 </section>
 

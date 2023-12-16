@@ -5,7 +5,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrivateCreateTicketModalComponent } from '../../modals/private-create-ticket-modal/private-create-ticket-modal.component';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
 import { AdmissionService } from 'src/app/shared/services/api/admission/admission.service';
-import { AppPagination, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
+import { AppPagination, PaginationContext, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
 import { AdmissionPrescriptionFilter } from 'src/app/shared/core/models/admission-prescription-filter';
 import { AdmissionPrescription } from 'src/app/shared/core/models/admission-prescription';
 import { AppTicket } from 'src/app/shared/core/models/app-ticket';
@@ -24,11 +24,13 @@ export class PrivateAdmissionPrecriptionsComponent extends SharedUtilityComponen
 
   isCreatingPrescription = false;
 
-  prescriptions: AdmissionPrescription[] = [];
-  appPagination = new AppPagination();
-  filter = new AdmissionPrescriptionFilter();
-  paginationRequest = new PaginationRequest<AdmissionPrescriptionFilter>(this.appPagination, this.filter);
-  paginationResponse = new PaginationResponse<AdmissionPrescription[]>();
+  // prescriptions: AdmissionPrescription[] = [];
+  // appPagination = new AppPagination();
+  // filter = new AdmissionPrescriptionFilter();
+  // paginationRequest = new PaginationRequest<AdmissionPrescriptionFilter>(this.appPagination, this.filter);
+  // paginationResponse = new PaginationResponse<AdmissionPrescription[]>();
+
+  pagination = new PaginationContext<AdmissionPrescription, AdmissionPrescriptionFilter>();
 
   index = 0;
   selected?: AdmissionPrescription;
@@ -42,24 +44,21 @@ export class PrivateAdmissionPrecriptionsComponent extends SharedUtilityComponen
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.filter.ticketId = this.ticket.base.id;
-    this.filter.appInventoryType = this.sectionName as any;
-    this.paginationRequest = new PaginationRequest<AdmissionPrescriptionFilter>(this.appPagination, this.filter);
+    this.pagination.initialize();
+    this.pagination.request?.setFilter({ appInventoryType: this.sectionName as any, ticketId: this.ticket.base.id })
     this.getPrescriptions(true);
   }
 
   getPrescriptions(restart: boolean): void {
     this.isLoading = true;
-    const sub = this.admissionService.getPrescriptions(this.paginationRequest)
+    const sub = this.admissionService.getPrescriptions(this.pagination.request)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: (data) => {
-          this.paginationResponse = data;
-          const d = data.result ?? [];
 
-          if (restart) { this.index = 0; this.prescriptions = [] }
+          if (restart) { this.index = 0; this.pagination.elements = [] }
 
-          this.prescriptions = this.prescriptions.concat(d);
+          this.pagination.setResponse(data, true);
 
           this.setPrescription();
 
@@ -84,21 +83,21 @@ export class PrivateAdmissionPrecriptionsComponent extends SharedUtilityComponen
 
 
   setPrescription(): void {
-    this.selected = this.prescriptions[this.index] ?? null;
+    this.selected = this.pagination.elements[this.index] ?? null;
   }
 
   nextPreviousPrescription(increment: number): void {
     const index = this.index + increment;
     this.index = index;
 
-    const newSelection = this.prescriptions[this.index];
+    const newSelection = this.pagination.elements[this.index];
 
     if (newSelection) {
       this.selected = newSelection;
       return;
     }
-
-    this.appPagination.pageNumber++;
+    const pageNumber = this.pagination.request?.getPagination()?.pageNumber || 0;
+    this.pagination.request?.setPagination({ pageNumber: pageNumber + 1 })
 
     this.getPrescriptions(false);
   }

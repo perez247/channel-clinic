@@ -2,13 +2,16 @@ import { Injectable } from '@angular/core';
 import * as saveAs from 'file-saver';
 import { UtilityHelpers } from '../../../core/functions/utility-helpers';
 import { UserFile } from '../../../core/models/files';
+import { CustomToastService } from '../custom-toast/custom-toast.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppFileService {
 
-  constructor() { }
+  constructor(
+    private toast: CustomToastService
+  ) { }
 
   download(userFile: UserFile) {
     const file = UtilityHelpers.dataURLtoFile(userFile.base64String ?? '', userFile.name ?? '')
@@ -16,6 +19,9 @@ export class AppFileService {
   }
 
   downloadAsCSV(data: any, filename='data') {
+
+    if (!data) { this.toast.error('No data available to download'); }
+
     let csvData = this.jsonToCSV(data, Object.keys(data[0]));
     let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, filename);

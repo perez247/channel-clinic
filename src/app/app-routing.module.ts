@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ApplicationRoutes } from './shared/core/routes/app-routes';
 import { PrivateUserOnlyGuard } from './shared/guards/private-user-only.guard';
+import { RedirectAuthUsersGuard } from './shared/guards/redirect-auth-users.guard';
 
 const appRoutes = ApplicationRoutes.generateRoutes();
 
@@ -14,7 +15,7 @@ const routes: Routes = [
   {
     path: `${appRoutes.publicRoute.$name}`,
     loadChildren: () => import('./public/public.module').then( m => m.PublicModule),
-    // canActivate: [CheckLoginGuard]
+    canActivate: [RedirectAuthUsersGuard]
   },
   {
     path: `${appRoutes.privateRoute.$name}`,

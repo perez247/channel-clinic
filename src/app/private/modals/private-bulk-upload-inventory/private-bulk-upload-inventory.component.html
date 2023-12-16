@@ -1,0 +1,86 @@
+
+
+
+<div class="modal-content">
+  <div class="modal-header c-bg-primary">
+    <div class="modal-title d-flex justify-content-between w-100 align-items-center ">
+      <div>
+        <span class="h5">Upload Bulk Inventory</span>
+        <small class="d-block">Maximum of 100 entries per upload</small>
+      </div>
+      <button class="btn btn-primary btn-sm" (click)="getTemplate()">Get template</button>
+    </div>
+    <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body c-bg-secondary">
+
+    <div class="" *ngIf="display.length == 0">
+
+      <div class="col-12 text-center">
+          <label class="btn btn-sm btn-primary">
+            Browse&hellip; <input (change)="fileChangeEvent($event)" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="display: none;">
+          </label>
+      </div>
+
+    </div>
+
+    <div class="" *ngIf="display.length > 0">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Found Name</th>
+            <th scope="col">Type</th>
+            <th scope="col">Found Type</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Found Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of display; let i = index">
+            <td>
+              <div class="d-flex">
+                <fa-icon (click)="removeItemFromDisplay(i)" [icon]="fonts.faTrashAlt" class="pe-1 text-danger pointer"></fa-icon>
+                  <span>{{ item.name }}</span>
+              </div>
+            </td>
+            <td>
+              <div *ngIf="item.foundName" class="d-flex">
+                <fa-icon (click)="removeSuggestion(i)" [icon]="fonts.faTrashAlt" class="pe-1 text-danger pointer"></fa-icon>
+                <span>{{ item.foundName }}</span>
+              </div>
+              <div *ngIf="!item.foundName" class="w-75 position-relative ">
+                <span class="d-block pointer text-primary" (click)="updateItemImported(item, i)">
+                  <fa-icon [icon]="fonts.faPenAlt" class="pe-1"></fa-icon>
+                  <span class="text-primary">Edit</span>
+                </span>
+              </div>
+            </td>
+            <td>
+              {{ item.type }}
+            </td>
+            <td>
+              {{ item.foundType }}
+            </td>
+            <td>
+              {{ item.price }}
+            </td>
+            <td [ngClass]="{'bg-warning': item.inventoryId && !item.foundId, 'bg-danger': !item.inventoryId && !item.foundId}">
+              {{ item.foundPrice }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+  <div class="modal-footer c-bg-primary d-flex justify-content-between">
+    <button (click)="uploadItems()" [disabled]="isLoading" type="button" class="btn btn-primary">Add files <strong><app-shared-loading *ngIf="isLoading"></app-shared-loading></strong></button>
+    <button (click)="activeModal.close()" [disabled]="isLoading" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  </div>
+</div>
+
+

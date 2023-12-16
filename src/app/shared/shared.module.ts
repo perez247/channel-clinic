@@ -27,6 +27,7 @@ import { PaidDebtPipe } from './pipes/paid-debt.pipe';
 import { UserIdPipe } from './pipes/user-id.pipe';
 import { SharedViewImageComponent } from './modals/shared-view-image/shared-view-image.component';
 import { SharedPaginationTemplateComponent } from './components/shared-pagination-template/shared-pagination-template.component';
+import { SharedInventoryItemAutocompleteComponent } from './components/shared-inventory-item-autocomplete/shared-inventory-item-autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { SharedPaginationTemplateComponent } from './components/shared-paginatio
     SharedToastComponent,
     SharedViewImageComponent,
     SharedPaginationTemplateComponent,
+    SharedInventoryItemAutocompleteComponent,
   ],
   imports: [
     CommonModule,
@@ -91,6 +93,7 @@ import { SharedPaginationTemplateComponent } from './components/shared-paginatio
     SharedToastComponent,
     SharedViewImageComponent,
     SharedPaginationTemplateComponent,
+    SharedInventoryItemAutocompleteComponent,
 
     // Directives
     DisplayProfileImageDirective,

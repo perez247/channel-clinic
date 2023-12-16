@@ -1,0 +1,40 @@
+
+
+<div class="modal-content">
+  <div class="modal-header c-bg-primary">
+    <h5 class="modal-title">Find {{ itemToUse.name }} ({{ itemToUse.type }})</h5>
+    <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body c-bg-secondary">
+
+    <form>
+
+      <div class="row">
+
+
+        <div class="form-group col-md-12 position-relative">
+
+          <div class="w-100 position-relative">
+            <label class="form-control-label mb-2" for="companyNameField">
+              <strong>Inventory Name</strong>
+            </label>
+            <input (keydown)="clearName()" placeholder="Type name to search" maxlength="250" type="text" [(ngModel)]="searchWord" name="inventoryItem" class="form-control" id="companyNameField" >
+            <app-shared-inventory-item-autocomplete [filter]="{companyId}" (selected)="selected($event)" class="position-absolute w-100" [searchWord]="searchWord"></app-shared-inventory-item-autocomplete>
+          </div>
+
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+  <div class="modal-footer c-bg-primary justify-content-between">
+    <button (click)="set()" type="button" class="btn btn-primary">Update</button>
+    <div>
+      <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TicketInventory } from 'src/app/shared/core/models/app-ticket';
+import { AppInventoryItem } from 'src/app/shared/core/models/inventory';
 import { PaginationResponse } from 'src/app/shared/core/models/pagination';
 import { environment } from 'src/environments/environment';
 
@@ -22,8 +23,16 @@ export class InventoryService {
     return this.http.post<any>(`${this.apiUrl}/inventories`, data);
   }
 
-  getInventoryItems(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/inventory-items`, data);
+  getInventoryItems(data: any): Observable<PaginationResponse<AppInventoryItem[]>> {
+    return this.http.post<PaginationResponse<AppInventoryItem[]>>(`${this.apiUrl}/inventory-items`, data);
+  }
+
+  searchBulkUpload(data: any): Observable<PaginationResponse<AppInventoryItem[]>> {
+    return this.http.post<PaginationResponse<AppInventoryItem[]>>(`${this.apiUrl}/search-bulk-upload`, data);
+  }
+
+  bulkUpload(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/bulk-upload`, data);
   }
 
   saveInventoryItems(data: any): Observable<any> {

@@ -121,6 +121,8 @@ import { LoggedPrescriptionsComponent } from './components/private-admission-pre
 import { PrivateUpdateTicketInventoryComponent } from './components/private-ticket-inventories/private-update-ticket-inventory/private-update-ticket-inventory.component';
 import { PrivateTicketInventoryItemBasicInfoComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-basic-info/private-ticket-inventory-item-basic-info.component';
 import { PrivateTicketInventoryItemAdditionalNoteComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-additional-note/private-ticket-inventory-item-additional-note.component';
+import { PrivateBulkUploadInventoryComponent } from './modals/private-bulk-upload-inventory/private-bulk-upload-inventory.component';
+import { PrivateAddBulkIvnItemComponent } from './modals/private-add-bulk-ivn-item/private-add-bulk-ivn-item.component';
 
 @NgModule({
   declarations: [
@@ -247,6 +249,8 @@ import { PrivateTicketInventoryItemAdditionalNoteComponent } from './components/
     PrivateUpdateTicketInventoryComponent,
     PrivateTicketInventoryItemBasicInfoComponent,
     PrivateTicketInventoryItemAdditionalNoteComponent,
+    PrivateBulkUploadInventoryComponent,
+    PrivateAddBulkIvnItemComponent,
   ],
   imports: [
     PrivateRoutingModule,

@@ -15,6 +15,7 @@ import { Base, Company } from "./app-user";
     getDefault?: boolean;
     companyName?: string;
     appInventoryName?: string;
+    InventoryItemNames?: string[];
   }
 
   export class AppInventory {
