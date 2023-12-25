@@ -14,6 +14,7 @@ export class AppConstants {
     allergies : 'allergies',
     vitals : 'vitals',
     staffDetails : 'staffDetails',
+    credentials : 'credentials',
     staffRoles : 'staffRoles',
     companyDetails : 'companyDetails',
     userFiles : 'userFiles',
@@ -27,6 +28,7 @@ export class AppConstants {
     ticketList: 'ticketList',
     previousTicketList: 'previousTicketList',
     financeInventory: 'financeInventory',
+    inventoryLogs: 'inventoryLogs',
 
     settingBilling: 'settingBilling',
 

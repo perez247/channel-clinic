@@ -17,7 +17,7 @@
                 Action
             </button>
             <ul class="dropdown-menu" aria-labelledby="more-action">
-              <li appHasRole [roles]="[roles.admin, roles.nurse]" [operator]="'or'">
+              <li appHasRole [roles]="[roles.admin, roles.nurse, roles.reception, roles.hr]" [operator]="'or'">
                 <a class="dropdown-item" (click)="openAddPatientModal()" >Add Patient</a>
               </li>
               <li><a class="dropdown-item" (click)="openFilterPatients()" >Filter</a></li>

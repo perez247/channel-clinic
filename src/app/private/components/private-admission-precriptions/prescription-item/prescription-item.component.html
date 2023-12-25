@@ -7,7 +7,7 @@
 
   <span class="d-block mt-2">{{admissionPrescription?.overallDescription}}</span>
 
-  <span class="d-block">
+  <span class="d-block d-flex">
     <a data-bs-toggle="collapse" href="#tickets" role="button" aria-expanded="false" aria-controls="tickets">
       {{admissionPrescription?.ticketInventories?.length}} prescriptions
     </a>
@@ -26,7 +26,7 @@
     </span>
 
 
-    <div *ngIf="admissionPrescription?.appTicketStatus == 'ongoing'" class="dropdown d-inline-block ms-2 ">
+    <div appHasRole [roles]="[roles.admin, roles.doctor]" *ngIf="admissionPrescription?.appTicketStatus == 'ongoing'" class="dropdown d-inline-block ms-2 ">
       <strong *ngIf="isLoading"> <app-shared-loading></app-shared-loading> </strong>
       <a *ngIf="!isLoading"  href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         <fa-icon [icon]="fonts.faEllipsisV"></fa-icon>
@@ -46,7 +46,7 @@
       <div class="collapse multi-collapse" id="tickets">
         <div class="border-top mt-2 pt-2 ">
           <div class="mb-1 pb-1 border-bottom" *ngFor="let inventory of admissionPrescription?.ticketInventories">
-            <fa-icon (click)="logExecution(inventory)" *ngIf="admissionPrescription?.appTicketStatus == 'concluded'" class="pointer text-success" [icon]="fonts.faPlusCircle"></fa-icon>
+            <fa-icon appHasRole [roles]="[roles.admin, roles.nurse]" (click)="logExecution(inventory)" *ngIf="admissionPrescription?.appTicketStatus == 'concluded'" class="pointer text-success" [icon]="fonts.faPlusCircle"></fa-icon>
 
             <span class="badge bg-primary mx-2">
 

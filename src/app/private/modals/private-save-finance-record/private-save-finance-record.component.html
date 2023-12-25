@@ -1,0 +1,79 @@
+<div class="modal-content">
+    <div class="modal-header c-bg-primary">
+      <h5 class="modal-title">Save Financial Record</h5>
+      <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="modal-body c-bg-secondary">
+  
+      <form [formGroup]="form">
+  
+        <div class="row">
+  
+          <div class="form-group col-12 position-relative">
+  
+            <div class="w-100 position-relative">
+              <label class="form-control-label mb-2" for="costTypeField">
+                <strong>Cost Type</strong>
+              </label>
+              <select class="form-control" id="costTypeField" formControlName="appCostType" [ngClass]="{'is-invalid': errorService.getError(form, 'appCostType')}">
+                <option [value]="null">---</option>
+                <option [value]="'profit'">Profit</option>
+                <option [value]="'expense'">Expense</option>
+              </select>
+              <app-custom-error-message [errorMessage]="errorService.getError(form, 'appCostType')"></app-custom-error-message>
+            </div>
+          </div>
+
+          <section *ngIf="form.get('appCostType')?.value && form.get('appCostType')?.value != 'null'">
+
+            <div class="form-group col-12 position-relative">
+    
+              <div class="w-100 position-relative">
+                <label class="form-control-label mb-2" for="acteeIdField">
+                  <strong>{{form.get('appCostType')?.value == 'profit' ? 'Payer' : 'Collector'}}</strong>
+                </label>
+                <input (keydown)="clearActee()" placeholder="Search Name" maxlength="250" type="text" class="form-control" id="acteeIdField" formControlName="actee"  [ngClass]="{'is-invalid': errorService.getError(form, 'acteeId')}">
+                <app-shared-user-autocomplete [userType]="'all'" (selected)="addUser($event)" class="position-absolute w-100" [searchWord]="form.get('actee')?.value"></app-shared-user-autocomplete>
+                <app-custom-error-message [errorMessage]="errorService.getError(form, 'acteeId')"></app-custom-error-message>
+              </div>
+    
+            </div>
+
+            <div class="form-group col-12 position-relative">
+              <label class="form-control-label mb-2" for="amountField">
+                <strong>{{form.get('appCostType')?.value == 'profit' ? 'Amount to pay' : 'Amount to deduct'}}</strong>
+              </label>
+              <input class="form-control" type="number" id="amountField" formControlName="amount"  [ngClass]="{'is-invalid': errorService.getError(form, 'amount')}" />
+              <app-custom-error-message [errorMessage]="errorService.getError(form, 'amount')"></app-custom-error-message>
+
+            </div>
+
+            <div class="form-group col-12 position-relative">
+              <label class="form-control-label mb-2" for="descriptionField">
+                <strong>Description</strong>
+              </label>
+              <textarea class="form-control" rows="4" maxlength="1000" id="descriptionField" formControlName="description"  [ngClass]="{'is-invalid': errorService.getError(form, 'description')}" ></textarea>
+              <app-custom-error-message [errorMessage]="errorService.getError(form, 'description')"></app-custom-error-message>
+
+            </div>
+          </section>
+        </div>
+  
+      </form>
+  
+  
+    </div>
+    <div class="modal-footer c-bg-primary justify-content-between">
+      <button [disabled]="form.invalid || isLoading" (click)="save()" type="button" class="btn btn-primary">
+        Save
+        <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+      </button>
+      <div>
+        <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+  
+  

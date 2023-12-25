@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IConfirmAction, SharedConfirmActionModalComponent } from 'src/app/shared/modals/shared-confirm-action-modal/shared-confirm-action-modal.component';
 import { finalize } from 'rxjs';
 import * as moment from 'moment';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 
 @Component({
   selector: 'app-private-company-contract',
@@ -40,6 +41,8 @@ export class PrivateCompanyContractComponent extends SharedUtilityComponent impl
   fonts = { faCircleCheck, faExclamationTriangle, faTimesCircle }
 
   routes = ApplicationRoutes.generateRoutes();
+
+  roles = AppRoles;
 
   constructor(
     private companyService: CompanyService,

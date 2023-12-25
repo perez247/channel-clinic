@@ -19,10 +19,10 @@
             <li><hr class="dropdown-divider"></li>
             <li><span class="dropdown-item pointer text-danger" (click)="deleteTicket()" >Delete</span></li>
           </div>
-          <div appHasRole [roles]="[roles.admin, roles.doctor]" [operator]="'or'" *ngIf="!appointment">
+          <!-- <div appHasRole [roles]="[roles.admin, roles.doctor]" [operator]="'or'" *ngIf="!appointment">
             <li><hr class="dropdown-divider"></li>
             <li><span class="dropdown-item pointer"(click)="sendToDepartment()">Copy ticket</span></li>
-          </div>
+          </div> -->
       </ul>
     </div>
 

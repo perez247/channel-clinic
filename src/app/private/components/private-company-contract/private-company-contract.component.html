@@ -48,6 +48,7 @@
     <fa-icon [ngbTooltip]="notHasContractToolTip" [icon]="fonts.faTimesCircle" class="pe-1 text-danger"></fa-icon>
 
     <span
+      appHasRole [roles]="[roles.admin, roles.hr, roles.reception]"
       (click)="confirmAddContract()"
       class="badge rounded-pill bg-primary pointer ms-2 shadow">Add Contract
     </span>

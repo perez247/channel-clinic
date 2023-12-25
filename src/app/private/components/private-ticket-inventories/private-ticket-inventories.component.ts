@@ -43,7 +43,9 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
   roles = AppRoles;
   types = AppTicketTypes;
 
-  pagination = new PaginationContext<TicketInventory, TicketInventoryFilter>()
+  pagination = new PaginationContext<TicketInventory, TicketInventoryFilter>();
+  
+  lookupType = AppConstants.LookUpType;
 
   constructor(
     private ticketService: TicketService,
@@ -60,9 +62,23 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
   override ngOnInit(): void {
     this.appStatuses = this.eventBus.getState().lookUps.value?.filter(x => x.type === AppConstants.LookUpType.AppTicketStatus) ?? [];
 
-    this.pagination.request?.setFilter({ appTicketId: this.ticket?.base?.id, isTickets: true });
+    const roles = this.getUserRoles();
+
+    this.pagination.request?.setFilter({ appTicketId: this.ticket?.base?.id, isTickets: true, roles });
 
     this.getTicketInventory();
+  }
+
+  getUserRoles(): string[] {
+    const userRoles = this.eventBus.getState().user.value?.userRoles || [];
+
+    if (userRoles?.includes(this.roles.admin)) { return []; }
+
+    const inventoryTypes = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType).map(y => y.name) || [];
+    
+    const types = inventoryTypes.filter(x => userRoles.includes(x));
+
+    return types;
   }
 
   getIndividualCompany(): void {

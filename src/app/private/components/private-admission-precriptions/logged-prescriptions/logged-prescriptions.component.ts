@@ -7,6 +7,7 @@ import { AdmissionPrescription } from 'src/app/shared/core/models/admission-pres
 import { finalize } from 'rxjs';
 import { AppPagination, PaginationContext } from 'src/app/shared/core/models/pagination';
 import { AppInventoryItem } from 'src/app/shared/core/models/inventory';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 
 @Component({
   selector: 'app-logged-prescriptions',
@@ -30,7 +31,7 @@ export class LoggedPrescriptionsComponent extends SharedUtilityComponent impleme
   ) {
     super();
   }
-
+  
   override ngOnInit(): void {
   }
 

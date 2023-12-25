@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EventBusService } from '../event-bus/event-bus.service';
 import { ToastrService } from 'ngx-toastr';
+import Swal, { SweetAlertOptions } from 'sweetalert2';
 
 export interface ICustomToast {
   css: string;
@@ -68,5 +69,9 @@ export class CustomToastService {
       // this.toastConfig.css = 'text-center';
       // this.toastConfig.body = message;
       // this.eventBus.emit(new EventData<ICustomToast>({ name: AppEventBus.notify.toast, value: this.toastConfig }));
+    }
+
+    async sweetAlertSuccess(options: SweetAlertOptions): Promise<void> {
+      await Swal.fire(options);
     }
 }

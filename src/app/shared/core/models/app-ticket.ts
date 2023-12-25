@@ -89,6 +89,7 @@ export class TicketInventoryFilter {
   prescriptionId?: string;
   isTickets?: boolean;
   isPrescriptions?: boolean;
+  roles: string[] = [];
 }
 
 export interface SurgeryTicketPersonnel {

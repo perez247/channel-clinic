@@ -9,6 +9,7 @@ import { PaginationContext } from '../../core/models/pagination';
 export class SharedPaginationTemplateComponent implements OnInit {
 
   @Input() pagination: PaginationContext<any, any> = new PaginationContext();
+  // @Input() pageChangedFunction?: (e: number) => void;
 
   @Output() pageChanged = new EventEmitter<number>();
 
@@ -18,6 +19,11 @@ export class SharedPaginationTemplateComponent implements OnInit {
   }
 
   pageHasChanged(newPage: number): void {
+    // if (this.pageChangedFunction) {
+    //   this.pageChangedFunction(newPage);
+    // }
     this.pageChanged.emit(newPage);
   }
+
+
 }

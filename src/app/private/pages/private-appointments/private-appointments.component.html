@@ -18,7 +18,7 @@
             <ul class="dropdown-menu" aria-labelledby="more-action">
               <li *ngIf="!displayCalendar"><a class="dropdown-item" (click)="displayCalendar = true" >View as calendar</a></li>
               <li *ngIf="displayCalendar"><a class="dropdown-item" (click)="displayCalendar = false" >View as list</a></li>
-              <li appHasRole [roles]="[roles.admin, roles.nurse]" [operator]="'or'"><a class="dropdown-item" (click)="openAddPatientAppointmentModal()" >Add Patient Appointment</a></li>
+              <li appHasRole [roles]="[roles.admin, roles.reception]" [operator]="'or'"><a class="dropdown-item" (click)="openAddPatientAppointmentModal()" >Add Patient Appointment</a></li>
               <li><a class="dropdown-item" (click)="openFilterAppointment()" >Filter</a></li>
             </ul>
           </div>

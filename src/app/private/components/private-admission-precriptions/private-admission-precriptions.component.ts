@@ -9,6 +9,7 @@ import { AppPagination, PaginationContext, PaginationRequest, PaginationResponse
 import { AdmissionPrescriptionFilter } from 'src/app/shared/core/models/admission-prescription-filter';
 import { AdmissionPrescription } from 'src/app/shared/core/models/admission-prescription';
 import { AppTicket } from 'src/app/shared/core/models/app-ticket';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 
 @Component({
   selector: 'app-private-admission-precriptions',
@@ -35,6 +36,8 @@ export class PrivateAdmissionPrecriptionsComponent extends SharedUtilityComponen
   index = 0;
   selected?: AdmissionPrescription;
   loggedPrescriptionUpdate = '';
+
+  roles = AppRoles;
 
   constructor(
     private modalService: NgbModal,

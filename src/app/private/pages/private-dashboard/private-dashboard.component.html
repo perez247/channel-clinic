@@ -36,6 +36,7 @@
         </div>
         <div class="card-footer text-muted">
           <a
+          appHasRole [roles]="[roles.admin, roles.reception, roles.doctor, roles.nurse, roles.hr]"
           [routerLink]="['/' + appRroutes.privateRoute.patients().$absolutePath]"
           >View patients</a>
         </div>
@@ -58,6 +59,7 @@
         </div>
         <div class="card-footer text-muted">
           <a
+          appHasRole [roles]="[roles.admin, roles.reception, roles.hr]"
           [routerLink]="['/' + appRroutes.privateRoute.companies().$absolutePath]"
           >View companies</a>
         </div>
@@ -80,6 +82,7 @@
         </div>
         <div class="card-footer text-muted">
           <a
+          appHasRole [roles]="[roles.admin, roles.reception, roles.doctor]"
           [routerLink]="['/' + appRroutes.privateRoute.appointments().$absolutePath]"
           >View appointments</a>
         </div>
@@ -102,6 +105,7 @@
         </div>
         <div class="card-footer text-muted">
           <a
+          appHasRole [roles]="[roles.admin, roles.pharmacy, roles.surgery, roles.lab, roles.radiology, roles.admission]"
           [routerLink]="['/' + appRroutes.privateRoute.tickets().$absolutePath]"
           >View tickets</a>
         </div>

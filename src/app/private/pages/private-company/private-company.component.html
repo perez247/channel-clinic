@@ -17,7 +17,7 @@
                 Action
             </button>
             <ul class="dropdown-menu" aria-labelledby="more-action">
-              <li appHasRole [roles]="[roles.admin, roles.hr]"><a class="dropdown-item pointer" (click)="openAddCompanyModal()" >Add Company</a></li>
+              <li appHasRole [roles]="[roles.admin, roles.hr, roles.reception]"><a class="dropdown-item pointer" (click)="openAddCompanyModal()" >Add Company</a></li>
               <li><a class="dropdown-item pointer" (click)="openFilterCompanies()" >Filter</a></li>
             </ul>
           </div>

@@ -123,6 +123,11 @@ import { PrivateTicketInventoryItemBasicInfoComponent } from './components/priva
 import { PrivateTicketInventoryItemAdditionalNoteComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-additional-note/private-ticket-inventory-item-additional-note.component';
 import { PrivateBulkUploadInventoryComponent } from './modals/private-bulk-upload-inventory/private-bulk-upload-inventory.component';
 import { PrivateAddBulkIvnItemComponent } from './modals/private-add-bulk-ivn-item/private-add-bulk-ivn-item.component';
+import { PrivateUpdateQuantityComponent } from './modals/private-update-quantity/private-update-quantity.component';
+import { PrivateInventoryLogsComponent } from './components/private-inventory-logs/private-inventory-logs.component';
+import { PrivateInventoryLogsItemComponent } from './components/private-inventory-logs/private-inventory-logs-item/private-inventory-logs-item.component';
+import { PrivateSaveFinanceRecordComponent } from './modals/private-save-finance-record/private-save-finance-record.component';
+import { PrivateUserPasswordComponent } from './components/private-user-password/private-user-password.component';
 
 @NgModule({
   declarations: [
@@ -251,6 +256,11 @@ import { PrivateAddBulkIvnItemComponent } from './modals/private-add-bulk-ivn-it
     PrivateTicketInventoryItemAdditionalNoteComponent,
     PrivateBulkUploadInventoryComponent,
     PrivateAddBulkIvnItemComponent,
+    PrivateUpdateQuantityComponent,
+    PrivateInventoryLogsComponent,
+    PrivateInventoryLogsItemComponent,
+    PrivateSaveFinanceRecordComponent,
+    PrivateUserPasswordComponent,
   ],
   imports: [
     PrivateRoutingModule,

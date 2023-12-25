@@ -19,6 +19,15 @@
                     <app-custom-error-message [errorMessage]="errorService.getError(form, 'name')"></app-custom-error-message>
                   </div>
   
+                  <div class="form-group col-12">
+                    <label class="form-control-label mb-2" for="activeField"><strong>Status</strong></label>
+                    <select class="form-control" id="activeField" formControlName="active"  [ngClass]="{'is-invalid': errorService.getError(form, 'active')}">
+                      <option [value]="null">---</option>
+                      <option [value]="true">Active</option>
+                      <option [value]="false">Disabled</option>
+                    </select>
+                    <app-custom-error-message [errorMessage]="errorService.getError(form, 'active')"></app-custom-error-message>
+                  </div>
                 </div>
   
               </form>

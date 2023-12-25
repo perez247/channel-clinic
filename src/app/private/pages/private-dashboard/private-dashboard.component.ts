@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { faSignature, faHospitalUser, faEllipsisV, faHamburger, faBedPulse, faChartLine, faClipboardUser, faBuilding, faWarehouse, faCalendarCheck, faTicket, faCoins, faSackXmark, faHandHoldingDollar } from '@fortawesome/free-solid-svg-icons';
 import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
 import { AppDashboard } from 'src/app/shared/core/models/app-dashboard';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 
 @Component({
   selector: 'app-private-dashboard',
@@ -24,6 +25,8 @@ export class PrivateDashboardComponent extends SharedUtilityComponent implements
   appRroutes = ApplicationRoutes.generateRoutes();
 
   dashboard: AppDashboard = {} as AppDashboard;
+
+  roles = AppRoles;
 
   override ngOnInit(): void {
     this.getStats();

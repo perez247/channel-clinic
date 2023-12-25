@@ -12,6 +12,8 @@ import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
 import { UserService } from 'src/app/shared/services/api/user/user.service';
 import { CustomToastService } from 'src/app/shared/services/common/custom-toast/custom-toast.service';
 import { EventBusService } from 'src/app/shared/services/common/event-bus/event-bus.service';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
+import { PermissionService } from 'src/app/shared/services/common/permission/permission.service';
 
 @Component({
   selector: 'app-private-single-staff',
@@ -34,21 +36,29 @@ export class PrivateSingleStaffComponent extends SharedUtilityComponent  impleme
   disableTabs = false;
   routes = ApplicationRoutes.generateRoutes();
 
+  roles = AppRoles;
+  
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
     private router: Router,
     private toast: CustomToastService,
-    private eventBus: EventBusService
+    private eventBus: EventBusService,
+    public permission: PermissionService
   ) {
     super();
   }
 
   override ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id') ?? '';
-    this.filter.userId = id;
-    this.paginationRequest = new PaginationRequest<UserFilter>(this.appPagination, this.filter);
-    this.getStaffList(this.currentSection);
+    const sub = this.route.paramMap.subscribe({
+      next: (d) => {
+        this.filter.userId = d.get('id') || '';
+        this.paginationRequest = new PaginationRequest<UserFilter>(this.appPagination, this.filter);
+        this.getStaffList(this.currentSection);
+      }
+    });
+
+    this.subscriptions.push(sub);
   }
 
   getStaffList(currentSection: string): void {
@@ -84,4 +94,7 @@ export class PrivateSingleStaffComponent extends SharedUtilityComponent  impleme
       this.subscriptions.push(sub);
   }
 
+  showCredentials(event: any) {
+    console.log(event)
+  }
 }

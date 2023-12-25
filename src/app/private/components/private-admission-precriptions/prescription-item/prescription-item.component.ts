@@ -10,6 +10,7 @@ import { finalize } from 'rxjs';
 import { Confirmable } from 'src/app/shared/decorators/confirm-action-method-decorator';
 import { CustomToastService } from 'src/app/shared/services/common/custom-toast/custom-toast.service';
 import { PrivateExecutePrescriptionModalComponent } from 'src/app/private/modals/private-execute-prescription-modal/private-execute-prescription-modal.component';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 
 @Component({
   selector: 'app-prescription-item',
@@ -24,6 +25,8 @@ export class PrescriptionItemComponent extends SharedUtilityComponent implements
   @Output() reloadLogged = new EventEmitter();
 
   fonts = { faEllipsisV, faPlusCircle }
+
+  roles = AppRoles;
 
   constructor(
     private modalService: NgbModal,

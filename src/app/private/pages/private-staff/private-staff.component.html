@@ -19,6 +19,7 @@
             <ul class="dropdown-menu" aria-labelledby="more-action">
               <li appHasRole [roles]="[roles.admin, roles.hr]" ><a class="dropdown-item" (click)="openAddStaffModal()" >Add Staff</a></li>
               <li><a class="dropdown-item" (click)="openFilterStaff()" >Filter</a></li>
+              <li appHasRole [roles]="[roles.admin, roles.hr]"><a class="dropdown-item" (click)="downloadStaff()" >Download Staff List</a></li>
             </ul>
           </div>
     </div>

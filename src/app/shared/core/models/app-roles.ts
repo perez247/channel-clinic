@@ -12,4 +12,6 @@ export const AppRoles = {
   staff : "staff",
   patients : "patient",
   company : "company",
+  reception: "reception",
+  other: "other",
 }

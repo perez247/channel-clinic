@@ -56,8 +56,19 @@ export class FinancialService {
     // .pipe(timeout(environment.timeOut));
   }
 
+  addRecord(data: any): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/save-record`, data);
+    // .pipe(timeout(environment.timeOut));
+  }
+
   payDebt(data: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/debt-payment`, data)
+    // .pipe(timeout(environment.timeOut));
+  }
+
+  getRevenue(data: any): Observable<{ expense: number, profit: number }> {
+    const params = '?' + new URLSearchParams(data).toString();
+    return this.http.get<{ expense: number, profit: number }>(`${this.apiUrl}/revenue-cost${params}`)
     // .pipe(timeout(environment.timeOut));
   }
 }

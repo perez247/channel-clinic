@@ -28,6 +28,7 @@ import { UserIdPipe } from './pipes/user-id.pipe';
 import { SharedViewImageComponent } from './modals/shared-view-image/shared-view-image.component';
 import { SharedPaginationTemplateComponent } from './components/shared-pagination-template/shared-pagination-template.component';
 import { SharedInventoryItemAutocompleteComponent } from './components/shared-inventory-item-autocomplete/shared-inventory-item-autocomplete.component';
+import { HumanTimePipe } from './pipes/human-time.pipe';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { SharedInventoryItemAutocompleteComponent } from './components/shared-in
     ContractDetailPipe,
     PaidDebtPipe,
     UserIdPipe,
+    HumanTimePipe,
 
     SharedUtilityComponent,
     CustomErrorMessageComponent,
@@ -106,6 +108,7 @@ import { SharedInventoryItemAutocompleteComponent } from './components/shared-in
     ContractDetailPipe,
     PaidDebtPipe,
     UserIdPipe,
+    HumanTimePipe,
   ],
   providers: [
 

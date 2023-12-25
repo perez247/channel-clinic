@@ -32,7 +32,10 @@
 
                   <div class="form-group col-md-6">
                       <label class="form-control-label mb-2" for="quantity"><strong>Quantity</strong></label>
-                      <input placeholder="Quantity" maxlength="250" type="number" class="form-control" id="quantity" formControlName="quantity"  [ngClass]="{'is-invalid': errorService.getError(form, 'quantity')}">
+                      <div class="input-group">
+                        <input placeholder="Quantity" maxlength="250" type="number" class="form-control" id="quantity" formControlName="quantity"  [ngClass]="{'is-invalid': errorService.getError(form, 'quantity')}">
+                        <button (click)="updateQuantity()" class="btn btn-primary" type="button">Update</button>
+                      </div>
                       <app-custom-error-message [errorMessage]="errorService.getError(form, 'quantity')"></app-custom-error-message>
                   </div>
 

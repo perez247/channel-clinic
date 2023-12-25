@@ -4,9 +4,14 @@
           <fa-icon [icon]="fonts.faHandHoldingDollar" class="pe-1 text-light"></fa-icon>
       </span>
       <div class="ms-5 ps-3">
-        <span class="h3 me-1">Paid</span>
+        <span class="h3 me-1 d-block">Financial Record</span>
         <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
-        <small class="d-block text-dark">{{paginationResponse.totalItems}}</small>
+        <small class="text-dark"><strong>Total Items: </strong>{{pagination.response.totalItems}}</small>
+        <small class="ms-2" *ngIf="revenue.expense != 0 && revenue.profit != 0">
+          | <strong>Expense: </strong> <span>{{ revenue.expense }}</span> |
+          <strong>Profit: </strong> <span>{{ revenue.profit }}</span> |
+          <strong>Total: </strong> <span>{{ revenue.profit - revenue.expense }}</span>
+        </small>
       </div>
 
   </div>
@@ -17,6 +22,7 @@
           </button>
           <ul class="dropdown-menu" aria-labelledby="more-action">
             <li><a class="dropdown-item pointer" (click)="openFilter()">Filter</a></li>
+            <li><a class="dropdown-item pointer" (click)="addRecordManually()">Add Record</a></li>
           </ul>
         </div>
   </div>
@@ -32,7 +38,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let pay of paid">
+      <tr *ngFor="let pay of pagination.elements">
         <td>
           <div *ngFor="let payerPayee of pay?.payerPayee">
             <div *ngIf="payerPayee.payer" class="d-flex justify-content-start">
@@ -58,6 +64,9 @@
               </div>
             </div>
           </div>
+          <div class="w-100 border-top p-1">
+            <strong>Responsible: </strong><a [routerLink]="['/' + routes.privateRoute.single_staff(pay.actor?.base?.id).$absolutePath]"  ><span>{{ pay.actor?.lastName }} {{ pay.actor?.firstName }}</span></a>
+          </div>
         </td>
         <td>
           <small class="d-block"><strong>Cost: </strong><span>{{ pay?.amount | currency: 'N' }}</span></small>
@@ -70,12 +79,6 @@
   </table>
 </section>
 
-<section>
-  <ngb-pagination
-    [(page)]="paginationResponse.pageNumber"
-    [pageSize]="paginationResponse.pageSize"
-    [collectionSize]="paginationResponse.totalItems"
-    (pageChange)="pageChanged($event)"
-    >
-  </ngb-pagination>
+<section *ngIf="pagination.response.totalItems > 10">
+  <app-shared-pagination-template [pagination]="pagination" (pageChanged)="pageChanged($event)" ></app-shared-pagination-template>
 </section>

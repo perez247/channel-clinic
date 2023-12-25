@@ -25,25 +25,32 @@
     <a href="#" class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.dashboard().$absolutePath]" routerLinkActive="active-tab">
       <fa-icon [icon]="fonts.faChartLine" class="pe-1"></fa-icon> Dashboard
     </a>
-    <a href="#" class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.patients().$absolutePath]" routerLinkActive="active-tab">
+    <a href="#" 
+    appHasRole [roles]="[roles.admin, roles.reception, roles.doctor, roles.nurse, roles.hr]"
+      class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.patients().$absolutePath]" routerLinkActive="active-tab">
       <fa-icon [icon]="fonts.faHospitalUser" class="pe-1"></fa-icon> Patients
     </a>
 
-    <a href="#" class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.staff().$absolutePath]" routerLinkActive="active-tab">
+    <a href="#" 
+    appHasRole [roles]="[roles.admin, roles.hr]"
+      class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.staff().$absolutePath]" routerLinkActive="active-tab">
       <fa-icon [icon]="fonts.faClipboardUser" class="pe-1"></fa-icon> Staff
     </a>
 
-    <a href="#" class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.companies().$absolutePath]" routerLinkActive="active-tab">
+    <a href="#" 
+    appHasRole [roles]="[roles.admin, roles.hr, roles.reception]"
+    class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.companies().$absolutePath]" routerLinkActive="active-tab">
       <fa-icon [icon]="fonts.faBuilding" class="pe-1"></fa-icon> Companies
     </a>
 
     <a href="#"
+    appHasRole [roles]="[roles.admin, roles.pharmacy, roles.surgery, roles.lab, roles.radiology, roles.admission, roles.other]"
       class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.inventories().$absolutePath]" routerLinkActive="active-tab">
       <fa-icon [icon]="fonts.faWarehouse" class="pe-1"></fa-icon> Inventories
     </a>
 
     <a href="#"
-      appHasRole [roles]="[roles.admin, roles.nurse, roles.doctor]"
+      appHasRole [roles]="[roles.admin, roles.reception, roles.doctor]"
       class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.appointments().$absolutePath]" routerLinkActive="active-tab">
       <fa-icon [icon]="fonts.faCalendarCheck" class="pe-1"></fa-icon> Appointments
     </a>
@@ -55,7 +62,7 @@
     </a>
 
     <a href="#"
-      appHasRole [roles]="[roles.admin, roles.pharmacy, roles.lab, roles.radiology, roles.surgery, roles.admission]"
+      appHasRole [roles]="[roles.admin, roles.nurse, roles.pharmacy, roles.lab, roles.radiology, roles.surgery, roles.admission]"
       class="d-block ps-4" [routerLink]="['/' + appRroutes.privateRoute.admissions().$absolutePath]" routerLinkActive="active-tab">
       <fa-icon [icon]="fonts.faBed" class="pe-1"></fa-icon> Admissions
     </a>
@@ -87,7 +94,7 @@
           <fa-icon [icon]="fonts.faSackXmark" class="pe-1"></fa-icon> Debts
         </a>
         <a href="#" class="d-block ps-4 border-end-0 mt-3" [routerLink]="['/' + appRroutes.privateRoute.finance_paid().$absolutePath]" routerLinkActive="active-tab">
-          <fa-icon [icon]="fonts.faHandHoldingDollar" class="pe-1"></fa-icon> Paid
+          <fa-icon [icon]="fonts.faHandHoldingDollar" class="pe-1"></fa-icon> Financial Record
         </a>
       </div>
     </div>

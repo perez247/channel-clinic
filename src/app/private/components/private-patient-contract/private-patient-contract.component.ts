@@ -10,6 +10,7 @@ import { SharedConfirmActionModalComponent, IConfirmAction } from 'src/app/share
 import { finalize } from 'rxjs';
 import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
 import { PrivatePatientChangeCompanyComponent } from '../../modals/private-patient-change-company/private-patient-change-company.component';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 
 @Component({
   selector: 'app-private-patient-contract',
@@ -40,6 +41,8 @@ export class PrivatePatientContractComponent extends SharedUtilityComponent impl
   fonts = { faCircleCheck, faExclamationTriangle, faTimesCircle, faArrowRightArrowLeft }
 
   routes = ApplicationRoutes.generateRoutes();
+
+  roles = AppRoles;
 
   constructor(
     private patientService: PatientService,

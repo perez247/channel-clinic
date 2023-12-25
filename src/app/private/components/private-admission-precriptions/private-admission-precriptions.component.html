@@ -2,7 +2,9 @@
 <section>
   <div class="text-end pointer">
     <strong *ngIf="isCreatingPrescription"> <app-shared-loading></app-shared-loading> </strong>
-    <fa-icon  *ngIf="!isCreatingPrescription" (click)="openAddNewDoctorsPrescription()" [icon]="fonts.faPlusCircle"></fa-icon>
+    <fa-icon  
+    appHasRole [roles]="[roles.admin, roles.doctor]"
+    *ngIf="!isCreatingPrescription" (click)="openAddNewDoctorsPrescription()" [icon]="fonts.faPlusCircle"></fa-icon>
   </div>
 
   <section class="prescription-box position-relative border p-2">
@@ -15,7 +17,7 @@
 
     <ng-container *ngIf="pagination.response.totalItems <= 0" >
       <p>No Prescription yet</p>
-      <button (click)="openAddNewDoctorsPrescription()" class="btn btn-primary btn-sm">Create Prescription</button>
+      <button appHasRole [roles]="[roles.admin, roles.doctor]" (click)="openAddNewDoctorsPrescription()" class="btn btn-primary btn-sm">Create Prescription</button>
     </ng-container>
 
   </section>

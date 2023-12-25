@@ -80,6 +80,18 @@
 
     </ngb-panel>
 
+    <ngb-panel *ngIf="permission.hasRoles([roles.admin, roles.hr, staffItem.base?.id || ''])" [id]="userSections.credentials" [disabled]="disableTabs">
+
+      <ng-template ngbPanelTitle>
+          Credentials
+      </ng-template>
+
+      <ng-template ngbPanelContent>
+        <app-private-user-password [user]="staffItem" ></app-private-user-password>
+      </ng-template>
+
+    </ngb-panel>
+
     <ngb-panel [id]="userSections.staffRoles" [disabled]="disableTabs">
 
       <ng-template ngbPanelTitle>

@@ -151,6 +151,7 @@ export class InvoiceCSV {
 }
 
 export class AppPaid {
+  actor?: AppUser;
   amount?: number;
   approvedPrice?: number;
   base?: Base;
