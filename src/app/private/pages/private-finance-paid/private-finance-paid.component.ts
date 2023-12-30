@@ -24,12 +24,6 @@ export class PrivateFinancePaidComponent extends SharedUtilityComponent implemen
 
   item = 0;
 
-  // paid: AppPaid[] = [];
-  // appPagination = new AppPagination();
-  // filter = new FinancialDebtFilter();
-  // paginationRequest = new PaginationRequest<FinancialDebtFilter>(this.appPagination, this.filter);
-  // paginationResponse = new PaginationResponse<AppPaid[]>();
-
   pagination = new PaginationContext<AppPaid, FinancialDebtFilter>();
 
   arr: any[] = [];
@@ -37,6 +31,8 @@ export class PrivateFinancePaidComponent extends SharedUtilityComponent implemen
   revenue = {
     profit: 0,
     expense: 0,
+    totalExpense: 0,
+    totalProfit: 0
   }
 
   startDate = moment();
@@ -111,6 +107,7 @@ export class PrivateFinancePaidComponent extends SharedUtilityComponent implemen
   getRevenue(): void {
     this.loadingRevenue = true;
     let { startDate, endDate } = this.pagination.request?.getFilter() || {};
+
     const sd = moment(startDate).local().toISOString();
     const ed = moment(endDate).local().toISOString();
     

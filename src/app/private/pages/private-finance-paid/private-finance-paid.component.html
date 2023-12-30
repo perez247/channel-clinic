@@ -4,8 +4,14 @@
           <fa-icon [icon]="fonts.faHandHoldingDollar" class="pe-1 text-light"></fa-icon>
       </span>
       <div class="ms-5 ps-3">
-        <span class="h3 me-1 d-block">Financial Record</span>
-        <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+        <span class="d-block">
+          <span class="h3 me-1">Financial Record</span>
+          <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+        </span>
+        <small class="d-block">
+          <strong>Overall: Expense - {{revenue.totalExpense || 0}} | Profit - {{revenue.totalProfit || 0}}</strong>
+        </small>
+
         <small class="text-dark"><strong>Total Items: </strong>{{pagination.response.totalItems}}</small>
         <small class="ms-2" *ngIf="revenue.expense != 0 && revenue.profit != 0">
           | <strong>Expense: </strong> <span>{{ revenue.expense }}</span> |

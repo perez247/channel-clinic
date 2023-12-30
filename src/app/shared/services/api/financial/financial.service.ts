@@ -66,9 +66,9 @@ export class FinancialService {
     // .pipe(timeout(environment.timeOut));
   }
 
-  getRevenue(data: any): Observable<{ expense: number, profit: number }> {
+  getRevenue(data: any): Observable<{ expense: number, profit: number, totalExpense: number, totalProfit: number }> {
     const params = '?' + new URLSearchParams(data).toString();
-    return this.http.get<{ expense: number, profit: number }>(`${this.apiUrl}/revenue-cost${params}`)
+    return this.http.get<{ expense: number, profit: number, totalExpense: number, totalProfit: number  }>(`${this.apiUrl}/revenue-cost${params}`)
     // .pipe(timeout(environment.timeOut));
   }
 }
