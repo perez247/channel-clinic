@@ -42,7 +42,8 @@ export const AppTicketTypes = {
   surgery: 'surgery',
   lab: 'lab',
   radiology: 'radiology',
-  admission: 'admission'
+  admission: 'admission',
+  nursing: 'nursing',
 }
 
 export interface TicketInventory {
@@ -51,11 +52,13 @@ export interface TicketInventory {
   appInventoryQuantity: number
   currentPrice: any
   totalPrice: any
+  concludedPrice: any
   concludedDate: any
   appTicketStatus: string
   proof: string[]
   description: any
   staffPrescription?: string
+  staffObservation?: string
   doctorsPrescription?: string
   departmentDescription?: string
   financeDescription?: string
@@ -82,6 +85,8 @@ export interface TicketInventory {
   additionalNote: string;
   staff: Staff;
   timeGiven: string;
+  debtors: ITicketInventoryDebtor[];
+  payers: Company[];
 }
 
 export class TicketInventoryFilter {
@@ -139,6 +144,13 @@ export interface ITicketInventory {
   frequency: string;
   duration: number;
   type: string;
+}
+
+export interface ITicketInventoryDebtor {
+  payerId: string,
+  payer: AppUser | Company | any,
+  amount: number,
+  description: string,
 }
 
 export class TicketHelper {

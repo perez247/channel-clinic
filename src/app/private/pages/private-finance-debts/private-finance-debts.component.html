@@ -50,6 +50,7 @@
               <div class="ps-2">
                 <span class="d-block">
                   <small *ngIf="debt?.companyContract" ><strong>Company Contract - {{ debt?.base?.dateCreated | date }}</strong></small>
+                  <small *ngIf="debt?.patientContract" ><strong>Patient Contract - {{ debt?.base?.dateCreated | date }}</strong></small>
                   <small *ngIf="debt?.ticket" ><strong>
                     <a class="text-danger" [routerLink]="['/' + routes.privateRoute.single_ticket(debt?.ticket?.base?.id).$absolutePath]">
                       {{ debt?.ticket?.appInventoryType }}
@@ -76,6 +77,7 @@
           <small class="d-block"><strong>Cost: </strong><span>{{ debt?.approvedPrice | currency: 'N' }}</span></small>
           <small class="d-block"><strong>Paid: </strong><span> {{ debt?.payment | paidDebt | currency: 'N' }} </span></small>
           <small class="d-block"><strong>Owing: </strong><span> {{ debt?.payment | paidDebt: debt?.approvedPrice | currency: 'N' }}  </span></small>
+          <small class="d-block"><strong>Owing: </strong><span> {{ debt?.description }}  </span></small>
         </td>
       </tr>
     </tbody>

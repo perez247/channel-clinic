@@ -66,6 +66,7 @@ export class PrivateDebtPaymentModalsComponent extends SharedUtilityComponent im
     const sub = modalRef.componentInstance.newPayment.subscribe({
       next: (data: PaymentMade) => {
         this.payment = data;
+        console.log(this.payment);
       },
       error: (error: any) => {
         throw error;
@@ -83,7 +84,7 @@ export class PrivateDebtPaymentModalsComponent extends SharedUtilityComponent im
     this.payment = undefined;
   }
 
-  confirmPayment(): void {
+  confirmPayment(fullPayment: boolean): void {
     const modalRef = this.modalService.open(SharedConfirmActionModalComponent);
     const confirmData = {
       title: `Confirm payment`,
@@ -98,29 +99,29 @@ export class PrivateDebtPaymentModalsComponent extends SharedUtilityComponent im
     const sub = modalRef.componentInstance.actionTaken.subscribe({
       next: (takeAction: boolean) => {
         if(takeAction) {
-          this.begin();
+          this.begin(fullPayment);
         }
       }
     });
     this.subscriptions.push(sub)
   }
 
-  paydebt(): void {
+  paydebt(fullPayment: boolean): void {
 
     if (this.paid + (this.payment?.amount ?? 0) > this.debt) {
       this.toast.error('Sum total of what to pay exceeds what is owed');
       return;
     }
 
-    if (this.paid + (this.payment?.amount ?? 0) < this.debt) {
-      this.confirmPayment();
+    if (fullPayment && (this.paid + (this.payment?.amount ?? 0) < this.debt)) {
+      this.confirmPayment(fullPayment);
       return;
     }
 
-    this.begin();
+    this.begin(fullPayment);
   }
 
-  private begin(): void {
+  private begin(fullPayment: boolean): void {
 
     const data = {
       userId: this.userId,
@@ -129,7 +130,8 @@ export class PrivateDebtPaymentModalsComponent extends SharedUtilityComponent im
       startDate: this.filter?.startDate,
       endDate: this.filter?.endDate,
       proof: this.payment?.base64String,
-      paymentType: this.payment?.paymentType
+      paymentType: this.payment?.paymentType,
+      fullPayment
     }
 
     this.isLoading = true;

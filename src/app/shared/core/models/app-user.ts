@@ -12,6 +12,8 @@ export class AppUser {
     firstName?: string
     lastName?: string
     otherName?: string
+    occupation?: string
+    gender?: string
     phone: any
     address?: string
     base?: Base
@@ -135,6 +137,7 @@ export class AppUser {
     patientCompanyName?: string;
     patientCompanyId?: string;
     forIndividual?: boolean;
+    companyUniqueId?: string;
   }
 
   export class Nurse {

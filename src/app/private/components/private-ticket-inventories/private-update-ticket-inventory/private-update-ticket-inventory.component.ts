@@ -42,6 +42,7 @@ export class PrivateUpdateTicketInventoryComponent extends SharedUtilityComponen
 
   setCanUpdate(): void {
     this.canUpdate = this.oldTicketInventory == JSON.stringify(this.ticketInventory);
+    // this.checkDifferences();
   }
 
   @Confirmable({
@@ -107,6 +108,20 @@ export class PrivateUpdateTicketInventoryComponent extends SharedUtilityComponen
       });
 
       this.subscriptions.push(sub);
+  }
+
+  checkDifferences(): void {
+    const oldTicket = JSON.parse(this.oldTicketInventory);
+    const obj: any =  this.ticketInventory;
+    for (const key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key) && typeof(obj[key]) !== 'object') {
+        
+        if (oldTicket[key] != obj[key]) {
+          console.log(key, '=>', 'old value => ', oldTicket[key], 'new value => ', obj[key]);
+        }
+      
+      }
+    }
   }
 
 }

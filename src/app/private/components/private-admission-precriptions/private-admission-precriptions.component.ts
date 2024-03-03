@@ -25,12 +25,6 @@ export class PrivateAdmissionPrecriptionsComponent extends SharedUtilityComponen
 
   isCreatingPrescription = false;
 
-  // prescriptions: AdmissionPrescription[] = [];
-  // appPagination = new AppPagination();
-  // filter = new AdmissionPrescriptionFilter();
-  // paginationRequest = new PaginationRequest<AdmissionPrescriptionFilter>(this.appPagination, this.filter);
-  // paginationResponse = new PaginationResponse<AdmissionPrescription[]>();
-
   pagination = new PaginationContext<AdmissionPrescription, AdmissionPrescriptionFilter>();
 
   index = 0;

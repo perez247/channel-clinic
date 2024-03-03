@@ -128,6 +128,10 @@ import { PrivateInventoryLogsComponent } from './components/private-inventory-lo
 import { PrivateInventoryLogsItemComponent } from './components/private-inventory-logs/private-inventory-logs-item/private-inventory-logs-item.component';
 import { PrivateSaveFinanceRecordComponent } from './modals/private-save-finance-record/private-save-finance-record.component';
 import { PrivateUserPasswordComponent } from './components/private-user-password/private-user-password.component';
+import { PrivateAddUserContractComponent } from './modals/private-add-user-contract/private-add-user-contract.component';
+import { AddTicketInventoryDebtorComponent } from './modals/add-ticket-inventory-debtor/add-ticket-inventory-debtor.component';
+import { PrivateNursingInventoryItemComponent } from './components/private-ticket-inventories/private-nursing-inventory-item/private-nursing-inventory-item.component';
+import { PrivateTicketInventoryItemStaffObservationComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-staff-observation/private-ticket-inventory-item-staff-observation.component';
 
 @NgModule({
   declarations: [
@@ -261,6 +265,10 @@ import { PrivateUserPasswordComponent } from './components/private-user-password
     PrivateInventoryLogsItemComponent,
     PrivateSaveFinanceRecordComponent,
     PrivateUserPasswordComponent,
+    PrivateAddUserContractComponent,
+    AddTicketInventoryDebtorComponent,
+    PrivateNursingInventoryItemComponent,
+    PrivateTicketInventoryItemStaffObservationComponent,
   ],
   imports: [
     PrivateRoutingModule,

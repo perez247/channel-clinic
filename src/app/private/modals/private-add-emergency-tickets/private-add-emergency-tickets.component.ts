@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
 import { PrivateAddEmergencyTicketsFunction } from './private-add-emergency-tickets-functions';
-import { AppUser } from 'src/app/shared/core/models/app-user';
+import { AppUser, Company } from 'src/app/shared/core/models/app-user';
 import { CustomErrorService } from 'src/app/shared/services/common/custom-error/custom-error.service';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { PrivateCreateTicketModalComponent } from '../private-create-ticket-modal/private-create-ticket-modal.component';
@@ -13,6 +13,8 @@ import { finalize, firstValueFrom } from 'rxjs';
 import { CustomToastService } from 'src/app/shared/services/common/custom-toast/custom-toast.service';
 import { Router } from '@angular/router';
 import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
+import { AppTicket } from 'src/app/shared/core/models/app-ticket';
+import { UserService } from 'src/app/shared/services/api/user/user.service';
 
 @Component({
   selector: 'app-private-add-emergency-tickets',
@@ -21,15 +23,15 @@ import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
 })
 export class PrivateAddEmergencyTicketsComponent extends SharedUtilityComponent implements OnInit {
 
-  @Input() appInventoryType = 'pharmacy';
-
   form: FormGroup = {} as any;
 
   fonts = { faPlusCircle }
 
-  ticket = undefined;
+  ticket?: AppTicket;
 
   routes = ApplicationRoutes.generateRoutes();
+  
+  companies: Company[] = [];
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -39,7 +41,8 @@ export class PrivateAddEmergencyTicketsComponent extends SharedUtilityComponent 
     private eventBus: EventBusService,
     private ticketService: TicketService,
     private toast: CustomToastService,
-    private router: Router
+    private router: Router,
+    private userService: UserService,
     ) {
     super();
   }
@@ -49,10 +52,11 @@ export class PrivateAddEmergencyTicketsComponent extends SharedUtilityComponent 
   }
 
   initializeForm(): void {
-    this.form = PrivateAddEmergencyTicketsFunction.createForm(this.fb, this.appInventoryType);
+    this.form = PrivateAddEmergencyTicketsFunction.createForm(this.fb);
   }
 
   addPatient(patient: AppUser): void {
+    this.getIndividualCompany(patient);
     this.form.patchValue({
       patientId: patient.patient?.base?.id,
       patientName: `${patient.lastName} ${patient.firstName} ${patient.otherName}`,
@@ -61,7 +65,8 @@ export class PrivateAddEmergencyTicketsComponent extends SharedUtilityComponent 
 
   clearpatient(): void {
     this.form.patchValue({
-      patientId: null
+      patientId: null,
+      sponsorId: null,
     });
   }
 
@@ -78,10 +83,13 @@ export class PrivateAddEmergencyTicketsComponent extends SharedUtilityComponent 
     });
   }
 
-  addTicket(): void {
+  addTicket(type: string): void {
     const modalRef = this.modalService.open(PrivateCreateTicketModalComponent, { size: 'lg' });
     const component: PrivateCreateTicketModalComponent = modalRef.componentInstance;
-    component.type = this.appInventoryType;
+    component.type = type;
+
+    if (type == 'admission') { modalRef.componentInstance.singleType = true; }
+
     component.returnData = true;
 
     const sub = component.saved.subscribe({
@@ -97,17 +105,24 @@ export class PrivateAddEmergencyTicketsComponent extends SharedUtilityComponent 
     this.ticket = undefined;
   }
 
+  updateTicket(newTicket: AppTicket): void {
+    this.ticket = newTicket
+  }
+
   createEmergencyAppointment(): void {
     this.isLoading = true;
     const currentUser = this.eventBus.getState().user.value;
 
     const data = this.form.value;
+    const event = this.ticket?.appInventoryType == 'admission' ? 'Admission' : 'Appointment';
     let d = {
       ...data,
-      overallAppointmentDescription: `Appointment created by ${currentUser?.lastName} ${currentUser?.firstName} for emergency ${this.appInventoryType} ticket`,
+      overallAppointmentDescription: `${event} created by ${currentUser?.lastName} ${currentUser?.firstName} for emergency ticket`,
       overallTicketDescription: (this.ticket as any).overallDescription,
       ticketInventories: (this.ticket as any).ticketInventories,
+      appInventoryType: this.ticket?.appInventoryType
     };
+
 
     const sub = this.ticketService.createEmergencyTicket(d)
       .pipe(finalize(() => this.isLoading = false))
@@ -116,7 +131,7 @@ export class PrivateAddEmergencyTicketsComponent extends SharedUtilityComponent 
 
           await firstValueFrom(this.ticketService.sendAllTickets(dataFromServer));
 
-          this.toast.success(`Emergency ${this.appInventoryType} ticket created successfully`);
+          this.toast.success(`Emergency ticket created successfully`);
           this.router.navigate([`/${this.routes.privateRoute.single_ticket(dataFromServer.ticketId).$absolutePath}`]);
           this.activeModal.close();
         },
@@ -126,5 +141,26 @@ export class PrivateAddEmergencyTicketsComponent extends SharedUtilityComponent 
       });
 
       this.subscriptions.push(sub);
+  }
+
+  getIndividualCompany(userAsPatient: AppUser): void {
+    this.isLoading = true;
+    const sub = this.userService.getIndividualCompany()
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: (data) => {
+          this.companies = [];
+          const user = data.result ? data.result[0] : null;
+          const company = user?.company;
+          if (company && company.base?.id != userAsPatient?.patient?.company?.base?.id) {
+            this.companies.push(company);
+          }
+
+          if (userAsPatient.patient?.company) {
+            this.companies.push(userAsPatient.patient.company || {});
+          }
+        }
+      });
+    this.subscriptions.push(sub);
   }
 }

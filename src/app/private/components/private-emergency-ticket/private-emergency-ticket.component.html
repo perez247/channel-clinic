@@ -18,7 +18,7 @@
     </div>
 
     <strong class="d-block pointer">
-      {{ ticket?.appInventoryType }}
+      Emergency {{ ticket?.appInventoryType == 'admission' ? 'Admission' : 'Appointment' }} Ticket
     </strong>
   </div>
 

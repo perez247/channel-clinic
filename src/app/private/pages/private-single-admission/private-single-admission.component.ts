@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/shared/services/api/ticket/ticket.service';
-import { faPills, faFlask, faXRay, faSyringe, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faPills, faFlask, faXRay, faSyringe, faArrowLeft, faUserNurse } from '@fortawesome/free-solid-svg-icons';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
 import { AdmissionService } from 'src/app/shared/services/api/admission/admission.service';
 import { ActivatedRoute } from '@angular/router';
@@ -24,7 +24,7 @@ export class PrivateSingleAdmissionComponent extends SharedUtilityComponent impl
     super()
    }
 
-  fonts = { faPills, faFlask, faXRay, faSyringe, faArrowLeft }
+  fonts = { faPills, faFlask, faXRay, faSyringe, faArrowLeft, faUserNurse }
   ticketId = '';
   dashboard: AdmissionStats = {} as AdmissionStats;
 

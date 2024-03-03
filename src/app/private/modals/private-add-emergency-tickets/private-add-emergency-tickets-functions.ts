@@ -3,7 +3,7 @@ import { CustomValidator } from "src/app/shared/validations/custom-validators";
 
 export class PrivateAddEmergencyTicketsFunction {
 
-  public static createForm(fb: FormBuilder, appInventoryType: string): FormGroup {
+  public static createForm(fb: FormBuilder): FormGroup {
     return fb.group({
       patientId: [null, [CustomValidator.CustomRequired('Patient')]],
       patientName: [null],
@@ -11,7 +11,8 @@ export class PrivateAddEmergencyTicketsFunction {
       doctorName: [null],
       overallAppointmentDescription: [null, [CustomValidator.MaxLength(5000)]],
       overallTicketDescription: [null, [CustomValidator.MaxLength(5000)]],
-      appInventoryType: [appInventoryType]
+      appInventoryType: [null],
+      sponsorId: [null, [CustomValidator.CustomRequired('Sponsor')]],
     });
   }
 }

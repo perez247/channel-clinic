@@ -1,5 +1,9 @@
 
-<section *ngIf="(!canUpdate || ticket?.cost || isAdmission) && !ticketInventory?.concludedDate" class="card-header d-flex justify-content-between">
+<section 
+  *ngIf="(!canUpdate || ticket?.cost || isAdmission) && !ticketInventory?.concludedDate" 
+  class="card-header d-flex justify-content-between"
+  [ngClass]="{'bg-danger': !canUpdate}"
+  >
 
   <div>
     <span>&nbsp;</span>

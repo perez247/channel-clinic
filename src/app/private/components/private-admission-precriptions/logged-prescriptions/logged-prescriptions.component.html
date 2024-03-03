@@ -27,6 +27,14 @@
       [isAdmission]="true"
     ></app-private-surgery-inventory-item>
 
+    <app-private-nursing-inventory-item
+      *ngIf="ticketInventory.inventory.appInventoryType === types.nursing"
+      [ticket]="ticket"
+      [ticketInventory]="ticketInventory"
+      [inventoryItems]="inventoryItems"
+      [isAdmission]="true"
+    ></app-private-nursing-inventory-item>
+
   </ng-container>
 
   <section *ngIf="pagination.response.totalItems > 10">

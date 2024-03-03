@@ -78,8 +78,7 @@ export class PrivateTicketsComponent extends SharedUtilityComponent implements O
     this.subscriptions.push(sub);
   }
 
-  openCreateTicket(type: string): void {
+  openCreateTicket(): void {
     const modalRef = this.modalService.open(PrivateAddEmergencyTicketsComponent, { size: 'lg' });
-    modalRef.componentInstance.appInventoryType = type;
   }
 }

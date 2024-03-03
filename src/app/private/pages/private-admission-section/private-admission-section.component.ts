@@ -1,7 +1,7 @@
 import { AdmissionService } from './../../../shared/services/api/admission/admission.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faArrowLeft, faFlask, faPills, faSyringe, faXRay, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faFlask, faPills, faSyringe, faXRay, faPlusCircle, faUserNurse } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
@@ -29,6 +29,7 @@ export class PrivateAdmissionSectionComponent extends SharedUtilityComponent imp
     lab: { name: faFlask, css: 'bg-success' },
     radiology: { name: faXRay, css: 'bg-danger' },
     surgery: { name: faSyringe, css: 'bg-warning' },
+    nursing: { name: faUserNurse, css: 'bg-black' },
   };
 
   backIcon = faArrowLeft;

@@ -11,6 +11,8 @@ export class UserPersonalDetailFunctions {
       lastName: [appUser?.lastName, [CustomValidator.CustomRequired('Last Name'), CustomValidator.MaxLength(200)]],
       phone: [appUser?.phone, [CustomValidator.CustomRequired('Phone'), CustomValidator.CustomPattern('^[0-9+]*$', 'Phone is invalid')]],
       otherName: [appUser?.otherName, [CustomValidator.MaxLength(200)]],
+      occupation: [appUser?.occupation, [CustomValidator.MaxLength(250)]],
+      gender: [appUser?.gender, [CustomValidator.MaxLength(200)]],
       address: [appUser?.address, [CustomValidator.MaxLength(2000)]],
       profile: [appUser?.profile],
       companyUniqueId: [appUser?.patient?.companyUniqueId, [CustomValidator.MaxLength(255)]],

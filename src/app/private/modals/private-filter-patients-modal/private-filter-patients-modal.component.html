@@ -25,6 +25,12 @@
                   <app-custom-error-message [errorMessage]="errorService.getError(form, 'userSearchId')"></app-custom-error-message>
                 </div>
 
+                <div class="form-group col-12">
+                  <label class="form-control-label mb-2" for="companyUniqueIdField"><strong>Patient Company Id</strong></label>
+                  <input placeholder="Name" maxlength="250" type="text" class="form-control" id="companyUniqueIdField" formControlName="companyUniqueId"  [ngClass]="{'is-invalid': errorService.getError(form, 'companyUniqueId')}">
+                  <app-custom-error-message [errorMessage]="errorService.getError(form, 'companyUniqueId')"></app-custom-error-message>
+                </div>
+
                 <div class="form-group col-md-12 position-relative">
 
                   <div class="w-100 position-relative">
@@ -37,6 +43,8 @@
                   </div>
 
                 </div>
+
+
 
                 <!-- <div class="form-group col-12">
                   <label class="form-control-label mb-2" for="isCompanyField"><strong>Type of Patient</strong></label>

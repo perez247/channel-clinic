@@ -71,7 +71,7 @@
           <div class="border-bottom">
             {{ payment.amount | currency: 'N'}} - {{ payment.typeDisplayName }}
           </div>
-          <div class="input-group">
+          <div *ngIf="payment.base64String" class="input-group">
             <button (click)="downloadFile(payment.base64String, payment.name)" class="btn btn-outline-success btn-success text-white" type="button">
               <fa-icon [icon]="fonts.faDownload" class="bg-success rounded text-white"></fa-icon>
             </button>
@@ -87,10 +87,17 @@
 
   </div>
   <div class="modal-footer c-bg-primary d-flex justify-content-between">
-    <button (click)="paydebt()" [disabled]="!payment || isLoading" type="button" class="btn btn-primary">
-      Pay debt
-      <app-shared-loading *ngIf="isLoading"></app-shared-loading>
-    </button>
+    <div class="d-flex justify-content-between bg-primary w-75">
+      <button (click)="paydebt(true)" [disabled]="!payment || isLoading" type="button" class="btn btn-success">
+        Pay in full
+        <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+      </button>
+
+      <button (click)="paydebt(false)" [disabled]="!payment || isLoading" type="button" class="btn btn-primary">
+        Pay part
+        <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+      </button>
+    </div>
     <button (click)="activeModal.close()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
   </div>
 </div>

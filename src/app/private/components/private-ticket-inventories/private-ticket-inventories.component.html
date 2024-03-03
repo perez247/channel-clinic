@@ -58,6 +58,14 @@
     (recalculate)="calculateNewTotal(selectedCompany)"
   ></app-private-admission-inventory-item>
 
+  <app-private-nursing-inventory-item
+    *ngIf="ticketInventory.inventory.appInventoryType === types.nursing"
+    [ticket]="ticket"
+    [ticketInventory]="ticketInventory"
+    [inventoryItems]="inventoryItems"
+    (recalculate)="calculateNewTotal(selectedCompany)"
+  ></app-private-nursing-inventory-item>
+
 </ng-container>
 
 <section *ngIf="pagination.response.totalItems > 10">
@@ -72,7 +80,7 @@
 
   <div appHasRole [roles]="[roles.admin, roles.finance]" [operator]="'or'" *ngIf="ticket.sentToFinance && !ticket.cost">
     <button [disabled]="isLoading || !selectedCompany"  (click)="billClient()" class="btn btn-sm btn-primary">
-      Upload payment
+      Bill Patient
       <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
     </button>
   </div>

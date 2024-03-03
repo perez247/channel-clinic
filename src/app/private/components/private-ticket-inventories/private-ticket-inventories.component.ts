@@ -96,7 +96,12 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
           }
           this.companies.push(this.ticket?.patient?.company ?? {});
 
-          this.calculateNewTotal(this.ticket.appointment.company?.base?.id || '')
+          this.calculateNewTotal(this.ticket.appointment.company?.base?.id || '');
+
+          this.pagination.elements.forEach(x => {
+            x.payers = this.companies;
+          });
+
         }
       });
     this.subscriptions.push(sub);

@@ -10,7 +10,7 @@
   <section class="prescription-box position-relative border p-2">
     <ng-container *ngIf="selected">
       <button *ngIf="index > 0" class="left-btn"><fa-icon size="2x" (click)="nextPreviousPrescription(-1)" [icon]="fonts.faChevronCircleLeft"></fa-icon></button>
-      <button *ngIf="index < pagination.response.totalItems" (click)="nextPreviousPrescription(1)" class="right-btn"><fa-icon size="2x" [icon]="fonts.faChevronCircleRight"></fa-icon></button>
+      <button *ngIf="index < (pagination.response.totalItems - 1)" (click)="nextPreviousPrescription(1)" class="right-btn"><fa-icon size="2x" [icon]="fonts.faChevronCircleRight"></fa-icon></button>
 
       <app-prescription-item *ngIf="selected" [ticket]="ticket" (reload)="getPrescriptions(true)" (reloadLogged)="reloadLoggedPrescriptions()" [admissionPrescription]="selected" ></app-prescription-item>
     </ng-container>

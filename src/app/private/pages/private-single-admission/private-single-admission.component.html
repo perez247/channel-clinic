@@ -87,6 +87,20 @@
       </div>
     </div>
 
+    <div class="col-lg-6 my-5">
+      <div [routerLink]="['/' + routes.privateRoute.admission_sectionName('nursing', (ticketId)).$absolutePath]" appHoverClass hover-class="shadow" class="card pointer">
+        <div class="card-body position-relative text-end">
+          <span class="d-block p-4 bg-black shadow icon-set">
+            <fa-icon [icon]="fonts.faUserNurse" class="pe-1 text-white" [size]="'4x'"></fa-icon>
+          </span>
+          <span class="text-muted">
+            <span>Nursing</span>
+            <span class="d-block h2">{{dashboard.nursing}}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
   </section>
 
   <ngb-accordion [closeOthers]="true" [activeIds]="currentSection">

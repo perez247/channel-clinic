@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
 import { faNairaSign } from '@fortawesome/free-solid-svg-icons';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddTicketInventoryDebtorComponent } from 'src/app/private/modals/add-ticket-inventory-debtor/add-ticket-inventory-debtor.component';
 import { AppRoles } from 'src/app/shared/core/models/app-roles';
 import { AppTicket, TicketInventory } from 'src/app/shared/core/models/app-ticket';
 import { AppInventoryItem } from 'src/app/shared/core/models/inventory';
@@ -15,8 +17,13 @@ export class PrivateTicketInventoryItemQuantityToGiveComponent implements OnChan
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
   @Input() isAdmission = false;
   @Input() inventoryItems: AppInventoryItem[] = [];
+  @Input() isAdmissionExecution = false;
 
   @Output() onBlur = new EventEmitter();
+
+  constructor(
+    private modalService: NgbModal,
+  ) {}
 
   pricePerItem = 0;
   sumTotal = 0;
@@ -44,5 +51,15 @@ export class PrivateTicketInventoryItemQuantityToGiveComponent implements OnChan
 
   setTotal(): void {
     this.sumTotal = (this.ticketInventory?.prescribedQuantity || 0) * this.pricePerItem;
+    this.ticketInventory.totalPrice = this.ticketInventory.totalPrice ? this.ticketInventory.totalPrice : this.sumTotal;
+    this.ticketInventory.concludedPrice = this.ticketInventory.concludedPrice ? this.ticketInventory.concludedPrice : this.sumTotal;
+  }
+
+  saveDebtor(): void {
+    const modalRef = this.modalService.open(AddTicketInventoryDebtorComponent, { size: 'lg' });
+    const component: AddTicketInventoryDebtorComponent = modalRef.componentInstance;
+
+    component.ticketInventory = this.ticketInventory;
+    component.sumTotal = this.ticketInventory.totalPrice ? this.ticketInventory.totalPrice : this.sumTotal;
   }
 }

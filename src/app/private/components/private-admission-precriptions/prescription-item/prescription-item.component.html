@@ -18,7 +18,7 @@
         'bg-success': admissionPrescription?.appTicketStatus == 'concluded',
         'bg-danger': admissionPrescription?.appTicketStatus == 'canceled'
       }"
-      class="badge ms-2">
+      class="badge ms-2 p-2">
         <span *ngIf="admissionPrescription?.appTicketStatus == 'ongoing'">Not concluded</span>
         <span *ngIf="admissionPrescription?.appTicketStatus == 'concluded'">concluded</span>
         <span *ngIf="admissionPrescription?.appTicketStatus == 'canceled'">closed</span>
@@ -45,15 +45,15 @@
     <div class="col">
       <div class="collapse multi-collapse" id="tickets">
         <div class="border-top mt-2 pt-2 ">
-          <div class="mb-1 pb-1 border-bottom" *ngFor="let inventory of admissionPrescription?.ticketInventories">
-            <fa-icon appHasRole [roles]="[roles.admin, roles.nurse]" (click)="logExecution(inventory)" *ngIf="admissionPrescription?.appTicketStatus == 'concluded'" class="pointer text-success" [icon]="fonts.faPlusCircle"></fa-icon>
+          <div class="mb-3 pb-1 border-bottom" *ngFor="let inventory of admissionPrescription?.ticketInventories">
 
-            <span class="badge bg-primary mx-2">
-
-              {{ inventory?.inventory?.name }}
-              | {{ inventory?.dosage }} - {{ inventory?.times }} times - {{ inventory?.frequency }}
-
-            </span>
+              <button (click)="logExecution(inventory)" class="btn btn-primary d-flex">
+                <fa-icon appHasRole [roles]="[roles.admin, roles.nurse]" (click)="logExecution(inventory)" *ngIf="admissionPrescription?.appTicketStatus == 'concluded'" class="pointer text-white mr-2" [icon]="fonts.faPlusCircle"></fa-icon>
+               <span class="d-block ps-2">
+                {{ inventory?.inventory?.name }} | Dosage: {{ inventory?.dosage }}, {{ inventory?.times }} time(s) {{ inventory?.frequency }}
+               </span>
+              </button>
+  
             <div>
               {{ inventory?.doctorsPrescription }}
             </div>

@@ -56,6 +56,7 @@ export class PrivateFinanceDebtsComponent extends SharedUtilityComponent impleme
           this.paid = data.result.paid;
           this.paginationResponse = data;
           this.debts = data.result.result ?? [];
+          console.log(this.debts);
         },
         error: (error) => {
           throw error;

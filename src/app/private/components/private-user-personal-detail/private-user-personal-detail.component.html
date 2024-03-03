@@ -18,7 +18,7 @@
             <fieldset [disabled]=disableForm>
                 <div class="row">
 
-                    <div class="form-group col-12 col-sm-12 position-relative">
+                    <div class="form-group col-12 col-sm-6 position-relative">
 
                         <div class="w-100 position-relative">
                         <label class="form-control-label mb-2" for="firstNameField">
@@ -54,6 +54,31 @@
                         <app-custom-error-message [errorMessage]="errorService.getError(form, 'phone')"></app-custom-error-message>
                     </div>
 
+                    <div class="form-group col-12 col-sm-6">
+                        <label class="form-control-label mb-2" for="occupationField"><strong>Occupation</strong></label>
+                        <input placeholder="Occupation" maxlength="200" type="text" class="form-control" id="occupationField" formControlName="occupation"  [ngClass]="{'is-invalid': errorService.getError(form, 'occupation')}">
+                        <app-custom-error-message [errorMessage]="errorService.getError(form, 'occupation')"></app-custom-error-message>
+                    </div>
+
+                    <div class="form-group col-12 col-sm-6">
+                        <label class="form-control-label mb-2" for="genderField"><strong>Gender</strong></label>
+                        <select class="form-control" id="genderField" formControlName="gender"  [ngClass]="{'is-invalid': errorService.getError(form, 'gender')}">
+                            <option>---</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <app-custom-error-message [errorMessage]="errorService.getError(form, 'gender')"></app-custom-error-message>
+                    </div>
+
+                    <ng-container *ngIf="user?.patient">
+                        <div class="form-group col-12 col-sm-6">
+                            <label class="form-control-label mb-2" for="companyUniqueIdField"><strong>Company Unique Id</strong></label>
+                            <input placeholder="Company Unique Id" maxlength="255" type="text" class="form-control" id="companyUniqueIdField" formControlName="companyUniqueId"  [ngClass]="{'is-invalid': errorService.getError(form, 'companyUniqueId')}">
+                            <app-custom-error-message [errorMessage]="errorService.getError(form, 'companyUniqueId')"></app-custom-error-message>
+                        </div>
+                    </ng-container>
+
                     <div class="form-group col-12">
                         <label class="form-control-label mb-2" for="addressField"><strong>Address</strong></label>
                         <input placeholder="Address" maxlength="1000" type="email" class="form-control" id="addressField" formControlName="address"  [ngClass]="{'is-invalid': errorService.getError(form, 'address')}">
@@ -61,12 +86,6 @@
                     </div>
 
                     <ng-container *ngIf="user?.patient">
-                      <div class="form-group col-12">
-                        <label class="form-control-label mb-2" for="companyUniqueIdField"><strong>Company Unique Id</strong></label>
-                        <input placeholder="Company Unique Id" maxlength="255" type="text" class="form-control" id="companyUniqueIdField" formControlName="companyUniqueId"  [ngClass]="{'is-invalid': errorService.getError(form, 'companyUniqueId')}">
-                        <app-custom-error-message [errorMessage]="errorService.getError(form, 'companyUniqueId')"></app-custom-error-message>
-                      </div>
-
                       <div class="form-group col-12">
                         <label class="form-control-label mb-2" for="otherInformationField"><strong>Other Company Information</strong></label>
 

@@ -41,7 +41,8 @@
         [ticket]="ticket"
         [ticketInventory]="ticketInventory"
         [inventoryItems]="inventoryItems"
-        [isAdmission]="true">
+        [isAdmission]="true"
+        [isAdmissionExecution]="true">
       </app-private-pharmacy-inventory-item>
 
       <app-private-lab-inventory-item
@@ -61,6 +62,15 @@
         [isAdmission]="true"
         [isAdmissionExecution]="true"
       ></app-private-surgery-inventory-item>
+      
+      <app-private-nursing-inventory-item
+        *ngIf="ticketInventory.inventory.appInventoryType === types.nursing"
+        [ticket]="ticket"
+        [ticketInventory]="ticketInventory"
+        [inventoryItems]="inventoryItems"
+        [isAdmission]="true"
+        [isAdmissionExecution]="true"
+      ></app-private-nursing-inventory-item>
 
     </form>
 
