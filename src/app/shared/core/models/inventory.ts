@@ -6,6 +6,7 @@ import { Base, Company } from "./app-user";
     appInventoryType?: string[];
     quantity?: number;
     inventoryId?: string;
+    low?: boolean;
   }
 
   export class InventoryItemFilter {
@@ -27,6 +28,20 @@ import { Base, Company } from "./app-user";
     howLow?: number
     profile?: string
     id?: string
+  }
+
+  export class AppInventoryCSV {
+    name?: string;
+    type?: string;
+    quantity?: string;
+    howlow?: string;
+
+    constructor(data: AppInventory) {
+      this.name = data.name,
+      this.type = data.appInventoryType,
+      this.quantity = data.quantity?.toString(),
+      this.howlow = data.howLow?.toString();
+    }
   }
 
   export class AppInventoryItem {

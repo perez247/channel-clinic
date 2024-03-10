@@ -5,13 +5,14 @@ import { finalize } from "rxjs";
 import { SharedUtilityComponent } from "src/app/shared/components/shared-utility/shared-utility.component";
 import { AppConstants } from "src/app/shared/core/models/app-constants";
 import { AppRoles } from "src/app/shared/core/models/app-roles";
-import { AppInventory, InventoryFilter } from "src/app/shared/core/models/inventory";
+import { AppInventory, AppInventoryCSV, InventoryFilter } from "src/app/shared/core/models/inventory";
 import { AppPagination, PaginationRequest, PaginationResponse } from "src/app/shared/core/models/pagination";
 import { ApplicationRoutes } from "src/app/shared/core/routes/app-routes";
 import { InventoryService } from "src/app/shared/services/api/inventory/inventory.service";
 import { EventBusService } from "src/app/shared/services/common/event-bus/event-bus.service";
 import { PrivateAddInventoryModalComponent } from "../../modals/private-add-inventory-modal/private-add-inventory-modal.component";
 import { PrivateFilterInventoryModalComponent } from "../../modals/private-filter-inventory-modal/private-filter-inventory-modal.component";
+import { AppFileService } from "src/app/shared/services/common/app-file/app-file.service";
 
 @Component({
   selector: 'app-private-inventory',
@@ -30,6 +31,8 @@ export class PrivateInventoryComponent extends SharedUtilityComponent implements
   paginationRequest = new PaginationRequest<InventoryFilter>(this.appPagination, this.filter);
   paginationResponse = new PaginationResponse<any[]>();
 
+  csvData: AppInventory[] = [];
+
   roles = AppRoles;
 
   ticketRoles: (string | undefined)[] = []
@@ -38,7 +41,8 @@ export class PrivateInventoryComponent extends SharedUtilityComponent implements
   constructor(
     private modalService: NgbModal,
     private inventoryService: InventoryService,
-    private eventBus: EventBusService
+    private eventBus: EventBusService,
+    private fileService: AppFileService,
     ) {
     super();
   }
@@ -97,4 +101,39 @@ export class PrivateInventoryComponent extends SharedUtilityComponent implements
     this.modalService.open(PrivateAddInventoryModalComponent, { size: 'lg' });
   }
 
+  downloadInventory(pageNumber: number = 1): void {
+    const appPagination = new AppPagination();
+    appPagination.pageSize = 500;
+    appPagination.pageNumber = pageNumber;
+    const paginationRequest = new PaginationRequest<InventoryFilter>(this.appPagination, this.filter);
+    this.isLoading = true;
+    const sub = this.inventoryService.getInventories(paginationRequest)
+    .pipe(finalize(() => this.isLoading = false))
+    .subscribe({
+      next: (data) => {
+        this.csvData = this.csvData.concat(data.result ?? []);
+        if (this.csvData.length < data.totalItems && data.totalItems != 0) {
+          this.downloadInventory(pageNumber++);
+        } else {
+          this.downloadInvoiceAsCSV(this.csvData);
+          this.csvData = [];
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  this.subscriptions.push(sub);
+  }
+
+  private downloadInvoiceAsCSV(appInventories: AppInventory[] = []): void {
+    const invoice = appInventories.map(x => new AppInventoryCSV(x));
+    let name = 'Inventory';
+    name = `Invoice_${name?.replace(' ', '_')}${new Date().toLocaleDateString()}.csv`
+    this.fileService.downloadAsCSV(invoice, name);
+  }
+
+  isFilterEmpty(): boolean {
+    return Object.keys(this.filter).length == 0;
+  }
 }

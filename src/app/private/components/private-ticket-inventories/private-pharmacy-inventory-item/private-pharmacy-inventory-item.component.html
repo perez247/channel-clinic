@@ -36,6 +36,13 @@
     [ticketInventory]="ticketInventory"
     [isAdmission]="isAdmission">
   </app-private-ticket-inventory-item-department-note>
+  
+  <app-private-ticket-inventory-item-staff-observation
+  [ticketInventory]="ticketInventory"
+  [isAdmission]="isAdmission"
+  [ticket]="ticket"
+  >
+  </app-private-ticket-inventory-item-staff-observation>
 
   <app-private-ticket-inventory-item-price
     *ngIf="ticket.sentToFinance && !isAdmission"

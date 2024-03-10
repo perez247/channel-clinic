@@ -86,8 +86,8 @@
 
 
   </div>
-  <div class="modal-footer c-bg-primary d-flex justify-content-between">
-    <div class="d-flex justify-content-between bg-primary w-75">
+  <div class="modal-footer d-flex justify-content-between">
+    <div class="d-flex justify-content-between w-75">
       <button (click)="paydebt(true)" [disabled]="!payment || isLoading" type="button" class="btn btn-success">
         Pay in full
         <app-shared-loading *ngIf="isLoading"></app-shared-loading>

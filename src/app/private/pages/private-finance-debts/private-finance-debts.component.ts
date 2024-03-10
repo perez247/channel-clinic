@@ -56,7 +56,6 @@ export class PrivateFinanceDebtsComponent extends SharedUtilityComponent impleme
           this.paid = data.result.paid;
           this.paginationResponse = data;
           this.debts = data.result.result ?? [];
-          console.log(this.debts);
         },
         error: (error) => {
           throw error;
@@ -79,7 +78,7 @@ export class PrivateFinanceDebtsComponent extends SharedUtilityComponent impleme
 
           this.invoiceData = this.invoiceData.concat(data.result.result ?? []);
 
-          if (this.invoiceData.length < data.totalItems) {
+          if (this.invoiceData.length < data.totalItems && data.totalItems != 0) {
             this.downloadInvoice(pageNumber++);
           } else {
             this.downloadInvoiceAsCSV(this.invoiceData);

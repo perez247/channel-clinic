@@ -46,6 +46,7 @@ export class Debt {
   payment?: Payment[];
   paymentStatus?: string;
   ticket?: AppTicket
+  ticketPart?: AppTicket
 }
 
 export class InvoiceCSV {
@@ -96,8 +97,8 @@ export class InvoiceCSV {
   private initializeOtherInformation(debt: Debt): string {
     let data = '';
 
-    data += this.getPatientDetails(debt.ticket)
-    debt.ticket?.ticketInventories.forEach(x => {
+    data += this.getPatientDetails(debt.ticketPart)
+    debt.ticketPart?.ticketInventories.forEach((x, index, arr) => {
       data += `
       ${this.getDefaultInformation(x)}`
 
@@ -109,9 +110,13 @@ export class InvoiceCSV {
         data += this.getSurgeryInformation(x);
       }
 
-      data += `\n*********************************************************`
+      if (index != arr.length - 1) {
+        data += `\n*********************************************************`
+      }
 
     });
+
+    debt.ticketPart?.ticketInventories.join()
 
     return `"${data}"`;
   }
@@ -127,14 +132,15 @@ export class InvoiceCSV {
   }
 
   private getDefaultInformation(x: TicketInventory): string {
-    console.log(x.concludedDate);
     return `
       NAME: ${x.inventory.name} (${x.inventory.appInventoryType})
       QUANTITY: ${x.prescribedQuantity}
       TOTAL: ${x.totalPrice} (${x.currentPrice} * ${x.prescribedQuantity})
       DATE STARTED: ${new Date(x.base?.dateCreated ?? '').toISOString().slice(0, 10)}
       DATE CONCLUDED: ${x.concludedDate ? new Date(x.concludedDate).toISOString().slice(0, 10) : ''}
-      ADDITIONAL INFO: ${x.additionalNote ? x.additionalNote : ''}`;
+      WORK DONE: ${x.staffObservation ? x.staffObservation : ''}
+      ADDITIONAL INFO: ${x.additionalNote ? x.additionalNote : ''}
+      `
   }
 
   private getAdmissionInformation(x: TicketInventory): string {

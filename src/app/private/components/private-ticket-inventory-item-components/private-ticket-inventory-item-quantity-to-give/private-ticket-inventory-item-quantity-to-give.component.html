@@ -50,7 +50,7 @@
               <strong *ngIf="payer.payer.name">{{ payer.payer.name }}: </strong>
               <strong *ngIf="!payer.payer.name">{{ payer.payer.lastName }} {{ payer.payer.firstName }}: </strong>
               <span><fa-icon [icon]="fonts.faNairaSign"></fa-icon>{{payer.amount | currency: ' '}}</span>
-              <span class="d-block">{{payer.description}}</span>
+              <!-- <span class="d-block">{{payer.description}}</span> -->
             </div>
           </div>
         </div>

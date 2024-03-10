@@ -36,6 +36,16 @@
                 <app-custom-error-message [errorMessage]="errorService.getError(form, 'quantity')"></app-custom-error-message>
               </div>
 
+              <div class="form-group col-12">
+                <label class="form-control-label mb-2" for="lowField"><strong>Low on Quantity</strong></label>
+                <select class="form-control" id="lowField" formControlName="low"  [ngClass]="{'is-invalid': errorService.getError(form, 'low')}">
+                  <option [value]="null">---</option>
+                  <option [value]="true">Yes</option>
+                  <option [value]="false">No</option>
+                </select>
+                <app-custom-error-message [errorMessage]="errorService.getError(form, 'low')"></app-custom-error-message>
+              </div>
+
             </form>
 
           </div>

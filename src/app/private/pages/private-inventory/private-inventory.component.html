@@ -19,6 +19,7 @@
             <li
               appHasRole [roles]="ticketRoles"
             ><a class="dropdown-item pointer" (click)="openAddInventoryModal()" >Add Inventory</a></li>
+            <li *ngIf="!isFilterEmpty()"><a class="dropdown-item pointer" (click)="downloadInventory()" >Download CSV</a></li>
             <li><a class="dropdown-item pointer" (click)="openFilterInventory()" >Filter</a></li>
           </ul>
         </div>
@@ -37,7 +38,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let inventory of inventories">
+        <tr *ngFor="let inventory of inventories" [ngClass]="{'bg-danger': (inventory?.quantity ?? 0) < (inventory?.howLow ?? 0)}">
           <!-- <th scope="row"> </th>-->
           <td>
             <img appDisplayProfileImage [imgSrc]="inventory?.profile" [profile]="'inventory'" class="img-fluid m-auto mini-profile rounded-circle">

@@ -30,7 +30,7 @@ export class PrivateSingleTicketComponent extends SharedUtilityComponent impleme
   paginationResponse = new PaginationResponse<AppTicket[]>();
 
   userSections = AppConstants.UserSections;
-  currentSection = this.userSections.ticketDetail;
+  currentSection = 'null';
   types = AppTicketTypes;
 
   roles = AppRoles;

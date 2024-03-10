@@ -27,7 +27,7 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
 
   fonts = { faCalendar, faPlus, faGears };
   userSections = AppConstants.UserSections;
-  currentSection = this.userSections.vitals;
+  currentSection = 'null';
 
   appointment?: AppAppointment;
   appointments: AppAppointment[] = [];

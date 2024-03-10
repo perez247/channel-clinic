@@ -9,7 +9,7 @@
           <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
         </span>
         <small class="d-block">
-          <strong>Overall: Expense - {{revenue.totalExpense || 0}} | Profit - {{revenue.totalProfit || 0}}</strong>
+          <strong>Overall from last month: Expense - {{revenue.totalExpense || 0}} | Profit - {{revenue.totalProfit || 0}}</strong>
         </small>
 
         <small class="text-dark"><strong>Total Items: </strong>{{pagination.response.totalItems}}</small>
@@ -74,7 +74,7 @@
             <strong>Responsible: </strong><a [routerLink]="['/' + routes.privateRoute.single_staff(pay.actor?.base?.id).$absolutePath]"  ><span>{{ pay.actor?.lastName }} {{ pay.actor?.firstName }}</span></a>
           </div>
         </td>
-        <td>
+        <td style="width: 17rem;">
           <small class="d-block"><strong>Cost: </strong><span>{{ pay?.amount | currency: 'N' }}</span></small>
           <small class="d-block"><strong>Concluded amount: </strong><span>{{ pay?.approvedPrice | currency: 'N' }}</span></small>
           <small class="d-block"><strong>Total number of items: </strong><span> {{ pay?.totalAppCosts }}  </span></small>
