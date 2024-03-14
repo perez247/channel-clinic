@@ -1,0 +1,79 @@
+<div class="card-header">
+  <div class="row">
+    <div class="col-2">
+      <strong>Admission Start Date</strong>
+    </div>
+    <div class="col-10 row">
+      <div class="col-4">
+        <div class="input-group mb-3">
+          <input readonly ngbDatepicker #startDate="ngbDatepicker" type="date" class="form-control" placeholder="YYYY-MM-DD" [(ngModel)]="ticketInventory.admissionStartDate">
+          <button *ngIf="!ticket.cost" (click)="startDate.toggle()" class="btn-primary bg-primary">
+            <fa-icon [icon]="fonts.faCalendar" class="text-white"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <div class="col-2">
+        <strong>Time (hours)</strong>
+      </div>
+      <div class="col-6">
+        <select [disabled]="ticket.cost != null" #time class="form-control" (change)="addHoursStart()" [(ngModel)]="selectedHourStart">
+          <option [value]="null" >---</option>
+          <option *ngFor="let hour of hours" [value]="hour" >{{hour}}</option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div>
+
+  <div class="card-header">
+    <div class="row">
+      <div class="col-2">
+        <strong>Admission End Date</strong>
+      </div>
+      <div class="col-10 row">
+        <div class="col-4">
+          <div class="input-group mb-3">
+            <input readonly ngbDatepicker #endDate="ngbDatepicker" type="date" class="form-control" placeholder="YYYY-MM-DD" [(ngModel)]="ticketInventory.admissionEndDate">
+            <button  *ngIf="!ticket.cost" (click)="endDate.toggle()" class="btn-primary bg-primary">
+              <fa-icon [icon]="fonts.faCalendar" class="text-white"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <div class="col-2">
+          <strong>Time (hours)</strong>
+        </div>
+        <div class="col-6">
+          <select [disabled]="ticket.cost != null" #time class="form-control" (change)="addHoursEnd()" [(ngModel)]="selectedHourEnd">
+            <option [value]="null" >---</option>
+            <option *ngFor="let hour of hours" [value]="hour" >{{hour}}</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card-header">
+    <div class="row">
+      <div class="col-2">
+        <strong>Duration</strong>
+      </div>
+      <div class="col-10 row">
+        <div class="d-flex">
+          <span>{{ duration }} day(s)</span>
+
+          <span class="ms-3" *ngIf="totalPrice > 0">
+            <fa-icon [icon]="fonts.faNairaSign"></fa-icon>
+            {{ totalPrice | currency: ' '}}
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+

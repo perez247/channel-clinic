@@ -1,0 +1,44 @@
+
+<section class="mt-5">
+
+  <ng-container *ngFor="let ticketInventory of pagination.elements">
+
+    <app-private-pharmacy-inventory-item
+      *ngIf="ticketInventory.inventory.appInventoryType === types.pharmacy"
+      [ticket]="ticket"
+      [ticketInventory]="ticketInventory"
+      [inventoryItems]="inventoryItems"
+      [isAdmission]="true"
+    ></app-private-pharmacy-inventory-item>
+
+    <app-private-lab-inventory-item
+      *ngIf="ticketInventory.inventory.appInventoryType === types.lab || ticketInventory.inventory.appInventoryType === types.radiology"
+      [ticket]="ticket"
+      [ticketInventory]="ticketInventory"
+      [inventoryItems]="inventoryItems"
+      [isAdmission]="true"
+    ></app-private-lab-inventory-item>
+
+    <app-private-surgery-inventory-item
+      *ngIf="ticketInventory.inventory.appInventoryType === types.surgery"
+      [ticket]="ticket"
+      [ticketInventory]="ticketInventory"
+      [inventoryItems]="inventoryItems"
+      [isAdmission]="true"
+    ></app-private-surgery-inventory-item>
+
+    <app-private-nursing-inventory-item
+      *ngIf="ticketInventory.inventory.appInventoryType === types.nursing"
+      [ticket]="ticket"
+      [ticketInventory]="ticketInventory"
+      [inventoryItems]="inventoryItems"
+      [isAdmission]="true"
+    ></app-private-nursing-inventory-item>
+
+  </ng-container>
+
+  <section *ngIf="pagination.response.totalItems > 10">
+    <app-shared-pagination-template [pagination]="pagination" (pageChanged)="pageChanged($event)" ></app-shared-pagination-template>
+  </section>
+
+</section>

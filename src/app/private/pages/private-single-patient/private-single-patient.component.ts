@@ -4,7 +4,7 @@ import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility
 import { AppUser, UserFilter } from 'src/app/shared/core/models/app-user';
 import { AppPagination, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
 import { finalize } from 'rxjs';
-import { faBedPulse, faEllipsisV, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faHospitalUser, faEllipsisV, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from 'src/app/shared/services/api/user/user.service';
 import { AppConstants } from 'src/app/shared/core/models/app-constants';
 import { CustomToastService } from 'src/app/shared/services/common/custom-toast/custom-toast.service';
@@ -17,7 +17,7 @@ import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
 })
 export class PrivateSinglePatientComponent extends SharedUtilityComponent  implements OnInit {
 
-  fonts = { faBedPulse, faEllipsisV, faChevronDown }
+  fonts = { faHospitalUser, faEllipsisV, faChevronDown }
   userSections = AppConstants.UserSections;
   currentSection = this.userSections.personalDetails;
 
@@ -64,7 +64,6 @@ export class PrivateSinglePatientComponent extends SharedUtilityComponent  imple
           this.paginationResponse = data;
           this.patients = data.result ?? [];
           this.patient = this.patients[0];
-
 
         },
         error: (data) => {

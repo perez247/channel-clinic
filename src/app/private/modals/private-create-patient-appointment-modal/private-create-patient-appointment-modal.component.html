@@ -31,26 +31,58 @@
                 <div class="form-group col-md-12 position-relative">
 
                   <div class="w-100 position-relative">
+                    <label class="form-control-label mb-2" for="sponsorField">
+                      <strong>Sponsor</strong>
+                    </label>
+
+                    <select name="sponsor" id="sponsorField" class="form-control" formControlName="sponsorId"  [ngClass]="{'is-invalid': errorService.getError(form, 'sponsorId')}">
+                      <!-- <option [value]="undefined">---</option> -->
+                      <option *ngFor="let company of companies" [value]="company.base?.id">{{company.name}}</option>
+                    </select>
+
+                    <app-custom-error-message [errorMessage]="errorService.getError(form, 'sponsorId')"></app-custom-error-message>
+                  </div>
+
+                </div>
+
+                <div class="form-group col-md-12 position-relative">
+
+                  <div class="w-100 position-relative">
                     <label class="form-control-label mb-2" for="doctorField">
                       <strong>Doctor</strong>
                     </label>
                     <input (keydown)="clearDoctor()" placeholder="Search for doctor" maxlength="250" type="text" class="form-control" id="doctorField" formControlName="doctorName"  [ngClass]="{'is-invalid': errorService.getError(form, 'doctorId')}">
-                    <app-shared-user-autocomplete [userType]="'staff'" (selected)="addDoctor($event)" class="position-absolute w-100" [searchWord]="form.get('doctorName')?.value"></app-shared-user-autocomplete>
+                    <app-shared-user-autocomplete [userType]="'staff'" [roles]="['doctor']" (selected)="addDoctor($event)" class="position-absolute w-100" [searchWord]="form.get('doctorName')?.value"></app-shared-user-autocomplete>
                     <app-custom-error-message [errorMessage]="errorService.getError(form, 'doctorId')"></app-custom-error-message>
                   </div>
 
                 </div>
 
-                <div class="form-group col-md-6 text-center">
-                  <label class="form-control-label mb-2 d-block"><strong>Appointment Date</strong></label>
-                  <ngb-datepicker #dp formControlName="appointmentDate"></ngb-datepicker>
+                <div class="form-group col-md-6">
+                  <label class="form-control-label mb-2 d-block" for="appointmentDateField"><strong>Appointment Date</strong></label>
+                  <div class="input-group">
+                    <input
+                      class="form-control"
+                      placeholder="yyyy-mm-dd"
+                      name="appointmentDate"
+                      formControlName="appointmentDate"
+                      ngbDatepicker
+                      readonly
+                      id="appointmentDateField"
+                      #d="ngbDatepicker"
+                    />
+                    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                      <fa-icon [icon]="fonts.faCalendar" class="pe-1 text-primary"></fa-icon>
+                    </button>
+                  </div>
+                  <!-- <ngb-datepicker #dp formControlName="appointmentDate"></ngb-datepicker> -->
                   <app-custom-error-message [errorMessage]="errorService.getError(form, 'appointmentDate')"></app-custom-error-message>
                 </div>
 
                 <div class="form-group col-md-6 position-relative">
                   <app-custom-error-message [errorMessage]="errorService.getError(form, 'appointmentTime')"></app-custom-error-message>
                   <label class="form-control-label mb-2 d-block" for="appointmentTime"><strong>Appoitment Time</strong></label>
-                  <ngb-timepicker formControlName="appointmentTime" [meridian]="true"></ngb-timepicker>
+                  <ngb-timepicker formControlName="appointmentTime" [meridian]="true" [spinners]="false"></ngb-timepicker>
                 </div>
 
               </div>

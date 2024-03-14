@@ -1,0 +1,23 @@
+<div class="card-header" appHasRole [roles]="[roles.admin]" [operator]="'or'">
+  <div class="row">
+    <div class="col-2">
+      <strong>Additional Note</strong>
+      <small class="d-block">(Used externally)</small>
+    </div>
+    <div class="col-10">
+      <form>
+        <fieldset>
+          <div class="row">
+
+            <div class="form-group col-12">
+              <textarea class="form-control"
+              [disabled]="ticketInventory.concludedDate"
+              name="additionalNote"
+              [(ngModel)]="ticketInventory.additionalNote" id="additionalNoteFied" rows="2"></textarea>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

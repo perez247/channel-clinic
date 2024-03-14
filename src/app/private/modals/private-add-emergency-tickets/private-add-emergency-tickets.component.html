@@ -1,0 +1,101 @@
+
+
+<div class="modal-content">
+  <div class="modal-header c-bg-primary">
+    <div>
+      <h5 class="modal-title">Create Emergency ticket</h5>
+    </div>
+    <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body c-bg-secondary">
+
+    <form [formGroup]="form">
+
+      <div class="row">
+
+        <div class="form-group col-md-12 position-relative">
+
+          <div class="w-100 position-relative">
+            <label class="form-control-label mb-2" for="patientField">
+              <strong>Patient</strong>
+            </label>
+            <input (keydown)="clearpatient()" placeholder="Search for patient" maxlength="250" type="text" class="form-control" id="patientField" formControlName="patientName"  [ngClass]="{'is-invalid': errorService.getError(form, 'patientId')}">
+            <app-shared-user-autocomplete [userType]="'patient'" (selected)="addPatient($event)" class="position-absolute w-100" [searchWord]="form.get('patientName')?.value"></app-shared-user-autocomplete>
+            <app-custom-error-message [errorMessage]="errorService.getError(form, 'patientId')"></app-custom-error-message>
+          </div>
+
+        </div>
+
+        <div class="form-group col-md-12 position-relative">
+
+          <div class="w-100 position-relative">
+            <label class="form-control-label mb-2" for="sponsorField">
+              <strong>Sponsor</strong>
+            </label>
+
+            <select name="sponsor" id="sponsorField" class="form-control" formControlName="sponsorId"  [ngClass]="{'is-invalid': errorService.getError(form, 'sponsorId')}">
+              <!-- <option [value]="undefined">---</option> -->
+              <option *ngFor="let company of companies" [value]="company.base?.id">{{company.name}}</option>
+            </select>
+
+            <app-custom-error-message [errorMessage]="errorService.getError(form, 'sponsorId')"></app-custom-error-message>
+          </div>
+
+        </div>
+
+        <div class="form-group col-md-12 position-relative">
+
+          <div class="w-100 position-relative">
+            <label class="form-control-label mb-2" for="doctorField">
+              <strong>Doctor</strong>
+            </label>
+            <input (keydown)="clearDoctor()" placeholder="Search for doctor" maxlength="250" type="text" class="form-control" id="doctorField" formControlName="doctorName"  [ngClass]="{'is-invalid': errorService.getError(form, 'doctorId')}">
+            <app-shared-user-autocomplete [userType]="'staff'" [roles]="['doctor']" (selected)="addDoctor($event)" class="position-absolute w-100" [searchWord]="form.get('doctorName')?.value"></app-shared-user-autocomplete>
+            <app-custom-error-message [errorMessage]="errorService.getError(form, 'doctorId')"></app-custom-error-message>
+          </div>
+
+        </div>
+
+        <div class="col-md-12">
+          <h6>
+            <strong>Ticket</strong>
+            <div *ngIf="!ticket" class="d-flex justify-content-between">
+              <small (click)="addTicket('pharmacy')" class="pointer" >
+                Create appointment
+                <fa-icon [icon]="fonts.faPlusCircle" class="ms-2 text-success pointer" ></fa-icon>
+              </small>
+
+              <small (click)="addTicket('admission')" class="pointer">
+                Create admission
+                <fa-icon [icon]="fonts.faPlusCircle" class="ms-2 text-success pointer" ></fa-icon>
+              </small>
+            </div>
+            <hr class="bg-light">
+          </h6>
+
+          <div *ngIf="ticket" class="card mt-4 shadow">
+
+          </div>
+
+
+          <app-private-emergency-ticket *ngIf="ticket" [ticket]="ticket" (delete)="removeTicket()" (updatedTicket)="updateTicket($event)"></app-private-emergency-ticket>
+
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+  <div class="modal-footer c-bg-primary justify-content-between">
+    <button [disabled]="form.invalid || !ticket || isLoading" (click)="createEmergencyAppointment()" type="button" class="btn btn-primary">
+      Create Emergency Ticket
+      <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+    </button>
+    <div>
+      <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

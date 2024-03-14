@@ -1,0 +1,103 @@
+
+<div class="card mb-3">
+  <div class="card-header">
+    <ng-container *ngIf="!ticket.cost">
+      <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+      <div *ngIf="!isLoading" class="row">
+        <div class="col-2">
+          <strong>Select Payer</strong>
+        </div>
+        <div class="col-10">
+          <select class="form-control" (change)="setCompanyToCalculateTotal($event)" [(ngModel)]="selectedCompany">
+            <option [value]="null" selected >---</option>
+            <option *ngFor="let company of companies" [value]="company.base?.id" >{{company.name}}</option>
+          </select>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="ticket.cost" >
+      <strong>Payer: </strong> <span>{{ getPayer() }}</span>
+    </ng-container>
+  </div>
+</div>
+
+
+
+<ng-container *ngFor="let ticketInventory of pagination.elements">
+
+  <app-private-pharmacy-inventory-item
+    *ngIf="ticketInventory.inventory.appInventoryType === types.pharmacy"
+    [ticket]="ticket"
+    [ticketInventory]="ticketInventory"
+    [inventoryItems]="inventoryItems"
+    (recalculate)="calculateNewTotal(selectedCompany)"
+  ></app-private-pharmacy-inventory-item>
+
+  <app-private-lab-inventory-item
+    *ngIf="ticketInventory.inventory.appInventoryType === types.lab || ticketInventory.inventory.appInventoryType === types.radiology"
+    [ticket]="ticket"
+    [ticketInventory]="ticketInventory"
+    [inventoryItems]="inventoryItems"
+    (recalculate)="calculateNewTotal(selectedCompany)"
+  ></app-private-lab-inventory-item>
+
+  <app-private-surgery-inventory-item
+    *ngIf="ticketInventory.inventory.appInventoryType === types.surgery"
+    [ticket]="ticket"
+    [ticketInventory]="ticketInventory"
+    [inventoryItems]="inventoryItems"
+    (recalculate)="calculateNewTotal(selectedCompany)"
+  ></app-private-surgery-inventory-item>
+
+  <app-private-admission-inventory-item
+    *ngIf="ticketInventory.inventory.appInventoryType === types.admission"
+    [ticket]="ticket"
+    [ticketInventory]="ticketInventory"
+    [inventoryItems]="inventoryItems"
+    (recalculate)="calculateNewTotal(selectedCompany)"
+  ></app-private-admission-inventory-item>
+
+  <app-private-nursing-inventory-item
+    *ngIf="ticketInventory.inventory.appInventoryType === types.nursing"
+    [ticket]="ticket"
+    [ticketInventory]="ticketInventory"
+    [inventoryItems]="inventoryItems"
+    (recalculate)="calculateNewTotal(selectedCompany)"
+  ></app-private-nursing-inventory-item>
+
+</ng-container>
+
+<section *ngIf="pagination.response.totalItems > 10">
+  <app-shared-pagination-template [pagination]="pagination" (pageChanged)="pageChanged($event)" ></app-shared-pagination-template>
+</section>
+
+<div class="mt-4 d-flex justify-content-between ">
+  <button appHasRole [roles]="[roles.admin, roles.pharmacy]" [operator]="'or'" *ngIf="!ticket.sentToFinance" [disabled]="isLoading" (click)="sendToFinance()" class="btn btn-sm btn-primary">
+    Send to finance
+    <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+  </button>
+
+  <div appHasRole [roles]="[roles.admin, roles.finance]" [operator]="'or'" *ngIf="ticket.sentToFinance && !ticket.cost">
+    <button [disabled]="isLoading || !selectedCompany"  (click)="billClient()" class="btn btn-sm btn-primary">
+      Bill Patient
+      <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+    </button>
+  </div>
+
+    <div>
+      <span *ngIf="ticket.cost">
+        <strong class="me-1">Total:</strong>
+        <fa-icon [icon]="fonts.faNairaSign"></fa-icon>
+        {{ ticket.cost.approvedPrice | currency: ' '}}
+        -
+        {{ ticket.cost.paymentStatus | uppercase }}
+      </span>
+
+      <span  class="ms-3" *ngIf="!ticket.cost">
+        <fa-icon [icon]="fonts.faNairaSign"></fa-icon>
+        {{ sumTotal | currency: ' '}}
+      </span>
+    </div>
+
+</div>

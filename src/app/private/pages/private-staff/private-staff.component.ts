@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { faClipboardUser, faEllipsisV, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { finalize } from 'rxjs';
+import { finalize, lastValueFrom } from 'rxjs';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
-import { AppUser, UserFilter } from 'src/app/shared/core/models/app-user';
-import { AppPagination, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
+import { AppUser, Staff, UserFilter } from 'src/app/shared/core/models/app-user';
+import { AppPagination, PaginationContext, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
 import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
 import { UserService } from 'src/app/shared/services/api/user/user.service';
 import { PrivateAddAStaffModalComponent } from '../../modals/private-add-a-staff-modal/private-add-a-staff-modal.component';
 import { PrivateFilterStaffModalComponent } from '../../modals/private-filter-staff-modal/private-filter-staff-modal.component';
+import { AppFileService } from 'src/app/shared/services/common/app-file/app-file.service';
 
 @Component({
   selector: 'app-private-staff',
@@ -27,9 +29,12 @@ export class PrivateStaffComponent extends SharedUtilityComponent implements OnI
   paginationRequest = new PaginationRequest<UserFilter>(this.appPagination, this.filter);
   paginationResponse = new PaginationResponse<AppUser[]>();
 
+  roles = AppRoles;
+
   constructor(
     private userService: UserService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private fileService: AppFileService,
   ) {
     super();
   }
@@ -48,7 +53,7 @@ export class PrivateStaffComponent extends SharedUtilityComponent implements OnI
           this.staff = data.result ?? [];
         },
         error: (error) => {
-          console.log(error);
+          throw error;
         }
       });
     this.subscriptions.push(sub);
@@ -76,5 +81,28 @@ export class PrivateStaffComponent extends SharedUtilityComponent implements OnI
 
   openAddStaffModal() {
     this.modalService.open(PrivateAddAStaffModalComponent, { size: 'lg' });
+  }
+
+  async downloadStaff(): Promise<void> {
+    const pagination = new PaginationContext<AppUser, UserFilter>();
+    pagination.request?.setFilter(this.filter);
+    pagination.request?.setPagination({ pageSize: 500 });
+    const list = await lastValueFrom(this.userService.getUsers(pagination.request));
+    const staff = list.result?.map(x => this.getAsCsv(x.staff|| {}));
+
+    const name = `Staff_List_${new Date().toLocaleDateString()}.csv`
+    this.fileService.downloadAsCSV(staff, name);
+  }
+
+  getAsCsv(x: Staff): any {
+      return {
+        name: `${x.user?.lastName} ${x.user?.firstName}`,
+        phone: `${x.user?.phone}`,
+        email: x.user?.email,
+        bank: x.bankName,
+        "account number": x.accountNumber,
+        salary: x.salary,
+        status: x.active ? 'Active' : 'Disabled'
+      }
   }
 }

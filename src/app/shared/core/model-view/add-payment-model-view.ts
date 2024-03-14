@@ -56,19 +56,27 @@ export class AddPaymentModelView {
   }
 
   addPayment(): PaymentMade | null {
-
-    if (!this.paymentMade.base64String) {
-      this.fileStatus = { isSuccess: false, errorMessage: 'Proof of payment is required' };
-      return null;
-    }
     const data = this.form.value;
-    const base64String = this.paymentMade.base64String;
     this.paymentMade = {
       ...data,
-      base64String: base64String
+      base64String: this.paymentMade.base64String
     };
 
     this.paymentMade.typeDisplayName = this.paymentTypes.find(x => x.name == this.paymentMade.paymentType)?.display ?? 'None';
+
+    // if (!this.paymentMade.base64String) {
+    //   // this.fileStatus = { isSuccess: false, errorMessage: 'Proof of payment is required' };
+    //   // return null;
+    //   return this.paymentMade;
+    // }
+    
+    // const base64String = this.paymentMade.base64String;
+    // this.paymentMade = {
+    //   ...data,
+    //   base64String: base64String
+    // };
+
+    // this.paymentMade.typeDisplayName = this.paymentTypes.find(x => x.name == this.paymentMade.paymentType)?.display ?? 'None';
 
     return this.paymentMade;
   }

@@ -7,6 +7,8 @@ import { AppPagination, PaginationRequest, PaginationResponse } from 'src/app/sh
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
 import { finalize, filter } from 'rxjs';
 import { PrivateFilterTicketsComponent } from '../../modals/private-filter-tickets/private-filter-tickets.component';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
+import { PrivateAddEmergencyTicketsComponent } from '../../modals/private-add-emergency-tickets/private-add-emergency-tickets.component';
 
 @Component({
   selector: 'app-private-tickets',
@@ -23,6 +25,8 @@ export class PrivateTicketsComponent extends SharedUtilityComponent implements O
   paginationRequest = new PaginationRequest<TicketFilter>(this.appPagination, this.filter);
   paginationResponse = new PaginationResponse<AppTicket[]>();
 
+  roles = AppRoles;
+
   constructor(
     private ticketService: TicketService,
     private modalService: NgbModal,
@@ -33,6 +37,7 @@ export class PrivateTicketsComponent extends SharedUtilityComponent implements O
   override ngOnInit(): void {
     this.filter.sentToDepartment = true;
     this.filter.appTicketStatus = 'ongoing';
+    this.filter.full = true;
     this.paginationRequest = new PaginationRequest<TicketFilter>(this.appPagination, this.filter);
     this.getTickets();
   }
@@ -71,5 +76,9 @@ export class PrivateTicketsComponent extends SharedUtilityComponent implements O
       }
     });
     this.subscriptions.push(sub);
+  }
+
+  openCreateTicket(): void {
+    const modalRef = this.modalService.open(PrivateAddEmergencyTicketsComponent, { size: 'lg' });
   }
 }

@@ -1,0 +1,90 @@
+<div class="d-flex justify-content-between mb-4">
+  <div class="d-flex justify-content-start mb-4 position-relative">
+      <span class="p-3 bg-primary shadow position-absolute">
+          <fa-icon [icon]="fonts.faHandHoldingDollar" class="pe-1 text-light"></fa-icon>
+      </span>
+      <div class="ms-5 ps-3">
+        <span class="d-block">
+          <span class="h3 me-1">Financial Record</span>
+          <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
+        </span>
+        <small class="d-block">
+          <strong>Overall from last month: Expense - {{revenue.totalExpense || 0}} | Profit - {{revenue.totalProfit || 0}}</strong>
+        </small>
+
+        <small class="text-dark"><strong>Total Items: </strong>{{pagination.response.totalItems}}</small>
+        <small class="ms-2" *ngIf="revenue.expense != 0 && revenue.profit != 0">
+          | <strong>Expense: </strong> <span>{{ revenue.expense }}</span> |
+          <strong>Profit: </strong> <span>{{ revenue.profit }}</span> |
+          <strong>Total: </strong> <span>{{ revenue.profit - revenue.expense }}</span>
+        </small>
+      </div>
+
+  </div>
+  <div>
+      <div class="dropdown">
+          <button class="btn btn-primary btn-sm text-white dropdown-toggle" type="button" id="more-action" data-bs-toggle="dropdown" aria-expanded="false">
+              Action
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="more-action">
+            <li><a class="dropdown-item pointer" (click)="openFilter()">Filter</a></li>
+            <li><a class="dropdown-item pointer" (click)="addRecordManually()">Add Record</a></li>
+          </ul>
+        </div>
+  </div>
+</div>
+
+<section class="bg-light rounded shadow">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <!-- <th scope="col">&nbsp;</th> -->
+        <th scope="col">Name</th>
+        <th scope="col">Payment Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pay of pagination.elements">
+        <td>
+          <div *ngFor="let payerPayee of pay?.payerPayee">
+            <div *ngIf="payerPayee.payer" class="d-flex justify-content-start">
+              <div>
+                <img appDisplayProfileImage [imgSrc]="payerPayee?.appUser?.profile" class="img-fluid m-auto mini-profile rounded-circle">
+              </div>
+              <div class="ps-2">
+                <a *ngIf="payerPayee.appUser.isCompany" [routerLink]="['/' + routes.privateRoute.single_company(payerPayee?.appUser?.base?.id).$absolutePath]">
+                  {{ payerPayee?.appUser?.firstName }}
+                </a>
+                <a *ngIf="payerPayee.appUser.isPatient" [routerLink]="['/' + routes.privateRoute.single_patient(payerPayee?.appUser?.base?.id).$absolutePath]">
+                  {{ payerPayee?.appUser?.lastName }} {{ payerPayee?.appUser?.firstName }}
+                </a>
+                <span class="d-block">
+                  {{ payerPayee?.appUser?.base?.id | userId }}
+                </span>
+                <span class="d-block">
+                  {{ pay.base?.dateCreated | date : 'short' }}
+                </span>
+                <span>
+                  {{ pay.description }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="w-100 border-top p-1">
+            <strong>Responsible: </strong><a [routerLink]="['/' + routes.privateRoute.single_staff(pay.actor?.base?.id).$absolutePath]"  ><span>{{ pay.actor?.lastName }} {{ pay.actor?.firstName }}</span></a>
+          </div>
+        </td>
+        <td style="width: 17rem;">
+          <small class="d-block"><strong>Cost: </strong><span>{{ pay?.amount | currency: 'N' }}</span></small>
+          <small class="d-block"><strong>Concluded amount: </strong><span>{{ pay?.approvedPrice | currency: 'N' }}</span></small>
+          <small class="d-block"><strong>Total number of items: </strong><span> {{ pay?.totalAppCosts }}  </span></small>
+          <small class="d-block"><strong>Cost type: </strong><span> {{ pay?.costType }}  </span></small>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section *ngIf="pagination.response.totalItems > 10">
+  <app-shared-pagination-template [pagination]="pagination" (pageChanged)="pageChanged($event)" ></app-shared-pagination-template>
+</section>

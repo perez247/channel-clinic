@@ -1,5 +1,5 @@
 # base image
-FROM node:14 as builder
+FROM node:20 as builder
 
 RUN npm install -g npm
 

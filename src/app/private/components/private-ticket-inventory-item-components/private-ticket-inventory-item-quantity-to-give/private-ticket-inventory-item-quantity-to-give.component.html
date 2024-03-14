@@ -1,0 +1,60 @@
+<div class="card-header">
+  <div class="row">
+    <div class="col-2">
+      <strong>{{ isAdmission ? 'Quantity Given' : 'Quantity to give' }} </strong>
+      <button *ngIf="!isAdmissionExecution && !isAdmission" class="btn btn-sm btn-primary d-block mt-2" (click)="saveDebtor()">
+        add payers
+      </button>
+    </div>
+    <div class="col-10">
+      <div class="col-12">
+        <input [disabled]="ticket.cost != null || (isAdmission && ticketInventory.updated) || ticketInventory.concludedDate" type="number" (blur)="blur()" [(ngModel)]="ticketInventory.prescribedQuantity" class="form-control">
+      </div>
+      <ng-container *ngIf="!isAdmission">
+        <div appHasRole [roles]="[roles.admin, roles.finance]" [operator]="'or'" class="row">
+          <div class="col-12 mt-2 row d-flex align-items-center">
+
+            <div class="col-4">
+              <strong>Price per item: </strong>
+              <span *ngIf="!ticketInventory.currentPrice">
+                <fa-icon [icon]="fonts.faNairaSign"></fa-icon>
+                {{ pricePerItem | currency: ' '}}
+              </span>
+              <span *ngIf="ticketInventory.currentPrice">
+                <fa-icon [icon]="fonts.faNairaSign"></fa-icon>
+                {{ ticketInventory.currentPrice | currency: ' '}}
+              </span>
+            </div>
+            
+            <div class="col-4 text-right">
+              <strong>Total: </strong>
+              <span *ngIf="!ticketInventory.totalPrice">
+                <fa-icon [icon]="fonts.faNairaSign"></fa-icon>
+                {{ sumTotal | currency: ' '}}
+              </span>
+              <span *ngIf="ticketInventory.totalPrice">
+                <fa-icon [icon]="fonts.faNairaSign"></fa-icon>
+                {{ ticketInventory.totalPrice | currency: ' '}}
+              </span>
+            </div>
+
+            <div class="col-4 text-right d-flex align-items-center">
+              <strong class="d-block mr-2">Concluded: </strong>
+              <input [disabled]="ticket.cost != null || (isAdmission && ticketInventory.updated) || ticketInventory.concludedDate" type="number" [(ngModel)]="ticketInventory.concludedPrice" class="form-control">
+            </div>
+            
+          </div>
+
+          <div class="col-12 mt-2 row">
+            <div *ngFor="let payer of ticketInventory.debtors; let i = index" class="col-12 border-top border-3 border-primary pt-2">
+              <strong *ngIf="payer.payer.name">{{ payer.payer.name }}: </strong>
+              <strong *ngIf="!payer.payer.name">{{ payer.payer.lastName }} {{ payer.payer.firstName }}: </strong>
+              <span><fa-icon [icon]="fonts.faNairaSign"></fa-icon>{{payer.amount | currency: ' '}}</span>
+              <!-- <span class="d-block">{{payer.description}}</span> -->
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

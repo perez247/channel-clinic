@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
 import { AppConstants, ILookUp } from 'src/app/shared/core/models/app-constants';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 import { AppInventory } from 'src/app/shared/core/models/inventory';
 import { InventoryService } from 'src/app/shared/services/api/inventory/inventory.service';
 import { CustomErrorService } from 'src/app/shared/services/common/custom-error/custom-error.service';
@@ -13,6 +14,7 @@ import { CustomToastService } from 'src/app/shared/services/common/custom-toast/
 import { EventBusService } from 'src/app/shared/services/common/event-bus/event-bus.service';
 import { PrivateUploadProfilePictureModalComponent } from '../../modals/private-upload-profile-picture-modal/private-upload-profile-picture-modal.component';
 import { PrivateInventoryDetailsFunctions } from './private-inventory-details-functions';
+import { PrivateUpdateQuantityComponent } from '../../modals/private-update-quantity/private-update-quantity.component';
 
 @Component({
   selector: 'app-private-inventory-details',
@@ -37,6 +39,8 @@ export class PrivateInventoryDetailsComponent  extends SharedUtilityComponent im
   lookups: ILookUp[] = [];
   lookupType = AppConstants.LookUpType;
 
+  roles = AppRoles;
+
   constructor(
     private route: ActivatedRoute,
     private inventoryService: InventoryService,
@@ -44,7 +48,8 @@ export class PrivateInventoryDetailsComponent  extends SharedUtilityComponent im
     public errorService: CustomErrorService,
     private modalService: NgbModal,
     private eventBus: EventBusService,
-    private toast: CustomToastService
+    private toast: CustomToastService,
+    private modal: NgbModal
   ) {
     super();
   }
@@ -112,4 +117,15 @@ export class PrivateInventoryDetailsComponent  extends SharedUtilityComponent im
     this.subscriptions.push(sub);
   }
 
+  updateQuantity(): void {
+    const ref = this.modal.open(PrivateUpdateQuantityComponent, { size: 'lg' });
+    const component: PrivateUpdateQuantityComponent = ref.componentInstance;
+
+    component.inventory = this.inventory;
+    const sub = component.reload.subscribe({
+      next: () => {
+        this.reload.emit(this.userSections.inventoryDetails);
+      }
+    });
+  }
 }

@@ -7,7 +7,7 @@ export class PrivateInventoryDetailsFunctions {
   {
     return fb.group({
       name: [inventory?.name, [CustomValidator.CustomRequired('Name'), CustomValidator.MaxLength(250)]],
-      quantity: [inventory?.quantity, [CustomValidator.CustomRequired('Last Name')]],
+      quantity: [{value: inventory?.quantity, disabled: true}, [CustomValidator.CustomRequired('Last Name')]],
       appInventoryType: [inventory?.appInventoryType, [CustomValidator.CustomRequired('Type')]],
       notifyWhenLow: [inventory?.notifyWhenLow],
       howLow: [inventory?.howLow],

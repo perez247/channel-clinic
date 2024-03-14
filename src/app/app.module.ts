@@ -9,8 +9,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToastrModule } from 'ngx-toastr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { AppErrorInterceptorProvider } from './shared/interceptors/app-error.handler';
-
 
 export let AppInjector: Injector;
 
@@ -24,7 +22,9 @@ export let AppInjector: Injector;
     BrowserAnimationsModule,
     FontAwesomeModule,
     SharedModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 10000
+    }),
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,

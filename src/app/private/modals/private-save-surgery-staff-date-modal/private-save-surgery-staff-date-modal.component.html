@@ -1,0 +1,98 @@
+
+
+<div class="modal-content">
+  <div class="modal-header c-bg-primary">
+    <div>
+      <h5 class="modal-title">Staff required for surgery</h5>
+    </div>
+    <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body c-bg-secondary">
+
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label class="form-control-label mb-2"><strong>Surgery Date</strong></label>
+            <div class="input-group mb-3">
+              <button (click)="clearSurgeryDate()" class="btn-danger bg-danger">
+                <fa-icon [icon]="fonts.faTrash" class="text-white"></fa-icon>
+              </button>
+              <input ngbDatepicker #d="ngbDatepicker" type="text" placeholder="YYYY-MM-DD" class="form-control" [(ngModel)]="ticketInventory.surgeryDate" >
+              <button (click)="d.toggle()" class="btn-primary bg-primary">
+                <fa-icon [icon]="fonts.faCalendar" class="text-white"></fa-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="form-control-label mb-2"><strong>&nbsp;</strong></label>
+
+            <select #time class="form-control" (change)="addHours()" [disabled]="!ticketInventory.surgeryDate" [(ngModel)]="selectedHour">
+              <option [value]="null" >---</option>
+              <option *ngFor="let hour of hours" [value]="hour" >{{hour}}</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="row" *ngFor="let item of this.ticketInventory.surgeryTicketPersonnels; let i = index">
+          <div class="form-group col-md-6 position-relative">
+
+            <div class="w-100 position-relative">
+              <input [disabled]="true" readonly placeholder="Company Name" maxlength="250" type="text" class="form-control" [value]="item.fullName">
+              <small *ngIf="item.isHeadPersonnel" class="text-primary">Head staff of this surgery</small>
+            </div>
+
+          </div>
+          <div class="form-group col-md-6 position-relative" >
+
+            <div class="input-group">
+              <input [disabled]="true" readonly type="text" class="form-control" placeholder="Amount" step=".01" [value]="item.surgeryRole">
+              <button *ngIf="!ticketInventory.concludedDate" class="btn btn-danger" (click)="removeItemInData(i)" type="button">
+                <fa-icon [icon]="fonts.faTrash"></fa-icon>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div [ngClass]="{'border-bottom mb-3': (ticketInventory.itemsUsed?.length ?? 0) > 0}">
+
+        </div>
+
+        <div *ngIf="!ticketInventory.concludedDate" class="row">
+
+          <div class="form-group col-md-6 position-relative">
+
+            <div class="input-group position-relative">
+              <div class="input-group-text">
+                <input [disabled]="hasHead" class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input" [(ngModel)]="leadingForm.isHeadPersonnel">
+              </div>
+                <input placeholder="Staff Name" (keyup)="clearInventory()"  maxlength="250" type="text" class="form-control" [(ngModel)]="leadingForm.fullName">
+                <app-shared-user-autocomplete class="position-absolute w-100 mt-5" [searchWord]="leadingForm.fullName" (selected)="addFromSearchToLeading($event)"></app-shared-user-autocomplete>
+            </div>
+
+          </div>
+
+          <div class="form-group col-md-6 position-relative">
+
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Role in surgery" [(ngModel)]="leadingForm.surgeryRole">
+              <button [disabled]="!leadingForm.surgeryRole || !leadingForm.id" class="btn btn-primary" type="button" (click)="addToData()">
+                <fa-icon [icon]="fonts.faPlus"></fa-icon>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+  </div>
+  <div class="modal-footer c-bg-primary justify-content-between">
+    <div>
+      <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

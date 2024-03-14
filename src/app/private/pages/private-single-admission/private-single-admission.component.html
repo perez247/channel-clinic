@@ -1,0 +1,151 @@
+
+<section *ngIf="isLoading" class="vh-100 w-100 d-flex justify-content-center align-items-center">
+  <app-shared-loading size="xl"></app-shared-loading>
+</section>
+
+<section *ngIf="!isLoading && dashboard.patient">
+
+  <section>
+    <span class="h4 d-block border-bottom mb-4">
+      <a [routerLink]="['/' + routes.privateRoute.admissions().$absolutePath]">
+        <fa-icon [icon]="fonts.faArrowLeft" class="pe-2"></fa-icon>
+      </a>
+
+      Admission: {{ admissionRoom }} <small style="font-size: 14px;" class="ms-2 mb-2 p-1 lead rounded-1 bg-danger text-white" *ngIf="dashboard.appTicket.cost"> Discharged </small>
+    </span>
+  </section>
+
+  <div class="mb-2 d-flex border-bottom mb-4 py-4">
+    <div>
+      <app-private-patient-info
+      [user]="dashboard.patient.user"
+      [company]="dashboard.patient.company"
+      ></app-private-patient-info>
+    </div>
+    <div class="ms-4 ps-4 border-start border-3">
+      <div> <strong>Admitted:</strong> {{ dashboard.ticketInventories[0].admissionStartDate | date }} </div>
+      <div *ngIf="dashboard.ticketInventories[0].admissionEndDate "> <strong>Discharged:</strong> {{ dashboard.ticketInventories[0].admissionEndDate | date }} </div>
+      <div> <strong>Duration in days:</strong> {{ duration }} </div>
+    </div>
+  </div>
+
+  <section class="w-100 row pt-4">
+
+    <div class="col-lg-6 my-5">
+      <div [routerLink]="['/' + routes.privateRoute.admission_sectionName('pharmacy', (ticketId)).$absolutePath]" appHoverClass hover-class="shadow" class="card pointer">
+        <div class="card-body position-relative text-end">
+          <span class="d-block p-4 bg-primary shadow icon-set">
+            <fa-icon [icon]="fonts.faPills" class="pe-1 text-white" [size]="'4x'"></fa-icon>
+          </span>
+          <span class="text-muted">
+            <span>Pharmacy</span>
+            <span class="d-block h2">{{dashboard.pharmacy}}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 my-5">
+      <div [routerLink]="['/' + routes.privateRoute.admission_sectionName('lab', (ticketId)).$absolutePath]" appHoverClass hover-class="shadow" class="card pointer">
+        <div class="card-body position-relative text-end">
+          <span class="d-block p-4 bg-success shadow icon-set">
+            <fa-icon [icon]="fonts.faFlask" class="pe-1 text-white" [size]="'4x'"></fa-icon>
+          </span>
+          <span class="text-muted">
+            <span>lab</span>
+            <span class="d-block h2">{{dashboard.lab}}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 my-5">
+      <div [routerLink]="['/' + routes.privateRoute.admission_sectionName('radiology', (ticketId)).$absolutePath]" appHoverClass hover-class="shadow" class="card pointer">
+        <div class="card-body position-relative text-end">
+          <span class="d-block p-4 bg-danger shadow icon-set">
+            <fa-icon [icon]="fonts.faXRay" class="pe-1 text-white" [size]="'4x'"></fa-icon>
+          </span>
+          <span class="text-muted">
+            <span>Radiology</span>
+            <span class="d-block h2">{{dashboard.radiology}}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 my-5">
+      <div [routerLink]="['/' + routes.privateRoute.admission_sectionName('surgery', (ticketId)).$absolutePath]" appHoverClass hover-class="shadow" class="card pointer">
+        <div class="card-body position-relative text-end">
+          <span class="d-block p-4 bg-warning shadow icon-set">
+            <fa-icon [icon]="fonts.faSyringe" class="pe-1 text-white" [size]="'4x'"></fa-icon>
+          </span>
+          <span class="text-muted">
+            <span>Surgery</span>
+            <span class="d-block h2">{{dashboard.surgery}}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 my-5">
+      <div [routerLink]="['/' + routes.privateRoute.admission_sectionName('nursing', (ticketId)).$absolutePath]" appHoverClass hover-class="shadow" class="card pointer">
+        <div class="card-body position-relative text-end">
+          <span class="d-block p-4 bg-black shadow icon-set">
+            <fa-icon [icon]="fonts.faUserNurse" class="pe-1 text-white" [size]="'4x'"></fa-icon>
+          </span>
+          <span class="text-muted">
+            <span>Nursing</span>
+            <span class="d-block h2">{{dashboard.nursing}}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <ngb-accordion [closeOthers]="true" [activeIds]="currentSection">
+
+    <ngb-panel [id]="userSections.allergies">
+
+      <ng-template ngbPanelTitle>
+        Allergies
+      </ng-template>
+
+      <ng-template ngbPanelContent>
+        <app-private-patient-allergies [patient]="dashboard.patient" (reload)="getStats($event)"></app-private-patient-allergies>
+      </ng-template>
+
+    </ngb-panel>
+
+    <ngb-panel [id]="userSections.vitals">
+
+      <ng-template ngbPanelTitle>
+        Vitals
+      </ng-template>
+
+      <ng-template ngbPanelContent>
+        <app-private-patient-vitals [user]="dashboard.patient.user" (reload)="getStats($event)"></app-private-patient-vitals>
+      </ng-template>
+
+    </ngb-panel>
+
+    <ngb-panel [id]="userSections.previousTicketList" >
+
+      <ng-template ngbPanelTitle>
+        Previous Tickets
+      </ng-template>
+
+      <ng-template ngbPanelContent>
+
+        <app-private-previous-tickets
+          [beforeDateTime]="currentDate"
+          [patientId]="dashboard.patient.base?.id">
+        </app-private-previous-tickets>
+
+      </ng-template>
+
+    </ngb-panel>
+
+  </ngb-accordion>
+
+</section>

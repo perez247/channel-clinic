@@ -1,3 +1,4 @@
+import { EventBusService } from './../../../shared/services/common/event-bus/event-bus.service';
 import { TicketService } from 'src/app/shared/services/api/ticket/ticket.service';
 import { IConfirmAction, SharedConfirmActionModalComponent } from 'src/app/shared/modals/shared-confirm-action-modal/shared-confirm-action-modal.component';
 import { Component, OnInit } from '@angular/core';
@@ -15,6 +16,7 @@ import { CustomToastService } from 'src/app/shared/services/common/custom-toast/
 import { PrivateCreateTicketModalComponent } from '../../modals/private-create-ticket-modal/private-create-ticket-modal.component';
 import { PrivateUpdateAppointmentModalComponent } from '../../modals/private-update-appointment-modal/private-update-appointment-modal.component';
 import { AppRoles } from 'src/app/shared/core/models/app-roles';
+import { AppUser } from 'src/app/shared/core/models/app-user';
 
 @Component({
   selector: 'app-private-single-appointment',
@@ -25,7 +27,7 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
 
   fonts = { faCalendar, faPlus, faGears };
   userSections = AppConstants.UserSections;
-  currentSection = this.userSections.companyDetails;
+  currentSection = 'null';
 
   appointment?: AppAppointment;
   appointments: AppAppointment[] = [];
@@ -38,6 +40,8 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
 
   roles = AppRoles;
 
+  vitalPatients?: AppUser;
+
   constructor(
     private appointmentService: AppointmentService,
     private ticketService: TicketService,
@@ -45,6 +49,7 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
     private router: Router,
     private toast: CustomToastService,
     private modalService: NgbModal,
+    private eventBus: EventBusService,
     ) {
     super();
   }
@@ -71,7 +76,9 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
 
           this.paginationResponse = data;
           this.appointments = data.result ?? [];
-          this.appointment = this.appointments[0];
+          this.appointment = new AppAppointment(this.appointments[0]);
+
+          this.appointment.patient!.user!.patient = this.appointment.patient;
         },
         error: (error) => {
           throw error;
@@ -85,9 +92,10 @@ export class PrivateSingleAppointmentComponent extends SharedUtilityComponent im
     modalRef.componentInstance.type = type;
     modalRef.componentInstance.appointment = this.appointment;
 
+    if (type == 'admission') { modalRef.componentInstance.singleType = true; }
+
     const sub = modalRef.componentInstance.saved.subscribe({
       next: () => {
-        console.log(this.paginationRequest);
         this.getAppointmentByDate();
       }
     });

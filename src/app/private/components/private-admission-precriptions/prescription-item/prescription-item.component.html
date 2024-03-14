@@ -1,0 +1,65 @@
+
+<section class="position-relative px-3 ">
+
+  <div>
+    <app-private-staff-info [staff]="admissionPrescription?.doctor" ></app-private-staff-info>
+  </div>
+
+  <span class="d-block mt-2">{{admissionPrescription?.overallDescription}}</span>
+
+  <span class="d-block d-flex">
+    <a data-bs-toggle="collapse" href="#tickets" role="button" aria-expanded="false" aria-controls="tickets">
+      {{admissionPrescription?.ticketInventories?.length}} prescriptions
+    </a>
+    <span>
+      <span
+      [ngClass]="{
+        'bg-warning': admissionPrescription?.appTicketStatus == 'ongoing',
+        'bg-success': admissionPrescription?.appTicketStatus == 'concluded',
+        'bg-danger': admissionPrescription?.appTicketStatus == 'canceled'
+      }"
+      class="badge ms-2 p-2">
+        <span *ngIf="admissionPrescription?.appTicketStatus == 'ongoing'">Not concluded</span>
+        <span *ngIf="admissionPrescription?.appTicketStatus == 'concluded'">concluded</span>
+        <span *ngIf="admissionPrescription?.appTicketStatus == 'canceled'">closed</span>
+      </span>
+    </span>
+
+
+    <div appHasRole [roles]="[roles.admin, roles.doctor]" *ngIf="admissionPrescription?.appTicketStatus == 'ongoing'" class="dropdown d-inline-block ms-2 ">
+      <strong *ngIf="isLoading"> <app-shared-loading></app-shared-loading> </strong>
+      <a *ngIf="!isLoading"  href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <fa-icon [icon]="fonts.faEllipsisV"></fa-icon>
+      </a>
+
+      <ul class="dropdown-menu pointer">
+        <li (click)="updatePrescription()" ><a class="dropdown-item">Edit</a></li>
+        <li (click)="concludeStatus()" ><a class="dropdown-item">Conclude</a></li>
+        <li ><hr class="dropdown-divider"></li>
+        <li (click)="deletePrescription()" ><a class="dropdown-item text-danger"><strong>Delete</strong></a></li>
+      </ul>
+    </div>
+  </span>
+
+  <div class="row">
+    <div class="col">
+      <div class="collapse multi-collapse" id="tickets">
+        <div class="border-top mt-2 pt-2 ">
+          <div class="mb-3 pb-1 border-bottom" *ngFor="let inventory of admissionPrescription?.ticketInventories">
+
+              <button (click)="logExecution(inventory)" class="btn btn-primary d-flex">
+                <fa-icon appHasRole [roles]="[roles.admin, roles.nurse]" (click)="logExecution(inventory)" *ngIf="admissionPrescription?.appTicketStatus == 'concluded'" class="pointer text-white mr-2" [icon]="fonts.faPlusCircle"></fa-icon>
+               <span class="d-block ps-2">
+                {{ inventory?.inventory?.name }} | Dosage: {{ inventory?.dosage }}, {{ inventory?.times }} time(s) {{ inventory?.frequency }}
+               </span>
+              </button>
+  
+            <div>
+              {{ inventory?.doctorsPrescription }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -66,7 +66,7 @@ export class PrivateUserNextOfKinComponent extends SharedUtilityComponent implem
     const url: string = this.router.url;
     if (url.includes('/private/patients/'))
     {
-      this.editRoles = [ this.roles.admin, this.roles.nurse, this.roles.hr ]
+      this.editRoles = [ this.roles.admin, this.roles.nurse, this.roles.hr, this.roles.reception ]
     } else {
       this.editRoles = [ this.roles.admin, this.roles.hr ]
     }

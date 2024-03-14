@@ -1,0 +1,53 @@
+
+
+<div class="modal-content">
+    <div class="modal-header c-bg-primary">
+      <div>
+        <h5 class="modal-title">Add Contract</h5>
+        <small class="d-block">{{ contractInfo?.fullName }}</small>
+      </div>
+      <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="modal-body c-bg-secondary">
+
+      <form [formGroup]="form">
+
+        <div class="row">
+
+          <div class="form-group col-md-6">
+            <label class="form-control-label mb-2" for="amountField"><strong>Amount</strong></label>
+            <input placeholder="amount" maxlength="250" type="number" class="form-control" id="amountField" formControlName="amount"  [ngClass]="{'is-invalid': errorService.getError(form, 'amount')}">
+            <app-custom-error-message [errorMessage]="errorService.getError(form, 'amount')"></app-custom-error-message>
+          </div>
+
+
+          <div class="form-group col-md-6">
+            <label class="form-control-label mb-2" for="durationInDaysField"><strong>Duration</strong></label>
+            <select class="form-control" id="durationInDaysField" formControlName="durationInDays"  [ngClass]="{'is-invalid': errorService.getError(form, 'durationInDays')}">
+                <option value="" >---</option>
+                <option value="1" >1 year</option>
+                <option value="2" >2 years</option>
+                <option value="3" >3 years</option>
+                <option value="4" >4 years</option>
+                <option value="5" >5 years</option>
+            </select>
+            <app-custom-error-message [errorMessage]="errorService.getError(form, 'durationInDays')"></app-custom-error-message>
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+    <div class="modal-footer c-bg-primary justify-content-between">
+      <button [disabled]="form.invalid || isLoading" (click)="addContract()" type="button" class="btn btn-primary">
+        Add Contract
+        <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+      </button>
+      <div>
+        <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>

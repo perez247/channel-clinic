@@ -21,5 +21,12 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/signin`, data);
   }
 
+  changePassword(data: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/change-password`, data);
+  }
+
+  resetPassword(data: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/reset-password`, data);
+  }
 
 }

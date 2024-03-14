@@ -12,6 +12,9 @@
         <strong *ngIf="!staff?.company">
           {{ staff.otherName }}
         </strong>
+        <small class="d-block">
+          {{ staff.base?.id | userId }}
+        </small>
       </span>
     </div>
 

@@ -7,6 +7,7 @@ import { PublicCheckEmailComponent } from './pages/public-check-email/public-che
 import { PublicConfirmEmailComponent } from './pages/public-confirm-email/public-confirm-email.component';
 import { PublicForgotPasswordComponent } from './pages/public-forgot-password/public-forgot-password.component';
 import { PublicSignupWithEmailComponent } from './pages/public-signup-with-email/public-signup-with-email.component';
+import { RedirectAuthUsersGuard } from '../shared/guards/redirect-auth-users.guard';
 
 const appRoutes = ApplicationRoutes.generateRoutes();
 const routes: Routes = [
@@ -21,7 +22,8 @@ const routes: Routes = [
     children: [
       {
         path: `${appRoutes.publicRoute.home().$name}`,
-        component: PublicAuthComponent
+        component: PublicAuthComponent,
+        canActivate: [RedirectAuthUsersGuard]
       },
       {
         path: `${appRoutes.publicRoute.signUpWithEmail().$name}`,

@@ -5,16 +5,17 @@ import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import {
   faEllipsisV, faHamburger,
-  faBedPulse, faChartLine,
+  faHospitalUser, faChartLine,
   faClipboardUser, faBuilding,
   faWarehouse, faCalendarCheck,
   faTicket, faCoins,
-  faSignature
+  faSignature, faSackXmark, faHandHoldingDollar,
+  faCog, faBed
 } from '@fortawesome/free-solid-svg-icons';
-import * as $ from "jquery";
 import { EventBusService } from 'src/app/shared/services/common/event-bus/event-bus.service';
 import { EventBusActions } from 'src/app/shared/services/common/event-bus/event-bus-action';
 import { AppUser } from 'src/app/shared/core/models/app-user';
+import { AppConstants } from 'src/app/shared/core/models/app-constants';
 
 @Component({
   selector: 'app-private-side-menu',
@@ -23,7 +24,7 @@ import { AppUser } from 'src/app/shared/core/models/app-user';
 })
 export class PrivateSideMenuComponent extends SharedUtilityComponent implements OnInit, AfterViewInit  {
 
-  fonts = { faSignature, faEllipsisV, faHamburger, faBedPulse, faChartLine, faClipboardUser, faBuilding, faWarehouse, faCalendarCheck, faTicket, faCoins }
+  fonts = { faSignature, faEllipsisV, faHamburger, faHospitalUser, faChartLine, faClipboardUser, faBuilding, faWarehouse, faCalendarCheck, faTicket, faCoins, faSackXmark, faHandHoldingDollar, faCog, faBed }
 
   openBar = true;
 
@@ -34,6 +35,9 @@ export class PrivateSideMenuComponent extends SharedUtilityComponent implements 
 
   roles = AppRoles;
 
+  ticketRoles: (string | undefined)[] = []
+  lookupType = AppConstants.LookUpType;
+
   constructor(
     private eventBus: EventBusService,
     private route: Router
@@ -42,12 +46,18 @@ export class PrivateSideMenuComponent extends SharedUtilityComponent implements 
   }
 
   override ngOnInit(): void {
+    this.setTicketRoles();
     this.currentUser = this.eventBus.getState().user.value ?? {} as AppUser;
     this.listenForChanges();
   }
 
   ngAfterViewInit(): void {
     this.isFinance();
+  }
+
+  setTicketRoles(): void {
+    this.ticketRoles = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType).map(y => y.name) || [];
+    this.ticketRoles?.push(this.roles.admin);
   }
 
   isFinance(): void {

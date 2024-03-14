@@ -10,8 +10,10 @@ export class FilterPatientsModalFunctions {
       name: [filter?.name, [CustomValidator.CustomPattern('^[a-zA-Z0-9._ ]*$', 'Only letters, numbers, periods and underscore'), CustomValidator.MaxLength(250)]],
       isCompany: [filter?.isCompany],
       patientCompanyId: [filter?.patientCompanyId],
+      companyUniqueId: [filter?.companyUniqueId],
       patientCompanyName: [filter?.patientCompanyName],
-      userType: [filter?.userType]
+      userType: [filter?.userType],
+      userSearchId: [filter?.userSearchId],
     });
   }
 

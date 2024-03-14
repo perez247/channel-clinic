@@ -10,6 +10,8 @@ import { SharedConfirmActionModalComponent, IConfirmAction } from 'src/app/share
 import { finalize } from 'rxjs';
 import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
 import { PrivatePatientChangeCompanyComponent } from '../../modals/private-patient-change-company/private-patient-change-company.component';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
+import { IAddUserContract, PrivateAddUserContractComponent } from '../../modals/private-add-user-contract/private-add-user-contract.component';
 
 @Component({
   selector: 'app-private-patient-contract',
@@ -40,6 +42,8 @@ export class PrivatePatientContractComponent extends SharedUtilityComponent impl
   fonts = { faCircleCheck, faExclamationTriangle, faTimesCircle, faArrowRightArrowLeft }
 
   routes = ApplicationRoutes.generateRoutes();
+
+  roles = AppRoles;
 
   constructor(
     private patientService: PatientService,
@@ -79,7 +83,8 @@ export class PrivatePatientContractComponent extends SharedUtilityComponent impl
       return;
     }
 
-    if (contract.appCost.paymentStatus != 'approved') {
+
+    if (contract.appCost.paymentStatus != 'approved' && contract.appCost.paymentStatus != 'owing') {
       this.hasApproved = false;
       return;
     }
@@ -156,6 +161,24 @@ export class PrivatePatientContractComponent extends SharedUtilityComponent impl
       },
       error: (error: any) => {
         throw error;
+      }
+    });
+
+    this.subscriptions.push(sub);
+  }
+
+  addContract(): void {
+    const modalRef = this.modalService.open(PrivateAddUserContractComponent, { size: 'lg' });
+    const component: PrivateAddUserContractComponent = modalRef.componentInstance;
+
+    component.contractInfo = {
+      patientId: this.user?.patient?.base?.id,
+      fullName: this.user?.lastName + ' ' + this.user?.firstName,
+    } as IAddUserContract;
+
+    const sub = component.reload.subscribe({
+      next: () => {
+        this.reload.emit();
       }
     });
 

@@ -1,0 +1,17 @@
+
+
+<section class="border rounded p-3 pb-1 mb-3" style="background-color: #f6f6f6;">
+  <section class="d-flex mb-2 w-100">
+    <div class="border-end pe-3">
+      <app-private-staff-info [staff]="log?.actor?.staff"></app-private-staff-info>
+    </div>
+    <div class="ps-2 w-100">
+      <div>{{ log?.actionDescription }}</div>
+      <span class="d-block w-100 border-top"></span>
+      <div>{{ log?.otherDescription }}</div>
+    </div>
+  </section>
+  <div class="border-top">
+    {{ log?.base?.dateCreated | humanTime }}
+  </div>
+</section>

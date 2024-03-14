@@ -16,13 +16,15 @@ import { AppUser } from 'src/app/shared/core/models/app-user';
 export class PrivateFilterTicketsComponent implements OnInit {
 
   @Input() filter?: TicketFilter;
+  @Input() keepState?: any = {};
+  @Input() admissionFilter: boolean = false;
   @Output() newFilter = new EventEmitter<TicketFilter>();
 
   appStatuses: ILookUp[] = [];
   appInventoryTypes: ILookUp[] = [];
   form: FormGroup = {} as any;
 
-  isAdmin = false;
+  isAdmin? = false;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -32,6 +34,7 @@ export class PrivateFilterTicketsComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.isAdmin = this.eventBus.getState().user.value?.userRoles?.includes('admin');
     this.appStatuses = this.eventBus.getState().lookUps.value?.filter(x => x.type === AppConstants.LookUpType.AppTicketStatus) ?? [];
     this.appInventoryTypes = this.eventBus.getState().lookUps.value?.filter(x => x.type === AppConstants.LookUpType.AppInventoryType) ?? [];
     this.initializeForm();
@@ -63,6 +66,8 @@ export class PrivateFilterTicketsComponent implements OnInit {
 
   clearForm(): void {
     this.filter = new TicketFilter();
+    const data = this.keepState;
+    this.filter = { ...data  };
     this.initializeForm();
   }
 

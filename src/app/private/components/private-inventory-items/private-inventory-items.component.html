@@ -14,7 +14,7 @@
               Action
           </button>
           <ul class="dropdown-menu" aria-labelledby="more-action">
-            <li><a class="dropdown-item pointer" (click)="saveInventoryItems()" >Save Inventory item</a></li>
+            <li appHasRole [roles]="[roles.admin, inventory?.appInventoryType]" ><a class="dropdown-item pointer" (click)="saveInventoryItems()" >Save Inventory item</a></li>
             <li><a class="dropdown-item pointer" (click)="openFilterInventoryItems()">Filter</a></li>
           </ul>
         </div>
@@ -43,13 +43,8 @@
           </td>
           <td>
             <fa-icon [icon]="fonts.faNairaSign"></fa-icon>
-            {{inventoryItem.pricePerItem}}
+            {{inventoryItem.pricePerItem | currency: ' '}}
           </td>
-          <!-- <td> -->
-            <!-- <fa-icon [icon]="fonts.faPencil" class="bg-primary text-white pointer p-1 me-4"></fa-icon> -->
-            <!-- <fa-icon [icon]="fonts.faTrash" class="bg-danger text-white pointer p-1"></fa-icon> -->
-          <!-- </td> -->
-          <!-- <td>@mdo</td> -->
         </tr>
       </tbody>
     </table>

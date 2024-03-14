@@ -260,4 +260,28 @@ export class CustomValidator {
       };
     }
 
+    static MustEqual(controlName: string, displayName: string): ValidatorFn {
+      return (c: AbstractControl) => {
+  
+        if (!c.parent) { return null; }
+  
+        const valueToMatch: string = c?.parent?.get(controlName)?.value;
+  
+        if (!valueToMatch || valueToMatch.length == 0) {
+          return null;
+        }
+  
+        const value: string = c.value;
+  
+        if (!value || value.length == 0) {
+          return null;
+        }
+  
+        if (valueToMatch == value) {
+          return null;
+        }
+        return { message: `Must equal ${displayName}` }
+      };
+    }
+
 }

@@ -1,0 +1,72 @@
+
+
+<div class="modal-content">
+  <div class="modal-header c-bg-primary">
+    <div>
+      <h5 class="modal-title">Update {{inventory?.name}} - {{ inventory?.quantity }}</h5>
+    </div>
+    <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body c-bg-secondary">
+
+    <form [formGroup]="form">
+
+      <div class="row">
+
+        <div class="form-group col-12 col-md-6 position-relative">
+
+          <div class="position-relative">
+            <label class="form-control-label mb-2" for="amountField">
+              <strong>Amount</strong>
+            </label>
+            <input placeholder="Amount" maxlength="250" type="number" class="form-control" id="amountField" formControlName="amount"  [ngClass]="{'is-invalid': errorService.getError(form, 'amount')}"/>
+            <app-custom-error-message [errorMessage]="errorService.getError(form, 'amount')"></app-custom-error-message>
+          </div>
+
+        </div>
+
+        <div class="form-group col-12 col-md-6 position-relative">
+
+          <div class="position-relative">
+            <label class="form-control-label mb-2" for="addField">
+              <strong>Action</strong>
+            </label>
+            <select class="form-control" id="addField" formControlName="add"  [ngClass]="{'is-invalid': errorService.getError(form, 'add')}">
+              <option value="" >---</option>
+              <option [value]="false" >Subtract</option>
+              <option [value]="true" >Add</option>
+            </select>
+            <app-custom-error-message [errorMessage]="errorService.getError(form, 'add')"></app-custom-error-message>
+          </div>
+
+        </div>
+
+        <div class="form-group col-12 col-md-12 position-relative">
+
+          <div class="position-relative">
+            <label class="form-control-label mb-2" for="reasonField">
+              <strong>Reason</strong>
+            </label>
+            <textarea placeholder="Reason" maxlength="10000" rows="4" class="form-control" id="reasonField" formControlName="reason" [ngClass]="{'is-invalid': errorService.getError(form, 'reason')}"></textarea>
+            <app-custom-error-message [errorMessage]="errorService.getError(form, 'reason')"></app-custom-error-message>
+          </div>
+
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+  <div class="modal-footer c-bg-primary justify-content-between">
+    <button (click)="updateQuantity()" [disabled]="form.invalid || isLoading" type="button" class="btn btn-primary">
+      Update
+      <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+    </button>
+    <div>
+      <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

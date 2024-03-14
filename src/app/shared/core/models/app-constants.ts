@@ -14,17 +14,23 @@ export class AppConstants {
     allergies : 'allergies',
     vitals : 'vitals',
     staffDetails : 'staffDetails',
+    credentials : 'credentials',
     staffRoles : 'staffRoles',
     companyDetails : 'companyDetails',
     userFiles : 'userFiles',
     inventoryDetails: 'inventoryDetails',
     inventoryItems: 'inventoryItems',
+    inventoryDependencies: 'inventoryDependencies',
     companyInventoryItems: 'companyInventoryItems',
     overallDescription: 'overallDescription',
     overallAppointmentDescription: 'overallAppointmentDescription',
     ticketDetail: 'ticketDetail',
     ticketList: 'ticketList',
+    previousTicketList: 'previousTicketList',
     financeInventory: 'financeInventory',
+    inventoryLogs: 'inventoryLogs',
+
+    settingBilling: 'settingBilling',
 
     tickets: {
       pharmacy: `tickets:${AppTicketTypes.pharmacy}`,
@@ -45,6 +51,10 @@ export class AppConstants {
     AppInventoryType: 'AppInventoryType',
     SurgeryTicketStatus: 'SurgeryTicketStatus'
   }
+
+  public static readonly TicketFrequency = [
+    'Once', 'Daily', 'Weekly', 'Monthly','Yearly'
+  ]
 }
 
 

@@ -36,7 +36,9 @@ export class PrivateFinanceTicketsComponent extends SharedUtilityComponent imple
   override ngOnInit(): void {
     this.filter.sentToDepartment = true;
     this.filter.sentToFinance = true;
+    this.filter.full = true;
     this.filter.appTicketStatus = 'ongoing';
+    this.filter.paymentStatus = ['pending', 'owing'];
     this.paginationRequest = new PaginationRequest<TicketFilter>(this.appPagination, this.filter);
     this.getTickets();
   }
@@ -66,6 +68,9 @@ export class PrivateFinanceTicketsComponent extends SharedUtilityComponent imple
   openFilterTicketModal(): void {
     const modalRef = this.modalService.open(PrivateFilterTicketsComponent, { size: 'lg' });
     modalRef.componentInstance.filter = this.filter;
+    modalRef.componentInstance.keepState = {
+      paymentStatus : ['pending', 'owing']
+    };
 
     const sub = modalRef.componentInstance.newFilter.subscribe({
       next: (filter: TicketFilter) => {

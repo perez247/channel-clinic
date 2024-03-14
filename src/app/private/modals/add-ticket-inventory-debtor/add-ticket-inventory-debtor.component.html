@@ -1,0 +1,69 @@
+<div class="modal-content">
+
+    <div class="modal-header c-bg-primary">
+        <div>
+          <h5 class="modal-title">
+            Update Debtors
+            <fa-icon (click)="addPayer()" *ngIf="debtors.length < payers.length" class="ps-1 text-primary pointer" [icon]="fonts.faPlusCircle"></fa-icon>
+        </h5>
+          <small class="d-block"><strong>Total: </strong> <fa-icon [icon]="fonts.faNairaSign"></fa-icon>{{sumTotal}}</small>
+        </div>
+        <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
+          <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+      <div class="modal-body c-bg-secondary">
+
+        <div class="row">
+
+            <div class="col-12" *ngFor="let debtor of debtors; let i = index">
+
+                <div class="d-flex w-100" [ngClass]="{'border-top border-3 border-primary pt-2': i == 1}">
+
+                    <fa-icon (click)="removePayer(i)" class="pe-3 text-danger" [icon]="fonts.faTrash"></fa-icon>
+            
+
+                    <div class="w-100">
+                        <div class="form-group">
+                            <label class="form-control-label mb-2">
+                                <strong>Payer</strong>
+                            </label>
+
+                            <select (change)="selected($event, debtor)" class="form-control" [(ngModel)]="debtor.payerId">
+                                <option [value]="null" selected>---</option>
+                                <option *ngFor="let item of payers" [value]="item.userId">{{ item.name }}</option>
+                            </select>
+                        </div>
+        
+                        <div class="form-group">
+                            <label class="form-control-label mb-2">
+                                <strong>Amount</strong>
+                            </label>
+                            <input type="number" class="form-control" [(ngModel)]="debtor.amount" />
+                        </div>
+        
+                        <div class="form-group">
+                            <label class="form-control-label mb-2">
+                                <strong>Description</strong>
+                            </label>
+                            <textarea class="form-control" rows="3" [(ngModel)]="debtor.description"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+      </div>
+
+      <div class="modal-footer c-bg-primary justify-content-between">
+        <button (click)="saveDebtors()" [disabled]="canSave" type="button" class="btn btn-primary">
+          Save Payers
+        </button>
+        <div>
+          <button (click)="activeModal.close()" type="button" class="ms-4 btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+</div>

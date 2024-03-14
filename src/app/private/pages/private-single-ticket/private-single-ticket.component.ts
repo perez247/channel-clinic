@@ -18,7 +18,7 @@ import { CustomToastService } from 'src/app/shared/services/common/custom-toast/
 })
 export class PrivateSingleTicketComponent extends SharedUtilityComponent implements OnInit {
 
-  fonts = { faTicket }
+  fonts = { faTicket };
 
   routes = ApplicationRoutes.generateRoutes();
 
@@ -30,7 +30,7 @@ export class PrivateSingleTicketComponent extends SharedUtilityComponent impleme
   paginationResponse = new PaginationResponse<AppTicket[]>();
 
   userSections = AppConstants.UserSections;
-  currentSection = this.userSections.ticketDetail;
+  currentSection = 'null';
   types = AppTicketTypes;
 
   roles = AppRoles;
@@ -61,7 +61,7 @@ export class PrivateSingleTicketComponent extends SharedUtilityComponent impleme
       .subscribe({
         next: (data) => {
           if (data.totalItems <= 0) {
-            this.toast.error('Ticket not found');
+            this.toast.error('Ticket not found.');
             this.router.navigate([this.routes.privateRoute.tickets().$absolutePath]);
             return;
           }

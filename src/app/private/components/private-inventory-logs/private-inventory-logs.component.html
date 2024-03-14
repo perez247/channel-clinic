@@ -1,0 +1,11 @@
+
+<section class="mt-2">
+
+  <ng-container *ngFor="let item of pagination.elements">
+    <app-private-inventory-logs-item [log]="item"></app-private-inventory-logs-item>
+  </ng-container>
+
+  <section *ngIf="pagination.response.totalItems > 10">
+    <app-shared-pagination-template [pagination]="pagination" (pageChanged)="pageChanged($event)" ></app-shared-pagination-template>
+  </section>
+</section>

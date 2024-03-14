@@ -9,6 +9,7 @@ export class FilterInventoryModalFunctions {
     return fb.group({
       name: [filter?.name, [CustomValidator.CustomPattern('^[a-zA-Z0-9._ ]*$', 'Only letters, numbers, periods and underscore'), CustomValidator.MaxLength(250)]],
       appInventoryType: [filter?.appInventoryType],
+      low: [filter?.low],
       quantity: [filter?.quantity, [CustomValidator.isNumber]],
     });
   }

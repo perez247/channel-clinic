@@ -31,7 +31,7 @@
   <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12"></a>
 </div>
 
-<ngb-accordion *ngIf="inventory && !isLoading" [closeOthers]="true" [activeIds]="currentSection">
+<ngb-accordion *ngIf="inventory && !isLoading" [closeOthers]="false" [activeIds]="currentSection">
 
 	<ngb-panel [id]="userSections.inventoryDetails" [disabled]="disableTabs">
 
@@ -44,6 +44,31 @@
 		</ng-template>
 
 	</ngb-panel>
+
+  <!-- <ngb-panel [id]="userSections.inventoryDependencies" [disabled]="disableTabs">
+
+		<ng-template ngbPanelTitle>
+			Inventory Dependencies
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <app-private-inventory-dependencies [inventory]="inventory" (reload)="getInventories($event)"></app-private-inventory-dependencies>
+		</ng-template>
+
+	</ngb-panel> -->
+
+  <ngb-panel [id]="userSections.inventoryDependencies" [disabled]="disableTabs">
+
+		<ng-template ngbPanelTitle>
+			Quantity Logs
+		</ng-template>
+
+		<ng-template ngbPanelContent>
+      <app-private-inventory-logs [inventory]="inventory"></app-private-inventory-logs>
+		</ng-template>
+
+	</ngb-panel>
+
 
   <ngb-panel [id]="userSections.inventoryItems" [disabled]="disableTabs">
 

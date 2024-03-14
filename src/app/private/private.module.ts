@@ -13,7 +13,6 @@ import { PrivateCompanyComponent } from './pages/private-company/private-company
 import { PrivateInventoryComponent } from './pages/private-inventory/private-inventory.component';
 import { PrivateAppointmentsComponent } from './pages/private-appointments/private-appointments.component';
 import { PrivateTicketsComponent } from './pages/private-tickets/private-tickets.component';
-import { PrivateFinanceComponent } from './pages/private-finance/private-finance.component';
 import { PrivateSinglePatientComponent } from './pages/private-single-patient/private-single-patient.component';
 import { PrivateUserPersonalDetailComponent } from './components/private-user-personal-detail/private-user-personal-detail.component';
 import { PrivateNotfoundComponent } from './pages/private-notfound/private-notfound.component';
@@ -47,11 +46,6 @@ import { PrivateFilterInventoryModalComponent } from './modals/private-filter-in
 import { PrivateFilterPatientsModalComponent } from './modals/private-filter-patients-modal/private-filter-patients-modal.component';
 import { PrivateFilterStaffModalComponent } from './modals/private-filter-staff-modal/private-filter-staff-modal.component';
 import { PrivateAddViewPatientVitalModalComponent } from './modals/private-add-view-patient-vital-modal/private-add-view-patient-vital-modal.component';
-import { PrivateCreateSurgeryTicketModalComponent } from './modals/private-create-ticket-modal/private-create-surgery-ticket-modal/private-create-surgery-ticket-modal.component';
-import { PrivateCreateAdmissionTicketModalComponent } from './modals/private-create-ticket-modal/private-create-admission-ticket-modal/private-create-admission-ticket-modal.component';
-import { PrivateCreateLabTicketModalComponent } from './modals/private-create-ticket-modal/private-create-lab-ticket-modal/private-create-lab-ticket-modal.component';
-import { PrivateCreatePharmacyTicketModalComponent } from './modals/private-create-ticket-modal/private-create-pharmacy-ticket-modal/private-create-pharmacy-ticket-modal.component';
-import { PrivateCreateRadiologyTicketModalComponent } from './modals/private-create-ticket-modal/private-create-radiology-ticket-modal/private-create-radiology-ticket-modal.component';
 import { PrivateCreateTicketModalComponent } from './modals/private-create-ticket-modal/private-create-ticket-modal.component';
 import { PrivateFilterAppointmentsModalComponent } from './modals/private-filter-appointments-modal/private-filter-appointments-modal.component';
 import { PrivateUploadFilesModalComponent } from './modals/private-upload-files-modal/private-upload-files-modal.component';
@@ -63,12 +57,10 @@ import { PrivateFilterCompanyInventoryItemsModalComponent } from './modals/priva
 import { PrivateUpdateAppointmentModalComponent } from './modals/private-update-appointment-modal/private-update-appointment-modal.component';
 import { PrivateSingleTicketComponent } from './pages/private-single-ticket/private-single-ticket.component';
 import { PrivateAppointmentOverallDescriptionComponent } from './components/private-appointment-overall-description/private-appointment-overall-description.component';
-import { PrivatePharmacyTicketListComponent } from './components/private-pharmacy-ticket-list/private-pharmacy-ticket-list.component';
 import { PrivateFilterTicketsComponent } from './modals/private-filter-tickets/private-filter-tickets.component';
 import { PrivateFinanceTicketsComponent } from './pages/private-finance-tickets/private-finance-tickets.component';
 import { PrivateFinanceContractsComponent } from './pages/private-finance-contracts/private-finance-contracts.component';
 import { PrivateGeneralTicketOverviewComponent } from './components/private-general-ticket-overview/private-general-ticket-overview.component';
-import { PrivatePharmacyTicketItemComponent } from './components/private-pharmacy-ticket-list/private-pharmacy-ticket-item/private-pharmacy-ticket-item.component';
 import { PrivateMakeInitialPaymentComponent } from './modals/private-make-initial-payment/private-make-initial-payment.component';
 import { PrivateCompletePaymentComponent } from './modals/private-complete-payment/private-complete-payment.component';
 import { PrivateAddPaymentModalComponent } from './modals/private-add-payment-modal/private-add-payment-modal.component';
@@ -78,6 +70,68 @@ import { PrivateCompanyContractComponent } from './components/private-company-co
 import { PrivateFilterFinanceContractModalComponent } from './modals/private-filter-finance-contract-modal/private-filter-finance-contract-modal.component';
 import { PrivateStaffRolesComponent } from './components/private-staff-roles/private-staff-roles.component';
 import { PrivatePatientChangeCompanyComponent } from './modals/private-patient-change-company/private-patient-change-company.component';
+import { PrivateFinanceDebtsComponent } from './pages/private-finance-debts/private-finance-debts.component';
+import { PrivateSingleFinanceDebtComponent } from './pages/private-single-finance-debt/private-single-finance-debt.component';
+import { PrivateFinancePaidComponent } from './pages/private-finance-paid/private-finance-paid.component';
+import { PrivateSingleFinancePaidComponent } from './pages/private-single-finance-paid/private-single-finance-paid.component';
+import { PrivateFinancePaidItemComponent } from './components/private-finance-paid-item/private-finance-paid-item.component';
+import { PrivateFinancePaidItemChildComponent } from './components/private-finance-paid-item-child/private-finance-paid-item-child.component';
+import { PrivateEditTicketInventoryModalComponent } from './modals/private-edit-ticket-inventory-modal/private-edit-ticket-inventory-modal.component';
+import { PrivateFinanceComponent } from './pages/private-finance/private-finance.component';
+import { PrivateFilterFinanceDebtsModalComponent } from './modals/private-filter-finance-debts-modal/private-filter-finance-debts-modal.component';
+import { PrivateDebtPaymentModalsComponent } from './modals/private-debt-payment-modals/private-debt-payment-modals.component';
+import { PrivateSettingsComponent } from './pages/private-settings/private-settings.component';
+import { PrivateBillingSettingComponent } from './components/private-billing-setting/private-billing-setting.component';
+import { PrivateGetInventoryModalComponent } from './modals/private-get-inventory-modal/private-get-inventory-modal.component';
+import { PrivatePreviousTicketsComponent } from './components/private-previous-tickets/private-previous-tickets.component';
+import { PrivateTicketInventoriesComponent } from './components/private-ticket-inventories/private-ticket-inventories.component';
+import { PrivatePharmacyInventoryItemComponent } from './components/private-ticket-inventories/private-pharmacy-inventory-item/private-pharmacy-inventory-item.component';
+import { PrivateLabInventoryItemComponent } from './components/private-ticket-inventories/private-lab-inventory-item/private-lab-inventory-item.component';
+import { PrivateInventoryDependenciesComponent } from './components/private-inventory-dependencies/private-inventory-dependencies.component';
+import { AddInventoryDependenciesModalComponent } from './modals/add-inventory-dependencies-modal/add-inventory-dependencies-modal.component';
+import { PrivateSaveLabRadiologyResultModalComponent } from './modals/private-save-lab-radiology-result-modal/private-save-lab-radiology-result-modal.component';
+import { PrivateSaveLabRadNoteComponent } from './modals/private-save-lab-radiology-result-modal/private-save-lab-rad-note/private-save-lab-rad-note.component';
+import { PrivateSaveLabRadProofComponent } from './modals/private-save-lab-radiology-result-modal/private-save-lab-rad-proof/private-save-lab-rad-proof.component';
+import { PrivateInventoryItemComponent } from './components/private-ticket-inventories/private-inventory-item.component';
+import { PrivateAddItemUsedModalComponent } from './modals/private-add-item-used-modal/private-add-item-used-modal.component';
+import { PrivateSurgeryInventoryItemComponent } from './components/private-ticket-inventories/private-surgery-inventory-item/private-surgery-inventory-item.component';
+import { PrivateSaveSurgeryStaffDateModalComponent } from './modals/private-save-surgery-staff-date-modal/private-save-surgery-staff-date-modal.component';
+import { PrivateAdmissionInventoryItemComponent } from './components/private-ticket-inventories/private-admission-inventory-item/private-admission-inventory-item.component';
+import { PrivateTicketInventoryItemStatusComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-status/private-ticket-inventory-item-status.component';
+import { PrivateTicketInventoryItemDoctorPrescriptionComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-doctor-prescription/private-ticket-inventory-item-doctor-prescription.component';
+import { PrivateTicketInventoryItemDepartmentNoteComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-department-note/private-ticket-inventory-item-department-note.component';
+import { PrivateTicketInventoryItemAvailableQuantityComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-available-quantity/private-ticket-inventory-item-available-quantity.component';
+import { PrivateTicketInventoryItemQuantityToGiveComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-quantity-to-give/private-ticket-inventory-item-quantity-to-give.component';
+import { PrivateTicketInventoryItemPriceComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-price/private-ticket-inventory-item-price.component';
+import { PrivateTicketInventoryItemStaffDateComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-staff-date/private-ticket-inventory-item-staff-date.component';
+import { PrivateTicketInventoryItemResultsComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-results/private-ticket-inventory-item-results.component';
+import { PrivateTicketInventoryItemAdmissionDatesComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-admission-dates/private-ticket-inventory-item-admission-dates.component';
+import { PrivateAddEmergencyTicketsComponent } from './modals/private-add-emergency-tickets/private-add-emergency-tickets.component';
+import { PrivateEmergencyTicketComponent } from './components/private-emergency-ticket/private-emergency-ticket.component';
+import { PrivateAdmissionsComponent } from './pages/private-admissions/private-admissions.component';
+import { PrivateSingleAdmissionComponent } from './pages/private-single-admission/private-single-admission.component';
+import { PrivateGeneralAdmissionTicketOverviewComponent } from './components/private-general-admission-ticket-overview/private-general-admission-ticket-overview.component';
+import { PrivatePatientInfoComponent } from './components/private-patient-info/private-patient-info.component';
+import { PrivateAdmissionSectionComponent } from './pages/private-admission-section/private-admission-section.component';
+import { PrivateAdmissionPrecriptionsComponent } from './components/private-admission-precriptions/private-admission-precriptions.component';
+import { PrescriptionItemComponent } from './components/private-admission-precriptions/prescription-item/prescription-item.component';
+import { PrivateStaffInfoComponent } from './components/private-staff-info/private-staff-info.component';
+import { PrivateExecutePrescriptionModalComponent } from './modals/private-execute-prescription-modal/private-execute-prescription-modal.component';
+import { LoggedPrescriptionsComponent } from './components/private-admission-precriptions/logged-prescriptions/logged-prescriptions.component';
+import { PrivateUpdateTicketInventoryComponent } from './components/private-ticket-inventories/private-update-ticket-inventory/private-update-ticket-inventory.component';
+import { PrivateTicketInventoryItemBasicInfoComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-basic-info/private-ticket-inventory-item-basic-info.component';
+import { PrivateTicketInventoryItemAdditionalNoteComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-additional-note/private-ticket-inventory-item-additional-note.component';
+import { PrivateBulkUploadInventoryComponent } from './modals/private-bulk-upload-inventory/private-bulk-upload-inventory.component';
+import { PrivateAddBulkIvnItemComponent } from './modals/private-add-bulk-ivn-item/private-add-bulk-ivn-item.component';
+import { PrivateUpdateQuantityComponent } from './modals/private-update-quantity/private-update-quantity.component';
+import { PrivateInventoryLogsComponent } from './components/private-inventory-logs/private-inventory-logs.component';
+import { PrivateInventoryLogsItemComponent } from './components/private-inventory-logs/private-inventory-logs-item/private-inventory-logs-item.component';
+import { PrivateSaveFinanceRecordComponent } from './modals/private-save-finance-record/private-save-finance-record.component';
+import { PrivateUserPasswordComponent } from './components/private-user-password/private-user-password.component';
+import { PrivateAddUserContractComponent } from './modals/private-add-user-contract/private-add-user-contract.component';
+import { AddTicketInventoryDebtorComponent } from './modals/add-ticket-inventory-debtor/add-ticket-inventory-debtor.component';
+import { PrivateNursingInventoryItemComponent } from './components/private-ticket-inventories/private-nursing-inventory-item/private-nursing-inventory-item.component';
+import { PrivateTicketInventoryItemStaffObservationComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-staff-observation/private-ticket-inventory-item-staff-observation.component';
 
 @NgModule({
   declarations: [
@@ -94,11 +148,6 @@ import { PrivatePatientChangeCompanyComponent } from './modals/private-patient-c
     PrivateFilterPatientsModalComponent,
     PrivateFilterStaffModalComponent,
     PrivateAddViewPatientVitalModalComponent,
-    PrivateCreateSurgeryTicketModalComponent,
-    PrivateCreateAdmissionTicketModalComponent,
-    PrivateCreateLabTicketModalComponent,
-    PrivateCreatePharmacyTicketModalComponent,
-    PrivateCreateRadiologyTicketModalComponent,
     PrivateCreateTicketModalComponent,
     PrivateFilterAppointmentsModalComponent,
     PrivateUploadFilesModalComponent,
@@ -108,6 +157,9 @@ import { PrivatePatientChangeCompanyComponent } from './modals/private-patient-c
     PrivateCreatePatientAppointmentModalComponent,
     PrivateFilterCompanyInventoryItemsModalComponent,
     PrivateUpdateAppointmentModalComponent,
+    PrivateSaveLabRadiologyResultModalComponent,
+    PrivateSaveLabRadNoteComponent,
+    PrivateSaveLabRadProofComponent,
 
     // Components-----------------------------------------
     PrivateLayoutContentComponent,
@@ -122,7 +174,6 @@ import { PrivatePatientChangeCompanyComponent } from './modals/private-patient-c
     PrivateInventoryComponent,
     PrivateAppointmentsComponent,
     PrivateTicketsComponent,
-    PrivateFinanceComponent,
     PrivateSinglePatientComponent,
     PrivateUserPersonalDetailComponent,
     PrivateNotfoundComponent,
@@ -146,12 +197,10 @@ import { PrivatePatientChangeCompanyComponent } from './modals/private-patient-c
     PrivateAppointmentsByListComponent,
     PrivateSingleTicketComponent,
     PrivateAppointmentOverallDescriptionComponent,
-    PrivatePharmacyTicketListComponent,
     PrivateFilterTicketsComponent,
     PrivateFinanceTicketsComponent,
     PrivateFinanceContractsComponent,
     PrivateGeneralTicketOverviewComponent,
-    PrivatePharmacyTicketItemComponent,
     PrivateMakeInitialPaymentComponent,
     PrivateCompletePaymentComponent,
     PrivateAddPaymentModalComponent,
@@ -161,6 +210,65 @@ import { PrivatePatientChangeCompanyComponent } from './modals/private-patient-c
     PrivateFilterFinanceContractModalComponent,
     PrivateStaffRolesComponent,
     PrivatePatientChangeCompanyComponent,
+    PrivateFinanceDebtsComponent,
+    PrivateSingleFinanceDebtComponent,
+    PrivateFinancePaidComponent,
+    PrivateSingleFinancePaidComponent,
+    PrivateFinancePaidItemComponent,
+    PrivateFinancePaidItemChildComponent,
+    PrivateEditTicketInventoryModalComponent,
+    PrivateFinanceComponent,
+    PrivateFilterFinanceDebtsModalComponent,
+    PrivateDebtPaymentModalsComponent,
+    PrivateSettingsComponent,
+    PrivateBillingSettingComponent,
+    PrivateGetInventoryModalComponent,
+    PrivatePreviousTicketsComponent,
+    PrivateTicketInventoriesComponent,
+    PrivatePharmacyInventoryItemComponent,
+    PrivateLabInventoryItemComponent,
+    PrivateInventoryDependenciesComponent,
+    AddInventoryDependenciesModalComponent,
+    PrivateInventoryItemComponent,
+    PrivateAddItemUsedModalComponent,
+    PrivateSurgeryInventoryItemComponent,
+    PrivateSaveSurgeryStaffDateModalComponent,
+    PrivateAdmissionInventoryItemComponent,
+    PrivateTicketInventoryItemStatusComponent,
+    PrivateTicketInventoryItemDoctorPrescriptionComponent,
+    PrivateTicketInventoryItemDepartmentNoteComponent,
+    PrivateTicketInventoryItemAvailableQuantityComponent,
+    PrivateTicketInventoryItemQuantityToGiveComponent,
+    PrivateTicketInventoryItemPriceComponent,
+    PrivateTicketInventoryItemStaffDateComponent,
+    PrivateTicketInventoryItemResultsComponent,
+    PrivateTicketInventoryItemAdmissionDatesComponent,
+    PrivateAddEmergencyTicketsComponent,
+    PrivateEmergencyTicketComponent,
+    PrivateAdmissionsComponent,
+    PrivateSingleAdmissionComponent,
+    PrivateGeneralAdmissionTicketOverviewComponent,
+    PrivatePatientInfoComponent,
+    PrivateAdmissionSectionComponent,
+    PrivateAdmissionPrecriptionsComponent,
+    PrescriptionItemComponent,
+    PrivateStaffInfoComponent,
+    PrivateExecutePrescriptionModalComponent,
+    LoggedPrescriptionsComponent,
+    PrivateUpdateTicketInventoryComponent,
+    PrivateTicketInventoryItemBasicInfoComponent,
+    PrivateTicketInventoryItemAdditionalNoteComponent,
+    PrivateBulkUploadInventoryComponent,
+    PrivateAddBulkIvnItemComponent,
+    PrivateUpdateQuantityComponent,
+    PrivateInventoryLogsComponent,
+    PrivateInventoryLogsItemComponent,
+    PrivateSaveFinanceRecordComponent,
+    PrivateUserPasswordComponent,
+    PrivateAddUserContractComponent,
+    AddTicketInventoryDebtorComponent,
+    PrivateNursingInventoryItemComponent,
+    PrivateTicketInventoryItemStaffObservationComponent,
   ],
   imports: [
     PrivateRoutingModule,

@@ -2,7 +2,7 @@ import { ApplicationRoutes } from './../../../shared/core/routes/app-routes';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppPagination, PaginationRequest, PaginationResponse } from './../../../shared/core/models/pagination';
 import { Component, OnInit } from '@angular/core';
-import { faBedPulse, faEllipsisV, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faHospitalUser, faEllipsisV, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { finalize } from 'rxjs';
 import { AppUser, UserFilter } from 'src/app/shared/core/models/app-user';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
@@ -10,6 +10,7 @@ import { UserService } from 'src/app/shared/services/api/user/user.service';
 import { PrivateFilterPatientsModalComponent } from '../../modals/private-filter-patients-modal/private-filter-patients-modal.component';
 import { PrivateAddAPatientModalComponent } from '../../modals/private-add-a-patient-modal/private-add-a-patient-modal.component';
 import { AppRoles } from 'src/app/shared/core/models/app-roles';
+import { CustomToastService } from 'src/app/shared/services/common/custom-toast/custom-toast.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ import { AppRoles } from 'src/app/shared/core/models/app-roles';
 })
 export class PrivatePatientsComponent extends SharedUtilityComponent implements OnInit {
 
-  fonts = { faBedPulse, faEllipsisV, faChevronDown }
+  fonts = { faHospitalUser, faEllipsisV, faChevronDown }
 
   routes = ApplicationRoutes.generateRoutes();
 
@@ -33,7 +34,7 @@ export class PrivatePatientsComponent extends SharedUtilityComponent implements 
 
   constructor(
     private userService: UserService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
   ) {
     super();
   }
@@ -52,7 +53,7 @@ export class PrivatePatientsComponent extends SharedUtilityComponent implements 
           this.patients = data.result ?? [];
         },
         error: (error) => {
-          console.log(error);
+          throw error;
         }
       });
     this.subscriptions.push(sub);
