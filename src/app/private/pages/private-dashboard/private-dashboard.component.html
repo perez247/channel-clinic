@@ -34,11 +34,12 @@
             <span class="d-block h2 text-muted">{{ dashboard.totalPatients | shortNumber }}</span>
           </span>
         </div>
-        <div class="card-footer text-muted">
+        <div class="card-footer text-muted d-flex justify-content-between">
           <a
           appHasRole [roles]="[roles.admin, roles.reception, roles.doctor, roles.nurse, roles.hr]"
           [routerLink]="['/' + appRroutes.privateRoute.patients().$absolutePath]"
           >View patients</a>
+          <span>&nbsp;</span>
         </div>
       </div>
     </div>
@@ -57,11 +58,12 @@
             <span class="d-block h2 text-muted">{{ dashboard.totalCompanies | shortNumber }}</span>
           </span>
         </div>
-        <div class="card-footer text-muted">
+        <div class="card-footer text-muted d-flex justify-content-between">
           <a
           appHasRole [roles]="[roles.admin, roles.reception, roles.hr]"
           [routerLink]="['/' + appRroutes.privateRoute.companies().$absolutePath]"
           >View companies</a>
+          <span>&nbsp;</span>
         </div>
       </div>
     </div>
@@ -80,11 +82,12 @@
             <span class="d-block h2 text-muted">{{ dashboard.appointmentsToday | shortNumber }}</span>
           </span>
         </div>
-        <div class="card-footer text-muted">
+        <div class="card-footer text-muted d-flex justify-content-between">
           <a
           appHasRole [roles]="[roles.admin, roles.reception, roles.doctor]"
           [routerLink]="['/' + appRroutes.privateRoute.appointments().$absolutePath]"
           >View appointments</a>
+          <span>&nbsp;</span>
         </div>
       </div>
     </div>
@@ -103,11 +106,12 @@
             <span class="d-block h2 text-muted">{{ dashboard.ticketsToday | shortNumber }}</span>
           </span>
         </div>
-        <div class="card-footer text-muted">
+        <div class="card-footer text-muted d-flex justify-content-between">
           <a
           appHasRole [roles]="[roles.admin, roles.pharmacy, roles.surgery, roles.lab, roles.radiology, roles.admission]"
           [routerLink]="['/' + appRroutes.privateRoute.tickets().$absolutePath]"
           >View tickets</a>
+          <span>&nbsp;</span>
         </div>
       </div>
     </div>

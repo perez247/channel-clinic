@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { AppUser } from 'src/app/shared/core/models/app-user';
 import { EventBusService } from './../services/common/event-bus/event-bus.service';
-import { Directive, Input, OnInit, OnDestroy, ElementRef, Renderer2 } from '@angular/core';
+import { Directive, Input, OnInit, Output, OnDestroy, ElementRef, Renderer2, EventEmitter } from '@angular/core';
 import { EventBusActions } from '../services/common/event-bus/event-bus-action';
 
 @Directive({
@@ -12,6 +12,7 @@ export class HasRoleDirective implements OnInit, OnDestroy {
 
   @Input() roles: (string | undefined)[] = [];
   @Input() operator: string = 'or';
+  @Output() show = new EventEmitter();
 
   currentUser?: AppUser;
   subscriptions: Subscription[] = [];
@@ -106,11 +107,13 @@ export class HasRoleDirective implements OnInit, OnDestroy {
   hideElement(): void {
     this.renderer.removeClass(this.elementRef.nativeElement, 'd-block');
     this.renderer.addClass(this.elementRef.nativeElement, 'd-none');
+    this.show.emit(false);
   }
 
   showElement(): void {
     this.renderer.removeClass(this.elementRef.nativeElement, 'd-none');
     this.renderer.addClass(this.elementRef.nativeElement, 'd-block');
+    this.show.emit(true);
   }
 
   ngOnDestroy(): void {

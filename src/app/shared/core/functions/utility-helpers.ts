@@ -136,4 +136,13 @@ export class UtilityHelpers
     return new File([blob], Math.random().toString(), { type: blob.type });
 
   }
+
+  static groupBy(arr: any[], key: string) {
+    return arr.reduce((acc, cur) => {
+        const groupKey = cur[key];
+        acc[groupKey] = acc[groupKey] || [];
+        acc[groupKey].push(cur);
+        return acc;
+    }, {});
+  }
 }

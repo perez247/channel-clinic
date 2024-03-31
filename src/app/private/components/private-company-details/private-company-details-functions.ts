@@ -11,6 +11,7 @@ export class CompanyDetailFunctions {
         address: [appUser?.address, [CustomValidator.CustomRequired('Address'), CustomValidator.MaxLength(2000)]],
         description: [appUser?.company?.description, [CustomValidator.MaxLength(2000)]],
         uniqueId: [appUser?.company?.uniqueId, [CustomValidator.MaxLength(2000)]],
+        email: [appUser?.company, [CustomValidator.MaxLength(100), CustomValidator.CustomEmail()]],
         forIndividual: [appUser?.company?.forIndividual],
         homeCompany: [appUser?.company?.homeCompany],
         otherId: [appUser?.company?.otherId, [CustomValidator.MaxLength(2000)]],

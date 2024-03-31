@@ -4,14 +4,16 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddTicketInventoryDebtorComponent } from 'src/app/private/modals/add-ticket-inventory-debtor/add-ticket-inventory-debtor.component';
 import { AppRoles } from 'src/app/shared/core/models/app-roles';
 import { AppTicket, TicketInventory } from 'src/app/shared/core/models/app-ticket';
+import { AppUser } from 'src/app/shared/core/models/app-user';
 import { AppInventoryItem } from 'src/app/shared/core/models/inventory';
+import { EventBusService } from 'src/app/shared/services/common/event-bus/event-bus.service';
 
 @Component({
   selector: 'app-private-ticket-inventory-item-quantity-to-give',
   templateUrl: './private-ticket-inventory-item-quantity-to-give.component.html',
   styleUrls: ['./private-ticket-inventory-item-quantity-to-give.component.scss']
 })
-export class PrivateTicketInventoryItemQuantityToGiveComponent implements OnChanges {
+export class PrivateTicketInventoryItemQuantityToGiveComponent implements OnInit, OnChanges {
 
   @Input() ticket: AppTicket = {} as AppTicket;
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
@@ -21,8 +23,11 @@ export class PrivateTicketInventoryItemQuantityToGiveComponent implements OnChan
 
   @Output() onBlur = new EventEmitter();
 
+  canEdit = true;
+
   constructor(
     private modalService: NgbModal,
+    private eventBus: EventBusService
   ) {}
 
   pricePerItem = 0;
@@ -31,6 +36,12 @@ export class PrivateTicketInventoryItemQuantityToGiveComponent implements OnChan
   roles = AppRoles;
 
   fonts = { faNairaSign }
+  user: AppUser = {} as AppUser;
+
+  ngOnInit(): void {
+    this.user = new AppUser(this.eventBus.getState().user.value ?? {});
+    this.canEditQuantity();
+  }
 
   ngOnChanges(): void {
     this.setPrice();
@@ -61,5 +72,9 @@ export class PrivateTicketInventoryItemQuantityToGiveComponent implements OnChan
 
     component.ticketInventory = this.ticketInventory;
     component.sumTotal = this.ticketInventory.totalPrice ? this.ticketInventory.totalPrice : this.sumTotal;
+  }
+
+  canEditQuantity(): void {
+    this.canEdit = this.user.hasClaim([AppRoles.admin, this.ticketInventory.inventory?.appInventoryType ?? ''], false);
   }
 }

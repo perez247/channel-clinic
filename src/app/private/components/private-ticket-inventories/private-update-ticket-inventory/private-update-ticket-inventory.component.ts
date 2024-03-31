@@ -19,7 +19,9 @@ export class PrivateUpdateTicketInventoryComponent extends SharedUtilityComponen
   @Output() reset = new EventEmitter<TicketInventory>();
   @Output() updating = new EventEmitter<TicketInventory>();
   oldTicketInventory: string = '';
-  canUpdate = true;
+  canUpdate = false;
+
+  ignoreKeys = ['totalPrice'];
 
   constructor(
     private inventoryService: InventoryService,
@@ -41,8 +43,8 @@ export class PrivateUpdateTicketInventoryComponent extends SharedUtilityComponen
   }
 
   setCanUpdate(): void {
-    this.canUpdate = this.oldTicketInventory == JSON.stringify(this.ticketInventory);
-    // this.checkDifferences();
+    // this.canUpdate = this.oldTicketInventory == JSON.stringify(this.ticketInventory);
+    this.checkDifferences();
   }
 
   @Confirmable({
@@ -113,15 +115,22 @@ export class PrivateUpdateTicketInventoryComponent extends SharedUtilityComponen
   checkDifferences(): void {
     const oldTicket = JSON.parse(this.oldTicketInventory);
     const obj: any =  this.ticketInventory;
+    let canUpdate = false;
     for (const key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key) && typeof(obj[key]) !== 'object') {
+
+      if (this.ignoreKeys.indexOf(key) < 0) {
+        if (Object.prototype.hasOwnProperty.call(obj, key) && typeof(obj[key]) !== 'object') {
+          
+          if (oldTicket[key] != obj[key]) {
+            // console.log(key, '=>', 'old value => ', oldTicket[key], 'new value => ', obj[key]);
+            canUpdate = true;
+          }
         
-        if (oldTicket[key] != obj[key]) {
-          console.log(key, '=>', 'old value => ', oldTicket[key], 'new value => ', obj[key]);
         }
-      
       }
+
     }
+    this.canUpdate = canUpdate;
   }
 
 }

@@ -28,6 +28,7 @@ import { Base, Company } from "./app-user";
     howLow?: number
     profile?: string
     id?: string
+    sellType?: string;
   }
 
   export class AppInventoryCSV {

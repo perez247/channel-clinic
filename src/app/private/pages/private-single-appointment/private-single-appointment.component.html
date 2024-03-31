@@ -6,7 +6,7 @@
       <div class="placeholder-glow ms-5 ps-3">
         <span *ngIf="!appointment" class="placeholder col-12"></span>
         <span *ngIf="appointment" class="h5 me-1">
-          {{appointment.appointmentDate | date : 'medium'}}
+          {{appointment.appointmentDate | date : 'MMM d, y, h:mm a'}}
         </span>
 
         <app-shared-loading *ngIf="!appointment"></app-shared-loading>

@@ -6,6 +6,7 @@ import { CustomValidator } from "src/app/shared/validations/custom-validators";
 export class UserPersonalDetailFunctions {
   public static createForm(fb: FormBuilder, appUser?: AppUser): FormGroup
   {
+    
     return fb.group({
       firstName: [appUser?.firstName, [CustomValidator.CustomRequired('First Name'), CustomValidator.MaxLength(200)]],
       lastName: [appUser?.lastName, [CustomValidator.CustomRequired('Last Name'), CustomValidator.MaxLength(200)]],
@@ -17,7 +18,7 @@ export class UserPersonalDetailFunctions {
       profile: [appUser?.profile],
       companyUniqueId: [appUser?.patient?.companyUniqueId, [CustomValidator.MaxLength(255)]],
       otherInformation: [appUser?.patient?.otherInformation, [CustomValidator.MaxLength(2000)]],
-      email: {value: appUser?.email, disabled: true},
+      email: [{value: appUser?.email, disabled: true}, [CustomValidator.MaxLength(100), CustomValidator.CustomEmail()]],
       userId: [appUser?.base?.id]
     });
   }

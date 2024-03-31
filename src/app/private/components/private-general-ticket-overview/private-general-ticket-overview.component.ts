@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faTicket, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 import { AppTicket, AppTicketTypes } from 'src/app/shared/core/models/app-ticket';
 import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
+import { InventoryService } from 'src/app/shared/services/api/inventory/inventory.service';
 
 @Component({
   selector: 'app-private-general-ticket-overview',
@@ -22,12 +24,22 @@ export class PrivateGeneralTicketOverviewComponent implements OnInit {
   route = '';
   admissionRoute = '';
 
+  services: {name: string, value: number}[] = [];
+
+  roles = AppRoles;
+
   constructor(
-    private router: Router
+    private router: Router,
+    private inventoryService: InventoryService,
   ) { }
 
   ngOnInit(): void {
     this.setTicketRoute();
+    this.setServicesEntered();
+  }
+
+  setServicesEntered(): void {
+    this.services = this.inventoryService.setServicesEntered(this.ticket?.ticketInventories ?? []);
   }
 
   setTicketRoute(): void {

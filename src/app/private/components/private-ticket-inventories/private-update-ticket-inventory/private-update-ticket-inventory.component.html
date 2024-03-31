@@ -1,8 +1,8 @@
 
 <section 
-  *ngIf="(!canUpdate || ticket?.cost || isAdmission) && !ticketInventory?.concludedDate" 
+  *ngIf="(canUpdate || ticket?.cost || isAdmission) && !ticketInventory?.concludedDate" 
   class="card-header d-flex justify-content-between"
-  [ngClass]="{'bg-danger': !canUpdate}"
+  [ngClass]="{'bg-danger': canUpdate}"
   >
 
   <div>
@@ -19,7 +19,7 @@
 
   <div>
     <span>&nbsp;</span>
-    <button *ngIf="!canUpdate" [disabled]="isLoading" (click)="updateTicketInventory()" class="btn btn-sm btn-primary">
+    <button *ngIf="canUpdate" [disabled]="isLoading" (click)="updateTicketInventory()" class="btn btn-sm btn-primary">
       Save
       <app-shared-loading *ngIf="isLoading"></app-shared-loading>
     </button>
