@@ -32,10 +32,16 @@ export class PrivateTicketInventoryItemStaffObservationComponent  implements OnI
   }
 
   setNoteDisabled(): void {
-    if (this.ticket.cost) {
+
+    if (this.ticketInventory.concludedDate) {
       this.noteDisabled = true;
       return;
     }
+
+    // if (this.ticket.cost) {
+    //   this.noteDisabled = true;
+    //   return;
+    // }
 
     if (this.isAdmission && this.ticketInventory.updated) {
       this.noteDisabled = true;

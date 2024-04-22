@@ -29,7 +29,7 @@ export class PrivateAdmissionSectionComponent extends SharedUtilityComponent imp
     lab: { name: faFlask, css: 'bg-success' },
     radiology: { name: faXRay, css: 'bg-danger' },
     surgery: { name: faSyringe, css: 'bg-warning' },
-    nursing: { name: faUserNurse, css: 'bg-black' },
+    nurse: { name: faUserNurse, css: 'bg-black' },
   };
 
   backIcon = faArrowLeft;

@@ -12,12 +12,20 @@
           [routerLink]="[route]"
           >View Ticket</a>
         </li>
-        <div *ngIf="ticket?.appInventoryType == appTicketTypes.admission">
+        <div *ngIf="ticket?.appInventoryType == appTicketTypes.admission && showAdmissionStartDate">
           <li><hr class="dropdown-divider"></li>
           <li>
             <a class="dropdown-item pointer"
             [routerLink]="[admissionRoute]"
             >View Admission</a>
+          </li>
+        </div>
+        <div *ngIf="ticket?.appInventoryType == appTicketTypes.admission && !showAdmissionStartDate">
+          <li><hr class="dropdown-divider"></li>
+          <li>
+            <a class="dropdown-item pointer text-danger"
+            [routerLink]="[route]"
+            >Notify Adission to start</a>
           </li>
         </div>
       </ul>
@@ -31,7 +39,9 @@
       -
       {{ ticket?.base?.dateCreated | date : 'MMM d, y, h:mm a' }}
 
-
+      <span class="text-danger" *ngIf="ticket?.appInventoryType == appTicketTypes.admission && !showAdmissionStartDate">
+        - Notify the admission team to start admission
+      </span>
     </strong>
   </div>
 

@@ -3,6 +3,7 @@ import { faCheckCircle, faClock, faPencilAlt, faMagnifyingGlass } from '@fortawe
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrivateAddItemUsedModalComponent } from 'src/app/private/modals/private-add-item-used-modal/private-add-item-used-modal.component';
 import { PrivateSaveLabRadiologyResultModalComponent } from 'src/app/private/modals/private-save-lab-radiology-result-modal/private-save-lab-radiology-result-modal.component';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 import { AppTicket, TicketInventory } from 'src/app/shared/core/models/app-ticket';
 
 @Component({
@@ -10,16 +11,21 @@ import { AppTicket, TicketInventory } from 'src/app/shared/core/models/app-ticke
   templateUrl: './private-ticket-inventory-item-results.component.html',
   styleUrls: ['./private-ticket-inventory-item-results.component.scss']
 })
-export class PrivateTicketInventoryItemResultsComponent {
+export class PrivateTicketInventoryItemResultsComponent implements OnInit {
 
   @Input() ticket: AppTicket = {} as AppTicket;
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
 
   fonts = { faCheckCircle, faClock, faPencilAlt, faMagnifyingGlass };
 
+  roles = AppRoles;
+
   constructor(
     private modalService: NgbModal
   ) { }
+
+  ngOnInit(): void {
+  }
 
   addResultModal(): void {
     const modalRef = this.modalService.open(PrivateSaveLabRadiologyResultModalComponent, { size: 'xl' });
@@ -32,7 +38,6 @@ export class PrivateTicketInventoryItemResultsComponent {
   addItemsUsed(): void {
     const modalRef = this.modalService.open(PrivateAddItemUsedModalComponent, { size: 'lg' });
     const component: PrivateAddItemUsedModalComponent = modalRef.componentInstance;
-
     component.ticketInventory = this.ticketInventory;
   }
 

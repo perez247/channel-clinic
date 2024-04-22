@@ -11,6 +11,7 @@ import { Confirmable } from 'src/app/shared/decorators/confirm-action-method-dec
 import { CustomToastService } from 'src/app/shared/services/common/custom-toast/custom-toast.service';
 import { PrivateExecutePrescriptionModalComponent } from 'src/app/private/modals/private-execute-prescription-modal/private-execute-prescription-modal.component';
 import { AppRoles } from 'src/app/shared/core/models/app-roles';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-prescription-item',
@@ -31,12 +32,16 @@ export class PrescriptionItemComponent extends SharedUtilityComponent implements
   constructor(
     private modalService: NgbModal,
     private admissionService: AdmissionService,
-    private toastService: CustomToastService
+    private toastService: CustomToastService,
+    private route: ActivatedRoute
     ) {
       super()
      }
 
+  section = '';
+
   override ngOnInit(): void {
+    this.section = this.route.snapshot.paramMap.get('sectionName') || '';
   }
 
   updatePrescription(): void {

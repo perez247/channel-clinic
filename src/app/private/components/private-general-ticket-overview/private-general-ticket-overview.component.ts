@@ -28,6 +28,8 @@ export class PrivateGeneralTicketOverviewComponent implements OnInit {
 
   roles = AppRoles;
 
+  showAdmissionStartDate = false;
+
   constructor(
     private router: Router,
     private inventoryService: InventoryService,
@@ -36,10 +38,16 @@ export class PrivateGeneralTicketOverviewComponent implements OnInit {
   ngOnInit(): void {
     this.setTicketRoute();
     this.setServicesEntered();
+    this.setAdmissionStatus();
   }
 
   setServicesEntered(): void {
     this.services = this.inventoryService.setServicesEntered(this.ticket?.ticketInventories ?? []);
+  }
+
+  private setAdmissionStatus(): void {
+    const admission = this.ticket?.ticketInventories.find(x => x.inventory.appInventoryType == this.appTicketTypes.admission);
+    this.showAdmissionStartDate = admission && admission.admissionStartDate ? true : false;
   }
 
   setTicketRoute(): void {

@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 import { AppTicket, AppTicketTypes, TicketInventory } from 'src/app/shared/core/models/app-ticket';
+import { AppUser } from 'src/app/shared/core/models/app-user';
+import { EventBusService } from 'src/app/shared/services/common/event-bus/event-bus.service';
 
 @Component({
   selector: 'app-private-save-lab-rad-note',
@@ -14,7 +17,11 @@ export class PrivateSaveLabRadNoteComponent implements OnInit {
 
   type = AppTicketTypes;
 
-  constructor() { }
+  roles = AppRoles;
+
+  constructor(
+    private eventBus: EventBusService
+  ) { }
 
   editorConfig: AngularEditorConfig = {};
 
@@ -32,7 +39,10 @@ export class PrivateSaveLabRadNoteComponent implements OnInit {
       return false;
     }
 
-    return true;
+    const currentUser = new AppUser(this.eventBus.getState().user.value || {});
+
+    return currentUser.hasClaim([this.roles.admin, this.ticketInventory.inventory.appInventoryType || ''], false);
+
   }
 
 }

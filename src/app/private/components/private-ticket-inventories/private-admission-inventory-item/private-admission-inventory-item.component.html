@@ -48,7 +48,6 @@
   </app-private-ticket-inventory-item-admission-dates>
 
   <app-private-update-ticket-inventory
-   *ngIf="!isAdmission || ticketInventory.inventory.appInventoryType === types.admission"
     [ticketInventory]="ticketInventory"
     [ticket]="ticket"
     (reset)="resetTicketInventory($event)"

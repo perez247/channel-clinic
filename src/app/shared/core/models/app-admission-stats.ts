@@ -9,6 +9,6 @@ export interface AdmissionStats {
   pharmacy: number;
   radiology: number;
   surgery: number;
-  nursing: number;
+  nurse: number;
   ticketInventories: TicketInventory[];
 }

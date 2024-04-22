@@ -47,6 +47,8 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
   
   lookupType = AppConstants.LookUpType;
 
+  canShowData = true;
+
   constructor(
     private ticketService: TicketService,
     private inventoryService: InventoryService,
@@ -72,8 +74,9 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
   getUserRoles(): string[] {
     const userRoles = this.eventBus.getState().user.value?.userRoles || [];
 
+    
     if (userRoles?.includes(this.roles.admin)) { return []; }
-
+    
     const inventoryTypes = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType).map(y => y.name) || [];
     
     const types = inventoryTypes.filter(x => userRoles.includes(x));
@@ -113,6 +116,12 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
       .pipe(finalize(() => this.isLoading = false ))
       .subscribe({
         next: (data) => {
+          if (!data.result) { 
+            this.canShowData = false;
+            return; 
+          }
+
+          this.canShowData = true;
           this.pagination.setResponse(data, false);
           this.pagination.elements.forEach(x => {
             if (Number(x.prescribedQuantity) <= 0) {

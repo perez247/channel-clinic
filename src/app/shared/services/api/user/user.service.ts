@@ -4,6 +4,7 @@ import { Observable, timeout } from 'rxjs';
 import { AppUser, UserFilter } from 'src/app/shared/core/models/app-user';
 import { AppPagination, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
 import { environment } from 'src/environments/environment';
+import { EventBusService } from '../../common/event-bus/event-bus.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class UserService {
 
   private apiUrl = `${environment.apiUrl}/user`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private eventBus: EventBusService) { }
 
   getUsers(data: any): Observable<PaginationResponse<AppUser[]>> {
     return this.http.post<PaginationResponse<AppUser[]>>(`${this.apiUrl}`, data);
@@ -50,5 +51,10 @@ export class UserService {
     filter.forIndividual = true;
     const paginationRequest = new PaginationRequest<UserFilter>(appPagination, filter);
     return this.getUsers(paginationRequest);
+  }
+
+  hasRoles(roles: string[], and: boolean): boolean {
+    const user = new AppUser(this.eventBus.getState().user.value || {});
+    return user.hasClaim(roles, and);
   }
 }

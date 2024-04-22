@@ -32,6 +32,13 @@
     [isAdmission]="isAdmission">
   </app-private-ticket-inventory-item-department-note>
 
+  <app-private-ticket-inventory-item-staff-observation
+  [ticketInventory]="ticketInventory"
+  [isAdmission]="isAdmission"
+  [ticket]="ticket"
+  >
+</app-private-ticket-inventory-item-staff-observation>
+
   <app-private-ticket-inventory-item-price
     *ngIf="ticket.sentToFinance && !isAdmission"
     [ticketInventory]="ticketInventory"
@@ -63,10 +70,11 @@
 
   <ng-container *ngIf="!isAdmissionExecution" >
     <app-private-update-ticket-inventory
-      *ngIf="!isAdmission || ticketInventory.inventory.appInventoryType === types.surgery"
       [ticket]="ticket"
+      [isAdmission]="isAdmission"
       [ticketInventory]="ticketInventory"
       (reset)="resetTicketInventory($event)"
+      [inventoryItems]="inventoryItems"
       (updating)="notifyForUpdate()"
     >
     </app-private-update-ticket-inventory>
