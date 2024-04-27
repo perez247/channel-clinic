@@ -48,7 +48,7 @@ export class PrivateTicketInventoryItemQuantityToGiveComponent implements OnInit
   }
 
   blur(): void {
-    this.setTotal();
+    this.updateTotal();
     this.onBlur.emit();
   }
 
@@ -66,12 +66,19 @@ export class PrivateTicketInventoryItemQuantityToGiveComponent implements OnInit
     this.ticketInventory.concludedPrice = this.ticketInventory.concludedPrice ? this.ticketInventory.concludedPrice : this.sumTotal;
   }
 
+  updateTotal(): void {
+    this.sumTotal = (this.ticketInventory?.prescribedQuantity || 0) * this.pricePerItem;
+    this.ticketInventory.totalPrice = this.sumTotal;
+    this.ticketInventory.concludedPrice = this.sumTotal;
+  }
+
   saveDebtor(): void {
     const modalRef = this.modalService.open(AddTicketInventoryDebtorComponent, { size: 'lg' });
     const component: AddTicketInventoryDebtorComponent = modalRef.componentInstance;
 
     component.ticketInventory = this.ticketInventory;
-    component.sumTotal = this.ticketInventory.totalPrice ? this.ticketInventory.totalPrice : this.sumTotal;
+    component.ticket = this.ticket;
+    component.sumTotal = this.ticketInventory.concludedPrice ? this.ticketInventory.concludedPrice : this.sumTotal;
   }
 
   canEditQuantity(): void {

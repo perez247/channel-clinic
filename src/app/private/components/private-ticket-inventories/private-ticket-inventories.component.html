@@ -81,7 +81,7 @@
       <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
     </button>
   
-    <div appHasRole [roles]="[roles.admin, roles.finance]" [operator]="'or'" *ngIf="ticket.sentToFinance && !ticket.cost">
+    <div appHasRole [roles]="[roles.admin, roles.finance]" [operator]="'or'">
       <button [disabled]="isLoading || !selectedCompany"  (click)="billClient()" class="btn btn-sm btn-primary">
         Bill Patient
         <app-shared-loading *ngIf="isLoading" ></app-shared-loading>

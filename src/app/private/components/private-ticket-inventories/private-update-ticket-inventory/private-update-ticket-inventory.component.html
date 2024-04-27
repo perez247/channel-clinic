@@ -1,7 +1,7 @@
 
 <ng-container *ngIf="hasPermission">
   <section 
-    *ngIf="(canUpdate || ticket?.cost || isAdmission || ticketInventory?.inventory?.appInventoryType == roles.admission) && !ticketInventory?.concludedDate" 
+    *ngIf="(canUpdate || ticket?.cost || isAdmission || ticketInventory?.inventory?.appInventoryType == roles.admission) && (!ticketInventory?.concludedDate || isAdminOrFinance)" 
     class="card-header d-flex justify-content-between"
     [ngClass]="{'bg-danger': canUpdate}"
     >
@@ -12,7 +12,7 @@
         Conclude
         <app-shared-loading *ngIf="isLoading"></app-shared-loading>
       </button> -->
-      <button appHasRole [roles]="[roles.admin, ticketInventory?.inventory?.appInventoryType]" selectedCompany *ngIf="!ticketInventory?.concludedDate && (isAdmission || ticketInventory?.inventory?.appInventoryType == roles.admission)" [disabled]="isLoading" (click)="concludeTicketInventory()" class="btn btn-sm btn-primary">
+      <button appHasRole [roles]="[roles.admin, ticketInventory?.inventory?.appInventoryType]" selectedCompany *ngIf="!ticketInventory?.concludedDate" [disabled]="isLoading" (click)="concludeTicketInventory()" class="btn btn-sm btn-primary">
         Conclude
         <app-shared-loading *ngIf="isLoading"></app-shared-loading>
       </button>

@@ -35,6 +35,8 @@ export class PrivateUpdateTicketInventoryComponent extends SharedUtilityComponen
 
   hasPermission = false;
 
+  isAdminOrFinance = false;
+
   constructor(
     private inventoryService: InventoryService,
     private notify: CustomToastService,
@@ -55,6 +57,8 @@ export class PrivateUpdateTicketInventoryComponent extends SharedUtilityComponen
 
   setUserRole(): void {
     this.hasPermission = this.userService.hasRoles([this.roles.admin, this.roles.finance, this.ticketInventory?.inventory.appInventoryType || ''], false)
+    this.isAdminOrFinance = this.userService.hasRoles([this.roles.admin, this.roles.finance], false)
+  
   }
 
   setValues(): void {

@@ -36,7 +36,7 @@
       <div class="col-10 row">
         <div class="col-4">
           <div class="input-group mb-3">
-            <input readonly ngbDatepicker #endDate="ngbDatepicker" type="date" class="form-control" placeholder="YYYY-MM-DD" [(ngModel)]="ticketInventory.admissionEndDate">
+            <input readonly ngbDatepicker #endDate="ngbDatepicker" type="date" class="form-control" placeholder="YYYY-MM-DD" (change)="addHoursEnd()" [(ngModel)]="ticketInventory.admissionEndDate" >
             <button  *ngIf="!ticket.cost" (click)="endDate.toggle()" class="btn-primary bg-primary">
               <fa-icon [icon]="fonts.faCalendar" class="text-white"></fa-icon>
             </button>
