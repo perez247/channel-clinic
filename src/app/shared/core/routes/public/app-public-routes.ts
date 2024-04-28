@@ -84,7 +84,6 @@ export class AppPublicRoute {
         };
     }
 
-
     /**
      * @description Get the status of an email sent
      */
@@ -92,6 +91,17 @@ export class AppPublicRoute {
         return {
             $name: `email-status`,
             $absolutePath: `${AppPublicRoute.$absolutePath}/email-status`
+        };
+    }
+
+    
+    /**
+     * @description Get the status of an email sent
+     */
+    public static auth(): IRoutePath {
+        return {
+            $name: `auth`,
+            $absolutePath: `${AppPublicRoute.$absolutePath}/auth`
         };
     }
 
@@ -107,6 +117,7 @@ export class AppPublicRoute {
         resetPassword: AppPublicRoute.resetPassword,
         sendEmailVerification: AppPublicRoute.sendEmailVerification,
         emailStatus: AppPublicRoute.emailStatus,
+        auth: AppPublicRoute.auth,
       };
     }
 }
@@ -122,5 +133,6 @@ export interface IAppPublicRoute {
   resetPassword: () => IRoutePath;
   sendEmailVerification: () => IRoutePath;
   emailStatus: () => IRoutePath;
+  auth: () => IRoutePath;
 }
 

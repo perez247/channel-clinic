@@ -7,6 +7,7 @@ import { PublicSignupWithEmailComponent } from './pages/public-signup-with-email
 import { PublicConfirmEmailComponent } from './pages/public-confirm-email/public-confirm-email.component';
 import { PublicForgotPasswordComponent } from './pages/public-forgot-password/public-forgot-password.component';
 import { PublicCheckEmailComponent } from './pages/public-check-email/public-check-email.component';
+import { PublicHomeComponent } from './pages/public-home/public-home.component';
 
 
 
@@ -17,7 +18,8 @@ import { PublicCheckEmailComponent } from './pages/public-check-email/public-che
     PublicSignupWithEmailComponent,
     PublicConfirmEmailComponent,
     PublicForgotPasswordComponent,
-    PublicCheckEmailComponent
+    PublicCheckEmailComponent,
+    PublicHomeComponent
   ],
   imports: [
     PublicRoutingModule,

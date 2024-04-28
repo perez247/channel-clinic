@@ -8,6 +8,7 @@ import { PublicConfirmEmailComponent } from './pages/public-confirm-email/public
 import { PublicForgotPasswordComponent } from './pages/public-forgot-password/public-forgot-password.component';
 import { PublicSignupWithEmailComponent } from './pages/public-signup-with-email/public-signup-with-email.component';
 import { RedirectAuthUsersGuard } from '../shared/guards/redirect-auth-users.guard';
+import { PublicHomeComponent } from './pages/public-home/public-home.component';
 
 const appRoutes = ApplicationRoutes.generateRoutes();
 const routes: Routes = [
@@ -16,6 +17,10 @@ const routes: Routes = [
     redirectTo: `${appRoutes.publicRoute.home().$name}`,
     pathMatch: 'full'
   },
+  // {
+  //   path: `${appRoutes.publicRoute.home().$name}`,
+  //   component: PublicHomeComponent
+  // },
   {
     path: '',
     component: PublicLayoutContentComponent,
@@ -36,6 +41,10 @@ const routes: Routes = [
       {
         path: `${appRoutes.publicRoute.forgotPassword().$name}`,
         component: PublicForgotPasswordComponent
+      },
+      {
+        path: `${appRoutes.publicRoute.emailStatus().$name}`,
+        component: PublicCheckEmailComponent
       },
       {
         path: `${appRoutes.publicRoute.emailStatus().$name}`,
