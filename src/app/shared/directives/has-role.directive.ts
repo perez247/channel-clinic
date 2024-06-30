@@ -29,7 +29,7 @@ export class HasRoleDirective implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.currentUser = this.eventBus.getState().user.value ?? {} as AppUser;
+    this.currentUser = this.eventBus.state.user.value ?? {} as AppUser;
     this.listenForChanges();
     this.checkRole();
   }

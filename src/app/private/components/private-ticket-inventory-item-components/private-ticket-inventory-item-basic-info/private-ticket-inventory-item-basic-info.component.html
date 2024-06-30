@@ -1,13 +1,14 @@
 
-<div class="card-header" *ngIf="ticketInventory.staff">
+<div class="card-header" *ngIf="staffResponsible">
   <div class="row">
-    <div class="col-2">
+    <!-- <div class="col-2">
       <app-private-staff-info [staff]="ticketInventory.staff"></app-private-staff-info>
-    </div>
-    <div class="col-10">
-      <span *ngIf="ticketInventory.timeGiven "><strong>Time Given:</strong> {{ ticketInventory.timeGiven  | date : 'MMM d, y, h:mm a'}}</span>
-      <span class="d-block"><strong>Created:</strong> {{ ticketInventory.base.dateCreated  | date : 'MMM d, y, h:mm a'}}</span>
-      <span class="d-block" *ngIf="ticketInventory.updated"> <strong>Last Update:</strong> {{ ticketInventory.updated | date : 'MMM d, y, h:mm a'}}</span>
+    </div> -->
+    <div class="col-12">
+      <app-staff-responsible title="Staff Responsible" [staffUserId]="staffResponsible?.base?.id"></app-staff-responsible>
+      <span *ngIf="ticketInventory?.timeGiven "><strong>Time Given:</strong> {{ ticketInventory?.timeGiven  | date : 'medium'}}</span>
+      <span class="d-block"><strong>Created:</strong> {{ ticketInventory?.base?.dateCreated  | date : 'medium'}}</span>
+      <span class="d-block" *ngIf="ticketInventory?.updated"> <strong>Last Update:</strong> {{ ticketInventory?.updated | date : 'MMM d, y, h:mm a'}}</span>
     </div>
   </div>
 </div>

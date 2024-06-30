@@ -39,7 +39,7 @@ export class PrivateTicketInventoryItemQuantityToGiveComponent implements OnInit
   user: AppUser = {} as AppUser;
 
   ngOnInit(): void {
-    this.user = new AppUser(this.eventBus.getState().user.value ?? {});
+    this.user = new AppUser(this.eventBus.state.user.value ?? {});
     this.canEditQuantity();
   }
 

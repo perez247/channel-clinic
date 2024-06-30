@@ -48,7 +48,7 @@ export class PrivateTicketInventoryItemStaffObservationComponent  implements OnI
       return;
     }
 
-    const currentUser = new AppUser(this.eventBus.getState().user.value || {});
+    const currentUser = new AppUser(this.eventBus.state.user.value || {});
 
     if (!currentUser.hasClaim([this.roles.admin, this.ticketInventory.inventory.appInventoryType || ''], false)) {
       this.noteDisabled = true;

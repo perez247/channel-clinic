@@ -40,7 +40,7 @@ export class PrivateFilterFinanceContractModalComponent implements OnInit {
   }
 
   setLookUp(): void {
-    this.lookups = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.PaymentType) ?? [];
+    this.lookups = this.eventBus.state.lookUps.value?.filter(x => x.type === this.lookupType.PaymentType) ?? [];
   }
 
   clearForm() {

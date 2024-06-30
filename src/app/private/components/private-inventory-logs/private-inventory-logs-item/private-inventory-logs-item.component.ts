@@ -10,9 +10,14 @@ export class PrivateInventoryLogsItemComponent implements OnInit {
 
   @Input() log?: ActivityLog;
 
+  adding = false;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.adding = this.log?.actionDescription?.includes('adding') ? true : false;
   }
+
+
 
 }

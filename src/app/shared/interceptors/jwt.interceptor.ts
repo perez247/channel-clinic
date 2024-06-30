@@ -19,7 +19,7 @@ export class JwtInterceptor implements HttpInterceptor {
           return next.handle(request);
         }
 
-        let token = this.eventBus.getState()?.jwt?.value?.jwt;
+        let token = this.eventBus.state?.jwt?.value?.jwt;
 
         // if (!environment.production) {
         //     token = LocalJWTToken;

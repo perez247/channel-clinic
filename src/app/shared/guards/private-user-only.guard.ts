@@ -21,7 +21,7 @@ export class PrivateUserOnlyGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-      const jwt = this.eventBus.getState().jwt.value;
+      const jwt = this.eventBus.state.jwt.value;
       if (!jwt) {
         this.eventBus.clearState();
         this.router.navigate([this.appRoutes.publicRoute.signIn().$absolutePath], { queryParams: { returnUrl: state.url }});

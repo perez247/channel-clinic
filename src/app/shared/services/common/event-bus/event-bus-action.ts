@@ -1,4 +1,4 @@
-import { AppUser } from 'src/app/shared/core/models/app-user';
+import { AppUser, Staff } from 'src/app/shared/core/models/app-user';
 import { ILookUp } from "src/app/shared/core/models/app-constants";
 import { JWTToken } from "src/app/shared/core/models/jwtToken";
 import { StoreService } from "../store/store.service";
@@ -11,7 +11,8 @@ export const EventBusActions = {
     menu: 'state:menu',
     lookUps: 'state:lookUps',
   },
-  toast: 'toast'
+  toast: 'toast',
+  staff: 'state:staff',
 };
 
 export class EventBusData<T> {
@@ -43,3 +44,20 @@ export class EventBusState {
     });
   }
 };
+
+export class EventTempState {
+  staff: EventBusData<AppUser[]|null> = { key: EventBusActions.staff, value: null };
+
+  async updateState<T>(newData: EventBusData<T>): Promise<void> {
+    const keys = Object.keys(this);
+
+    keys.forEach(async x => {
+      const d: any = (this as any)[x];
+      if (d.key === newData.key)
+      {
+        d.value = newData.value;
+        return;
+      }
+    });
+  }
+}

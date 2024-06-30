@@ -39,7 +39,7 @@ export class PrivateSaveLabRadNoteComponent implements OnInit {
       return false;
     }
 
-    const currentUser = new AppUser(this.eventBus.getState().user.value || {});
+    const currentUser = new AppUser(this.eventBus.state.user.value || {});
 
     return currentUser.hasClaim([this.roles.admin, this.ticketInventory.inventory.appInventoryType || ''], false);
 

@@ -31,6 +31,8 @@ export class PrivateSinglePatientComponent extends SharedUtilityComponent  imple
   disableTabs = true;
   routes = ApplicationRoutes.generateRoutes();
 
+  currentDate = new Date().toUTCString();
+
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,

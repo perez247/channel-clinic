@@ -29,6 +29,13 @@ export class PrescriptionItemComponent extends SharedUtilityComponent implements
 
   roles = AppRoles;
 
+  frequency = {
+    Daily: 'day',
+    Weekly: 'week',
+    Monthly: 'month',
+    Yearly: 'year'
+  } as any;
+
   constructor(
     private modalService: NgbModal,
     private admissionService: AdmissionService,
@@ -78,7 +85,7 @@ export class PrescriptionItemComponent extends SharedUtilityComponent implements
 
   @Confirmable({
     title: 'Conclude ticket',
-    html: 'Are you sure you want to start using this prescription. you wont be able to change this anymore and the previous prescription will be concluded',
+    html: 'Are you sure you want to start using this prescription. you won\'t be able to change this anymore and the previous prescription will be concluded',
     confirmButtonText: 'Yes start using',
     denyButtonText: 'No I changed my mind',
   })

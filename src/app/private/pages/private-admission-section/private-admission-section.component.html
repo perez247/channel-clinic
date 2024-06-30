@@ -5,16 +5,33 @@
 <section *ngIf="!isLoading && dashboard.patient">
 
   <section>
-    <span class="h4 d-block border-bottom mb-4">
+    <span class="h4 d-block border-bottom mb-4 d-flex">
       <a [routerLink]="['/' + routes.privateRoute.single_admission(ticketId).$absolutePath]">
         <fa-icon [icon]="backIcon" class="pe-2"></fa-icon>
       </a>
 
-      Admission: {{ admissionRoom }} | {{ sectionName }}
+      <div>
+        Admission: {{ admissionRoom }} | {{ sectionName }}
+      </div>
+
+      <div class="dropdown ms-2">
+        <span class="d-block icon-set" [ngClass]="fonts.dropdown.css" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <fa-icon [icon]="fonts.dropdown.name" class="pe-1"></fa-icon>
+        </span>
+
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" [routerLink]="['/' + routes.privateRoute.admission_sectionName('pharmacy', (ticketId)).$absolutePath]" *ngIf="sectionName != 'pharmacy'" >Pharmacy</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/' + routes.privateRoute.admission_sectionName('lab', (ticketId)).$absolutePath]" *ngIf="sectionName != 'lab'" >Lab</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/' + routes.privateRoute.admission_sectionName('radiology', (ticketId)).$absolutePath]" *ngIf="sectionName != 'radiology'" >Radiology</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/' + routes.privateRoute.admission_sectionName('surgery', (ticketId)).$absolutePath]" *ngIf="sectionName != 'surgery'" >Surgery</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/' + routes.privateRoute.admission_sectionName('nurse', (ticketId)).$absolutePath]" *ngIf="sectionName != 'nurse'" >Nursing</a></li>
+        </ul>
+      </div>
+
     </span>
   </section>
 
-  <div class="mb-2 d-flex border-bottom mb-4 py-4">
+  <div class="d-flex border-bottom mb-4 py-4">
     <span class="d-block p-4 shadow icon-set me-5" [ngClass]="fonts[sectionName].css">
       <fa-icon [icon]="fonts[sectionName].name" class="pe-1 text-white" [size]="'2x'"></fa-icon>
     </span>

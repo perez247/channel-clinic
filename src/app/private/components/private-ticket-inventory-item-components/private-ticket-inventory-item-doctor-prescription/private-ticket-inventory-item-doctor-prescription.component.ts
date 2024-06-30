@@ -33,7 +33,7 @@ export class PrivateTicketInventoryItemDoctorPrescriptionComponent implements On
 
   setRole(): void {
     const requiredRoles = [this.roles.admin, this.roles.doctor];
-    const currentUser = new AppUser(this.eventBus.getState().user.value || {});
+    const currentUser = new AppUser(this.eventBus.state.user.value || {});
     this.notInRole = !currentUser?.hasClaim(requiredRoles, false);
   }
 

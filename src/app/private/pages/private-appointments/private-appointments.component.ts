@@ -38,7 +38,7 @@ export class PrivateAppointmentsComponent extends SharedUtilityComponent impleme
   }
 
   updateFilterDoctor(): void {
-    const user = this.eventBus.getState().user.value;
+    const user = this.eventBus.state.user.value;
     const hasDoctor = user?.userRoles?.find(x => x === this.roles.doctor);
     if (hasDoctor) {
       this.filter.doctorId = user?.staff?.base?.id,

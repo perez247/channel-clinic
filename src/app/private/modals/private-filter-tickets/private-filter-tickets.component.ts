@@ -34,9 +34,9 @@ export class PrivateFilterTicketsComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.isAdmin = this.eventBus.getState().user.value?.userRoles?.includes('admin');
-    this.appStatuses = this.eventBus.getState().lookUps.value?.filter(x => x.type === AppConstants.LookUpType.AppTicketStatus) ?? [];
-    this.appInventoryTypes = this.eventBus.getState().lookUps.value?.filter(x => x.type === AppConstants.LookUpType.AppInventoryType) ?? [];
+    this.isAdmin = this.eventBus.state.user.value?.userRoles?.includes('admin');
+    this.appStatuses = this.eventBus.state.lookUps.value?.filter(x => x.type === AppConstants.LookUpType.AppTicketStatus) ?? [];
+    this.appInventoryTypes = this.eventBus.state.lookUps.value?.filter(x => x.type === AppConstants.LookUpType.AppInventoryType) ?? [];
     this.initializeForm();
   }
 

@@ -30,6 +30,7 @@ import { SharedPaginationTemplateComponent } from './components/shared-paginatio
 import { SharedInventoryItemAutocompleteComponent } from './components/shared-inventory-item-autocomplete/shared-inventory-item-autocomplete.component';
 import { HumanTimePipe } from './pipes/human-time.pipe';
 import { BubblesComponent } from './components/bubbles/bubbles.component';
+import { StaffResponsibleComponent } from './components/staff-responsible/staff-responsible.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { BubblesComponent } from './components/bubbles/bubbles.component';
     SharedPaginationTemplateComponent,
     SharedInventoryItemAutocompleteComponent,
     BubblesComponent,
+    StaffResponsibleComponent,
   ],
   imports: [
     CommonModule,
@@ -99,6 +101,7 @@ import { BubblesComponent } from './components/bubbles/bubbles.component';
     SharedPaginationTemplateComponent,
     SharedInventoryItemAutocompleteComponent,
     BubblesComponent,
+    StaffResponsibleComponent,
 
     // Directives
     DisplayProfileImageDirective,

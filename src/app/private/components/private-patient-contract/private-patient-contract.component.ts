@@ -115,42 +115,6 @@ export class PrivatePatientContractComponent extends SharedUtilityComponent impl
     }
   }
 
-  confirmAddContract(): void {
-    const modalRef = this.modalService.open(SharedConfirmActionModalComponent);
-    const confirmData = {
-      title: `Add a new contract`,
-      body: `Are you sure you want to add a new contract for this patient`,
-      positiveBtn: `Yes, Add`,
-      positiveBtnCss: `btn btn-primary`,
-      nagativeBtn: `No, Cancel`,
-      negativeBtnCss: `btn btn-danger`
-    } as IConfirmAction;
-
-    modalRef.componentInstance.confirmData = confirmData;
-    const sub = modalRef.componentInstance.actionTaken.subscribe({
-      next: (takeAction: boolean) => {
-        if(takeAction) {
-          this.addNewContract();
-        }
-      }
-    });
-    this.subscriptions.push(sub)
-  }
-
-  private addNewContract(): void {
-    const data = { patientId: this.user?.patient?.base?.id, durationInDays: 180 }
-    this.loadingContract = true;
-    const sub = this.patientService.addContract(data)
-      .pipe(finalize(() => this.loadingContract = false))
-      .subscribe({
-        next: (result) => {
-          this.reload.emit();
-        }
-      });
-
-    this.subscriptions.push(sub);
-  }
-
   changeCompanyModal(): void {
     const modalRef = this.modalService.open(PrivatePatientChangeCompanyComponent, { size: 'lg' });
     modalRef.componentInstance.appUser = this.user;

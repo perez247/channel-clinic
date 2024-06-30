@@ -105,4 +105,21 @@
 
 	</ngb-panel>
 
+  <ngb-panel [id]="userSections.previousTicketList" >
+
+    <ng-template ngbPanelTitle>
+      Previous Tickets
+    </ng-template>
+
+    <ng-template ngbPanelContent>
+
+      <app-private-previous-tickets
+        [beforeDateTime]="currentDate"
+        [patientId]="patient.patient?.base?.id">
+      </app-private-previous-tickets>
+
+    </ng-template>
+
+  </ngb-panel>
+
 </ngb-accordion>

@@ -62,7 +62,7 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
   }
 
   override ngOnInit(): void {
-    this.appStatuses = this.eventBus.getState().lookUps.value?.filter(x => x.type === AppConstants.LookUpType.AppTicketStatus) ?? [];
+    this.appStatuses = this.eventBus.state.lookUps.value?.filter(x => x.type === AppConstants.LookUpType.AppTicketStatus) ?? [];
 
     const roles = this.getUserRoles();
 
@@ -72,12 +72,12 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
   }
 
   getUserRoles(): string[] {
-    const userRoles = this.eventBus.getState().user.value?.userRoles || [];
+    const userRoles = this.eventBus.state.user.value?.userRoles || [];
 
     
     if (userRoles?.includes(this.roles.admin)) { return []; }
     
-    const inventoryTypes = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType).map(y => y.name) || [];
+    const inventoryTypes = this.eventBus.state.lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType).map(y => y.name) || [];
     
     const types = inventoryTypes.filter(x => userRoles.includes(x));
 

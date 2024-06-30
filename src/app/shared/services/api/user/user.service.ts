@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, timeout } from 'rxjs';
+import { Observable, lastValueFrom, timeout } from 'rxjs';
 import { AppUser, UserFilter } from 'src/app/shared/core/models/app-user';
-import { AppPagination, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
+import { AppPagination, PaginationContext, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
 import { environment } from 'src/environments/environment';
 import { EventBusService } from '../../common/event-bus/event-bus.service';
 
@@ -54,7 +54,16 @@ export class UserService {
   }
 
   hasRoles(roles: string[], and: boolean): boolean {
-    const user = new AppUser(this.eventBus.getState().user.value || {});
+    const user = new AppUser(this.eventBus.state.user.value || {});
     return user.hasClaim(roles, and);
+  }
+
+  async getInternalStaff(): Promise<AppUser[] | undefined> {
+    const pagination = new PaginationContext<AppUser, UserFilter>();
+    pagination.initialize();
+    pagination.request?.setPagination({ pageSize: 500 });
+    pagination.request?.setFilter({ userType: 'staff' });
+    const data = await lastValueFrom(this.getUsers(pagination.request));
+    return data.result;
   }
 }

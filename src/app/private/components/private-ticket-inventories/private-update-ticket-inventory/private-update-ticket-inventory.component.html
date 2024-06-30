@@ -2,7 +2,7 @@
 <ng-container *ngIf="hasPermission">
   <section 
     *ngIf="(canUpdate || ticket?.cost || isAdmission || ticketInventory?.inventory?.appInventoryType == roles.admission) && (!ticketInventory?.concludedDate || isAdminOrFinance)" 
-    class="card-header d-flex justify-content-between"
+    class="card-footer d-flex justify-content-between"
     [ngClass]="{'bg-danger': canUpdate}"
     >
 

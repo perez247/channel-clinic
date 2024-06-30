@@ -47,7 +47,7 @@ export class PrivateSideMenuComponent extends SharedUtilityComponent implements 
 
   override ngOnInit(): void {
     this.setTicketRoles();
-    this.currentUser = this.eventBus.getState().user.value ?? {} as AppUser;
+    this.currentUser = this.eventBus.state.user.value ?? {} as AppUser;
     this.listenForChanges();
   }
 
@@ -56,7 +56,7 @@ export class PrivateSideMenuComponent extends SharedUtilityComponent implements 
   }
 
   setTicketRoles(): void {
-    this.ticketRoles = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType).map(y => y.name) || [];
+    this.ticketRoles = this.eventBus.state.lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType).map(y => y.name) || [];
     this.ticketRoles?.push(this.roles.admin);
   }
 
