@@ -50,6 +50,7 @@ export class LoggedPrescriptionsComponent extends SharedUtilityComponent impleme
       .subscribe({
         next: (data) => {
           this.pagination.setResponse(data, true);
+          this.calculateNewTotal(this.ticket.appointment.company?.base?.id || '');
         },
         error: (error) => {
           throw error;
@@ -62,5 +63,34 @@ export class LoggedPrescriptionsComponent extends SharedUtilityComponent impleme
   pageChanged(e: number) {
     this.pagination.request?.setPagination({ pageNumber: e } as AppPagination);
     this.getLoggedPrescriptions();
+  }
+
+  calculateNewTotal(companyId: string): void
+  {
+    if (this.pagination.elements.length <= 0) { return; }
+
+    const data = {
+      companyId: companyId,
+      appInventories: this.pagination.elements.map(x => {
+        return {
+          appInventoryId: x.inventory.base?.id
+        }
+      }),
+    }
+
+    this.isLoading = true;
+    const sub = this.inventoryService.getInventoryItemPrices(data)
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: (data) => {
+          this.inventoryItems = data;
+        },
+        error: (error) => {
+          this.inventoryItems = [];
+          throw error;
+        }
+      });
+
+    this.subscriptions.push(sub);
   }
 }

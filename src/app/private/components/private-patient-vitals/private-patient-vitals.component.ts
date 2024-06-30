@@ -54,7 +54,6 @@ export class PrivatePatientVitalsComponent extends SharedUtilityComponent implem
     const sub = modalRef.componentInstance.vitalAdded.subscribe({
       next: () => {
         this.reload.emit(this.userSections.vitals);
-        console.log('refresh vitals')
       }
     });
     this.subscriptions.push(sub);

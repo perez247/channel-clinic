@@ -57,12 +57,14 @@
     >
     </app-private-ticket-inventory-item-basic-info>
   
-    <app-private-update-ticket-inventory
-      *ngIf="!isAdmission"
-      [ticket]="ticket"
-      [ticketInventory]="ticketInventory"
-      (reset)="resetTicketInventory($event)"
-    >
-    </app-private-update-ticket-inventory>
+    <ng-container *ngIf="!isAdmissionExecution">
+      <app-private-update-ticket-inventory
+        [ticket]="ticket"
+        [isAdmission]="isAdmission"
+        [ticketInventory]="ticketInventory"
+        (reset)="resetTicketInventory($event)"
+      >
+      </app-private-update-ticket-inventory>
+    </ng-container>
   </div>
   

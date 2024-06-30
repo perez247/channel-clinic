@@ -32,7 +32,7 @@
             <div *ngIf="ticketInventory.frequency != 'Once'" class="form-group mb-0 col-3">
               <label class="form-control-label" for="durationField"><strong>Duration</strong></label>
 
-              <select type="text" class="form-control" name="duration" id="durationField" [(ngModel)]="ticketInventory.duration" >
+              <select type="text" class="form-control" name="duration" id="durationField" [(ngModel)]="ticketInventory.duration" (change)="durationChanged()" >
                 <option [value]="null">---</option>
                 <option *ngFor="let duration of durations" [value]="duration">{{duration}}</option>
               </select>

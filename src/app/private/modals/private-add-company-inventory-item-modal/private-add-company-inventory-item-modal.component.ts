@@ -53,14 +53,14 @@ export class PrivateAddCompanyInventoryItemModalComponent extends SharedUtilityC
 
   setRoleAccess(): void {
 
-    this.currentUser = this.eventBus.getState().user.value;
+    this.currentUser = this.eventBus.state.user.value;
 
     const isAdmin = this.currentUser?.userRoles?.find(x => x === this.appRoles.admin);
 
     if (isAdmin) { return; }
 
-    const roles = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType);
-    const userRoles = this.eventBus.getState().user.value?.userRoles || [];
+    const roles = this.eventBus.state.lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType);
+    const userRoles = this.eventBus.state.user.value?.userRoles || [];
 
     userRoles.forEach(x => {
       let inRole = roles?.find(y => y.name == x);

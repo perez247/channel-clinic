@@ -37,7 +37,7 @@ export class DisplayProfileImageDirective implements OnInit, OnChanges, OnDestro
   }
 
   listenForNewProfileImage(): void {
-    // const currentUser = this.eventBus.getState().user;
+    // const currentUser = this.eventBus.state.user;
     // const sub = this.eventBus.on(AppEventBus.file.profilePicture, (user: AppUser) => {
     //   if (user.id == currentUser.id)
     //   {

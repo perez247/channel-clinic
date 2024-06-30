@@ -13,6 +13,7 @@ import { CustomErrorService } from 'src/app/shared/services/common/custom-error/
 import { CustomToastService } from 'src/app/shared/services/common/custom-toast/custom-toast.service';
 import * as moment from 'moment';
 import { AppInventoryItem } from 'src/app/shared/core/models/inventory';
+import { AppUser } from 'src/app/shared/core/models/app-user';
 
 @Component({
   selector: 'app-private-execute-prescription-modal',
@@ -32,6 +33,8 @@ export class PrivateExecutePrescriptionModalComponent extends SharedUtilityCompo
   types = AppTicketTypes;
 
   inventoryItems: AppInventoryItem[] = [];
+
+  staffResponsible?: AppUser;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -61,11 +64,12 @@ export class PrivateExecutePrescriptionModalComponent extends SharedUtilityCompo
   save(): void {
     this.isLoading = true;
     const d = {...this.ticketInventory, ...this.form.value};
-    let date = moment(d.timeGiven);
-    date = date.hours(d.time.hour);
-    date = date.minutes(d.time.minute);
+    let date = moment(d.timeGiven).toDate();
+    date.setHours(d.time.hour);
+    date.setMinutes(d.time.minute);
     // d.timeGiven = new Date(date.year(), date.month(), date.date(), d.time.hour, d.time.minute).toISOString();
-    d.timeGiven =  date.format('MM/DD/YYYY HH:mm:ss A');
+    d.timeGiven =  date;
+    d.staffResponsible = this.staffResponsible?.base?.id;
     const sub = this.admissionService.executePrescription(d)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({

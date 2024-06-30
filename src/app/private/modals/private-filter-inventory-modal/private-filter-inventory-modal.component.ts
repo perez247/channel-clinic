@@ -39,7 +39,7 @@ export class PrivateFilterInventoryModalComponent implements OnInit {
   }
 
   setLookUp(): void {
-    this.lookups = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType) ?? [];
+    this.lookups = this.eventBus.state.lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType) ?? [];
   }
 
   clearForm() {

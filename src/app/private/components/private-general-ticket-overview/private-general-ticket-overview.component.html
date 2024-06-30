@@ -1,7 +1,8 @@
 <div class="card mt-4 shadow">
   <div class="card-header position-relative">
 
-    <div class="dropstart ticketOption">
+    <div class="dropstart ticketOption" 
+    appHasRole [roles]="[roles.admin, roles.nurse, roles.doctor, roles.pharmacy, roles.lab, roles.surgery, roles.radiology, roles.admission, roles.finance]">
       <button class="btn" type="button" id="ticketMoreOptions" data-bs-toggle="dropdown" aria-expanded="false">
         <fa-icon [icon]="fonts.faEllipsisV" class="text-dark"></fa-icon>
       </button>
@@ -11,12 +12,20 @@
           [routerLink]="[route]"
           >View Ticket</a>
         </li>
-        <div *ngIf="ticket?.appInventoryType == appTicketTypes.admission">
+        <div *ngIf="ticket?.appInventoryType == appTicketTypes.admission && showAdmissionStartDate">
           <li><hr class="dropdown-divider"></li>
           <li>
             <a class="dropdown-item pointer"
             [routerLink]="[admissionRoute]"
             >View Admission</a>
+          </li>
+        </div>
+        <div *ngIf="ticket?.appInventoryType == appTicketTypes.admission && !showAdmissionStartDate">
+          <li><hr class="dropdown-divider"></li>
+          <li>
+            <a class="dropdown-item pointer text-danger"
+            [routerLink]="[route]"
+            >Notify Adission to start</a>
           </li>
         </div>
       </ul>
@@ -28,13 +37,16 @@
        ({{ getFirstAdmission() }})
       </span> -->
       -
-      {{ ticket?.base?.dateCreated | date : 'medium' }}
+      {{ ticket?.base?.dateCreated | date : 'MMM d, y, h:mm a' }}
 
-
+      <span class="text-danger" *ngIf="ticket?.appInventoryType == appTicketTypes.admission && !showAdmissionStartDate">
+        - Notify the admission team to start admission
+      </span>
     </strong>
   </div>
 
   <div class="card-body row">
+
     <div class="col-6">
 
       <app-private-patient-info
@@ -52,6 +64,16 @@
         </a>
       </small>
     </div>
+
+    <div class="col-12">
+      <p class="card-text border-bottom">{{ ticket?.overallDescription | trimSentence : 100 }}</p>
+      <span *ngFor="let service of services">
+        <span class="badge bg-primary me-2">
+          {{ service.name }}: {{ service.value }}
+        </span>
+      </span>
+    </div>
+
   </div>
 
   <div class="card-footer text-muted">

@@ -31,7 +31,7 @@ export class AddPaymentModelView {
   }
 
   setPaymentTypes(): void {
-    this.paymentTypes = this.eventBus.getState().lookUps.value?.filter(x => x.type === AppConstants.LookUpType.PaymentType) ?? [];
+    this.paymentTypes = this.eventBus.state.lookUps.value?.filter(x => x.type === AppConstants.LookUpType.PaymentType) ?? [];
   }
 
   addFile(base64String: string): void {

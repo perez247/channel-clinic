@@ -8,4 +8,35 @@ export class PatientVital {
 
 export class PatientVitalFilter {
     patientId?: string;
-  }
+}
+
+export const DefaultVitals = [ 
+    {
+        name: 'Blood Pressure',
+        value: '',
+    }, 
+    {
+        name: 'Pulse',
+        value: '',
+    }, 
+    {
+        name: 'Temperature',
+        value: '',
+    }, 
+    {
+        name: 'Height',
+        value: '',
+    }, 
+    {
+        name: 'Weight',
+        value: '',
+    }, 
+    {
+        name: 'Spo2',
+        value: '',
+    }, 
+    {
+        name: 'Random Blood Sugar',
+        value: '',
+    }
+]

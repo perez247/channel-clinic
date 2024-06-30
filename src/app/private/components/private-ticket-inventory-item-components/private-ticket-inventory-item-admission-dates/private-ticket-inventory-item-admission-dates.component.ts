@@ -3,6 +3,7 @@ import { faCalendar, faNairaSign } from '@fortawesome/free-solid-svg-icons';
 import * as moment from 'moment';
 import { lastValueFrom } from 'rxjs';
 import { SharedUtilityComponent } from 'src/app/shared/components/shared-utility/shared-utility.component';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 import { AppTicket, TicketInventory } from 'src/app/shared/core/models/app-ticket';
 import { AppInventoryItem } from 'src/app/shared/core/models/inventory';
 import { InventoryService } from 'src/app/shared/services/api/inventory/inventory.service';
@@ -27,6 +28,8 @@ export class PrivateTicketInventoryItemAdmissionDatesComponent extends SharedUti
   duration = 0;
 
   totalPrice = 0;
+
+  roles = AppRoles;
 
   constructor(
     private inventoryService: InventoryService
@@ -92,6 +95,8 @@ export class PrivateTicketInventoryItemAdmissionDatesComponent extends SharedUti
     const appInventory = this.inventoryItems.find(x => x.inventory?.base?.id == this.ticketInventory.inventory.base?.id);
     const pricePerItem = appInventory?.pricePerItem || 0;
     this.totalPrice = pricePerItem * (this.ticketInventory?.prescribedQuantity ?? 0) * this.duration;
+    this.ticketInventory.totalPrice = this.totalPrice;
+    this.ticketInventory.concludedPrice = this.totalPrice;
   }
 
   async quicklyUpdateAdmissionStartDate(): Promise<void> {

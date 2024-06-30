@@ -2,7 +2,7 @@
 
 <div class="card mt-4 shadow">
   <div class="card-header position-relative">
-    <div class="dropstart ticketOption">
+    <div appHasRole [roles]="[roles.admin, appointment?.doctor?.user?.base?.id]" class="dropstart ticketOption">
       <button class="btn" type="button" id="ticketMoreOptions" data-bs-toggle="dropdown" aria-expanded="false">
         <fa-icon *ngIf="!isLoading" [icon]="fonts.faEllipsisV" class="text-dark"></fa-icon>
         <app-shared-loading *ngIf="isLoading" ></app-shared-loading>
@@ -12,7 +12,7 @@
           <a class="dropdown-item pointer"
           [routerLink]="['/' + routes.privateRoute.single_ticket(ticket?.base?.id).$absolutePath]"
           >View</a></li>
-          <div appHasRole [roles]="[roles.admin, appointment.doctor?.user?.base?.id]" [operator]="'or'" *ngIf="!ticket?.sent && appointment && isTodayAppointment">
+          <div *ngIf="!ticket?.sent && appointment && isTodayAppointment">
             <li><hr class="dropdown-divider"></li>
             <li><span class="dropdown-item pointer"(click)="sendToDepartment()">Send to department</span></li>
             <li><span class="dropdown-item pointer" (click)="editTicket()" >Edit</span></li>
@@ -27,16 +27,16 @@
     </div>
 
     <strong class="d-block pointer">
-      {{ ticket?.base?.dateCreated | date : 'medium' }}
+      {{ ticket?.base?.dateCreated | date : 'MMM d, y, h:mm a' }}
       | {{ ticket?.appInventoryType == appTicketTypes.admission ? 'Admission' : 'Appointment' }}
     </strong>
   </div>
 
   <div class="card-body">
     <p class="card-text border-bottom">{{ ticket?.overallDescription | trimSentence : 100 }}</p>
-    <span *ngFor="let inventory of ticket?.ticketInventories">
+    <span *ngFor="let service of services">
       <span class="badge bg-primary me-2">
-        {{ inventory?.inventory?.name }}
+        {{ service.name }}: {{ service.value }}
       </span>
     </span>
   </div>

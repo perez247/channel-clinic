@@ -1,14 +1,13 @@
 
 
-<section class="border rounded p-3 pb-1 mb-3" style="background-color: #f6f6f6;">
+<section class="border rounded ps-3 pb-4 mb-3" [ngClass]="{'border-danger': !adding, 'border-success': adding }" style="background-color: #f6f6f6;">
   <section class="d-flex mb-2 w-100">
-    <div class="border-end pe-3">
+    <div class="border-end pe-3 pt-3">
       <app-private-staff-info [staff]="log?.actor?.staff"></app-private-staff-info>
     </div>
     <div class="ps-2 w-100">
-      <div>{{ log?.actionDescription }}</div>
-      <span class="d-block w-100 border-top"></span>
-      <div>{{ log?.otherDescription }}</div>
+      <div class="w-100 text-white pt-3 rounded-right ps-1" [ngClass]="{'bg-danger': !adding, 'bg-success': adding }">{{ log?.actionDescription }}</div>
+      <div class="ps-1">{{ log?.otherDescription }}</div>
     </div>
   </section>
   <div class="border-top">

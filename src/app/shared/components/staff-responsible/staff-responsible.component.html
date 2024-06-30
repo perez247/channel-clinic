@@ -1,0 +1,20 @@
+
+<div class="w-100 d-flex align-items-center justify-content-start">
+    <strong class="me-2">{{title}}:</strong>
+    <div *ngIf="!staff">
+        <form [formGroup]="form">
+            <div class="w-100 position-relative">
+                <input placeholder="Name of state" maxlength="250" type="text" class="form-control" id="name" formControlName="name" maxLength="20">
+                <app-shared-user-autocomplete [userType]="'staff'" (selected)="staffResponsible($event)" class="position-absolute w-100" [searchWord]="form.get('name')?.value"></app-shared-user-autocomplete>
+              </div>
+        </form>
+    </div>
+
+    <div *ngIf="staff">
+        <a [routerLink]="['/' + routes.privateRoute.single_staff(staff?.base?.id).$absolutePath]" >
+            {{staff?.firstName}}
+            {{staff?.lastName}}
+            <!-- {{user?.otherName}} -->
+          </a>
+    </div>
+</div>

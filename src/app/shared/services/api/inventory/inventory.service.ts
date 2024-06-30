@@ -62,4 +62,18 @@ export class InventoryService {
   updateQuantity(data: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/update-quantity`, data);
   }
+
+  setServicesEntered(ticketInventories: TicketInventory[]): { name: string, value: number }[] {
+    const services: { name: string, value: number }[] = []
+    ticketInventories.forEach(x => {
+      const found = services.find(y => y.name == x.inventory.appInventoryType);
+      if (found) {
+        found.value++;
+      } else {
+        services.push({ name: x.inventory.appInventoryType || '', value: 1 });
+      }
+    });
+
+    return services;
+  }
 }

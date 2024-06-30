@@ -66,7 +66,19 @@ export class PrivateGetInventoryModalComponent implements OnInit {
       d.duration = 1;
     }
 
+    if (!d.duration) {
+      d.duration = 1
+    }
+
     this.itemSaved.emit(d);
     this.activeModal.close();
+  }
+
+  durationChanged(event: any): void {
+    if (typeof event.target.value == 'string' && event.target.value == 'null') {
+      this.form.patchValue({
+        duration: 1
+      });
+    }
   }
 }

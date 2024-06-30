@@ -37,6 +37,13 @@
     [isAdmission]="isAdmission">
   </app-private-ticket-inventory-item-department-note>
 
+  <app-private-ticket-inventory-item-staff-observation
+    [ticketInventory]="ticketInventory"
+    [isAdmission]="isAdmission"
+    [ticket]="ticket"
+    >
+  </app-private-ticket-inventory-item-staff-observation>
+
   <!-- <app-private-ticket-inventory-item-price
     *ngIf="ticket.sentToFinance && !isAdmission"
     [ticketInventory]="ticketInventory"
@@ -44,7 +51,7 @@
   </app-private-ticket-inventory-item-price> -->
 
   <ng-container *ngIf="!isAdmissionExecution">
-    <div *ngIf="(this.ticket.sentToFinance && ticket.cost && ticketInventory?.appTicketStatus !== 'canceled') || (isAdmission)">
+    <div>
 
       <app-private-ticket-inventory-item-results
         [ticket]="ticket"
@@ -61,10 +68,10 @@
 
   <ng-container *ngIf="!isAdmissionExecution">
     <app-private-update-ticket-inventory
-    *ngIf="!isAdmission || ticketInventory.inventory.appInventoryType === types.lab || ticketInventory.inventory.appInventoryType === types.radiology"
       [ticket]="ticket"
       [isAdmission]="isAdmission"
       [ticketInventory]="ticketInventory"
+      [inventoryItems]="inventoryItems"
       (reset)="resetTicketInventory($event)"
     >
     </app-private-update-ticket-inventory>

@@ -54,7 +54,7 @@ export class PrivateCompanyIntentoryItemsComponent extends SharedUtilityComponen
   }
 
   setTicketRoles(): void {
-    this.ticketRoles = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType).map(y => y.name) || [];
+    this.ticketRoles = this.eventBus.state.lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType).map(y => y.name) || [];
     this.ticketRoles?.push(this.roles.admin);
   }
 

@@ -21,7 +21,7 @@ export class RedirectAuthUsersGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-      const jwt = this.eventBus.getState().jwt.value;
+      const jwt = this.eventBus.state.jwt.value;
       if (jwt && jwt?.exp > Date.now()/1000) {
         this.router.navigate([this.appRoutes.privateRoute.dashboard().$absolutePath]);
         return true;

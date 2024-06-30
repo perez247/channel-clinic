@@ -47,6 +47,8 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
   
   lookupType = AppConstants.LookUpType;
 
+  canShowData = true;
+
   constructor(
     private ticketService: TicketService,
     private inventoryService: InventoryService,
@@ -60,7 +62,7 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
   }
 
   override ngOnInit(): void {
-    this.appStatuses = this.eventBus.getState().lookUps.value?.filter(x => x.type === AppConstants.LookUpType.AppTicketStatus) ?? [];
+    this.appStatuses = this.eventBus.state.lookUps.value?.filter(x => x.type === AppConstants.LookUpType.AppTicketStatus) ?? [];
 
     const roles = this.getUserRoles();
 
@@ -70,11 +72,12 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
   }
 
   getUserRoles(): string[] {
-    const userRoles = this.eventBus.getState().user.value?.userRoles || [];
+    const userRoles = this.eventBus.state.user.value?.userRoles || [];
 
+    
     if (userRoles?.includes(this.roles.admin)) { return []; }
-
-    const inventoryTypes = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType).map(y => y.name) || [];
+    
+    const inventoryTypes = this.eventBus.state.lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType).map(y => y.name) || [];
     
     const types = inventoryTypes.filter(x => userRoles.includes(x));
 
@@ -113,6 +116,12 @@ export class PrivateTicketInventoriesComponent extends SharedUtilityComponent im
       .pipe(finalize(() => this.isLoading = false ))
       .subscribe({
         next: (data) => {
+          if (!data.result) { 
+            this.canShowData = false;
+            return; 
+          }
+
+          this.canShowData = true;
           this.pagination.setResponse(data, false);
           this.pagination.elements.forEach(x => {
             if (Number(x.prescribedQuantity) <= 0) {

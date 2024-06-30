@@ -43,7 +43,7 @@ export const AppTicketTypes = {
   lab: 'lab',
   radiology: 'radiology',
   admission: 'admission',
-  nursing: 'nursing',
+  nurse: 'nurse',
 }
 
 export interface TicketInventory {

@@ -8,6 +8,7 @@
       <span *ngIf="(ticketInventory?.inventory?.quantity ?? 0) <= (ticketInventory?.inventory?.howLow ?? 0)" class="text-danger">
         Low on stock
       </span>
+      <span class="d-block" *ngIf="ticketInventory.inventory.sellType">{{ticketInventory.inventory.sellType}}</span>
     </div>
   </div>
 </div>

@@ -12,6 +12,7 @@ export class PrivateInventoryDetailsFunctions {
       notifyWhenLow: [inventory?.notifyWhenLow],
       howLow: [inventory?.howLow],
       profile: [inventory?.profile],
+      sellType: [inventory?.sellType, [CustomValidator.MaxLength(100)]],
       appInventoryId: [inventory?.base?.id]
     });
   }

@@ -8,7 +8,7 @@
       <section *ngIf="expired">
         <span class="text-danger me-2">User contract has expired</span>
         <span
-        (click)="confirmAddContract()"
+        (click)="addContract()"
         *ngIf="!companyId"
         class="badge rounded-pill bg-primary pointer ms-2 shadow">Add Contract
       </span>
@@ -24,7 +24,7 @@
 
         <fa-icon [ngbTooltip]="hasContractToolTip" [icon]="iconStat" class="pe-1" [ngClass]="iconCss"></fa-icon>
         <span
-            (click)="confirmAddContract()"
+            (click)="addContract()"
             *ngIf="iconCss == 'text-warning' || iconCss == 'text-danger'"
             class="badge rounded-pill bg-primary pointer ms-2 shadow">Add Contract
         </span>
@@ -49,7 +49,7 @@
 
     <span
       appHasRole [roles]="[roles.admin, roles.hr, roles.reception]"
-      (click)="confirmAddContract()"
+      (click)="addContract()"
       class="badge rounded-pill bg-primary pointer ms-2 shadow">Add Contract
     </span>
   </section>

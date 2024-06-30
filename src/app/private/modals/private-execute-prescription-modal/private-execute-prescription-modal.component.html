@@ -64,13 +64,15 @@
       ></app-private-surgery-inventory-item>
       
       <app-private-nursing-inventory-item
-        *ngIf="ticketInventory.inventory.appInventoryType === types.nursing"
+        *ngIf="ticketInventory.inventory.appInventoryType === types.nurse"
         [ticket]="ticket"
         [ticketInventory]="ticketInventory"
         [inventoryItems]="inventoryItems"
         [isAdmission]="true"
         [isAdmissionExecution]="true"
       ></app-private-nursing-inventory-item>
+
+      <app-staff-responsible (staffSelected)="staffResponsible = $event"></app-staff-responsible>
 
     </form>
 

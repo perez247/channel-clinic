@@ -3,6 +3,7 @@
   <span>{{ticketInventory.proof?.length ?? 0}}/5</span>
   <button
     [disabled]="ticketInventory.concludedDate || ticketInventory.proof.length === 5"
+    appHasRole [roles]="[roles.admin, this.ticketInventory.inventory.appInventoryType]"
     (click)="openUploadProfileModal()"
     class="btn btn-sm btn-primary">Add image</button>
 </div>

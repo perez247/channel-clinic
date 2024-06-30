@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, timeout } from 'rxjs';
+import { Observable, lastValueFrom, timeout } from 'rxjs';
 import { AppUser, UserFilter } from 'src/app/shared/core/models/app-user';
-import { AppPagination, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
+import { AppPagination, PaginationContext, PaginationRequest, PaginationResponse } from 'src/app/shared/core/models/pagination';
 import { environment } from 'src/environments/environment';
+import { EventBusService } from '../../common/event-bus/event-bus.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class UserService {
 
   private apiUrl = `${environment.apiUrl}/user`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private eventBus: EventBusService) { }
 
   getUsers(data: any): Observable<PaginationResponse<AppUser[]>> {
     return this.http.post<PaginationResponse<AppUser[]>>(`${this.apiUrl}`, data);
@@ -50,5 +51,19 @@ export class UserService {
     filter.forIndividual = true;
     const paginationRequest = new PaginationRequest<UserFilter>(appPagination, filter);
     return this.getUsers(paginationRequest);
+  }
+
+  hasRoles(roles: string[], and: boolean): boolean {
+    const user = new AppUser(this.eventBus.state.user.value || {});
+    return user.hasClaim(roles, and);
+  }
+
+  async getInternalStaff(): Promise<AppUser[] | undefined> {
+    const pagination = new PaginationContext<AppUser, UserFilter>();
+    pagination.initialize();
+    pagination.request?.setPagination({ pageSize: 500 });
+    pagination.request?.setFilter({ userType: 'staff' });
+    const data = await lastValueFrom(this.getUsers(pagination.request));
+    return data.result;
   }
 }
