@@ -11,6 +11,7 @@ import { Confirmable } from 'src/app/shared/decorators/confirm-action-method-dec
 import { CustomToastService } from 'src/app/shared/services/common/custom-toast/custom-toast.service';
 import { PrivateExecutePrescriptionModalComponent } from 'src/app/private/modals/private-execute-prescription-modal/private-execute-prescription-modal.component';
 import { AppRoles } from 'src/app/shared/core/models/app-roles';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-prescription-item',
@@ -28,15 +29,26 @@ export class PrescriptionItemComponent extends SharedUtilityComponent implements
 
   roles = AppRoles;
 
+  frequency = {
+    Daily: 'day',
+    Weekly: 'week',
+    Monthly: 'month',
+    Yearly: 'year'
+  } as any;
+
   constructor(
     private modalService: NgbModal,
     private admissionService: AdmissionService,
-    private toastService: CustomToastService
+    private toastService: CustomToastService,
+    private route: ActivatedRoute
     ) {
       super()
      }
 
+  section = '';
+
   override ngOnInit(): void {
+    this.section = this.route.snapshot.paramMap.get('sectionName') || '';
   }
 
   updatePrescription(): void {
@@ -73,7 +85,7 @@ export class PrescriptionItemComponent extends SharedUtilityComponent implements
 
   @Confirmable({
     title: 'Conclude ticket',
-    html: 'Are you sure you want to start using this prescription. you wont be able to change this anymore and the previous prescription will be concluded',
+    html: 'Are you sure you want to start using this prescription. you won\'t be able to change this anymore and the previous prescription will be concluded',
     confirmButtonText: 'Yes start using',
     denyButtonText: 'No I changed my mind',
   })

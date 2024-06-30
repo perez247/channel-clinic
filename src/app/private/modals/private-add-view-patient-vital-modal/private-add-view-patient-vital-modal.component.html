@@ -2,15 +2,19 @@
 
         <div class="modal-content">
             <div class="modal-header c-bg-primary">
-                <h5 *ngIf="!patientVital" class="modal-title">Add Patient Vital</h5>
-                <h5 *ngIf="patientVital" class="modal-title">View Patient's Vital</h5>
+                <div class="d-flex ">
+                  <div class="me-3">
+                    <h5 *ngIf="!patientVital" class="modal-title">Add Patient Vital</h5>
+                    <h5 *ngIf="patientVital" class="modal-title">View Patient's Vital</h5>
+                  </div>
+                </div>
               <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
                 <i class="fas fa-times"></i>
               </button>
             </div>
             <div class="modal-body c-bg-secondary">
   
-                <div *ngIf="!patientVital">
+                <!-- <div *ngIf="!patientVital">
                     <angular-editor maxlength="5000" [placeholder]="'Enter vitals here...'" [(ngModel)]="vital" [config]="editorConfig"></angular-editor>
                     <small class="d-block text-end">
                         {{vital?.length ?? 0}}/5000
@@ -25,7 +29,41 @@
                   <div class="border border-3 rounded" style="height: 25rem; overflow-y: scroll;">
                     <p [innerHTML]="patientVital.data" ></p>
                   </div>
-                </div>
+                </div> -->
+
+                  <div class="row border-bottom mb-2" *ngFor="let item of vitalStructure; let i = index">
+                    <div class="col-md-4 position-relative">
+  
+                      <div class="w-100 position-relative">
+                        <input [disabled]="patientVital != undefined" type="text" class="form-control" placeholder="Amount" [(ngModel)]="item.name">
+                      </div>
+  
+                    </div>
+                    <div class="mb-2 pb-2 col-md-8 position-relative" >
+  
+                      <div class="input-group">
+                        <input [disabled]="patientVital != undefined" type="text" class="form-control" placeholder="Readings" [(ngModel)]="item.value">
+                        <button *ngIf="!patientVital" class="btn btn-danger" (click)="removeItemInData(i)" type="button">
+                          <fa-icon [icon]="fonts.faTrash"></fa-icon>
+                        </button>
+                      </div>
+  
+                    </div>
+  
+                  </div>
+
+                  <div class="d-flex justify-content-between w-100 align-items-center">
+                    <button *ngIf="!patientVital" class="btn btn-primary" (click)="addNewVitalData()" type="button">
+                      Add new vitals
+                    </button>    
+                    
+                    <div *ngIf="patientVital" class="d-flex align-items-center justify-content-start">
+                      <strong class="me-2">Date: </strong>
+                      <span>{{ patientVital?.base?.dateCreated | date: 'medium' }}</span>
+                    </div>
+                    
+                    <app-staff-responsible [staffUserId]="patientVital?.base?.staffResponsible" (staffSelected)="staffResponsible = $event"></app-staff-responsible>
+                  </div>
 
             </div>
             <div class="modal-footer c-bg-primary justify-content-between">

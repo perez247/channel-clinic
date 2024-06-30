@@ -27,7 +27,7 @@ export class PrivateWelcomeUserComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.currentUser = this.eventBus.getState().user.value ?? {} as AppUser;
+    this.currentUser = this.eventBus.state.user.value ?? {} as AppUser;
     this.redirectAfter5Seconds();
   }
 

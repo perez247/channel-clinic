@@ -111,7 +111,7 @@ export class PrivateAddEmergencyTicketsComponent extends SharedUtilityComponent 
 
   createEmergencyAppointment(): void {
     this.isLoading = true;
-    const currentUser = this.eventBus.getState().user.value;
+    const currentUser = this.eventBus.state.user.value;
 
     const data = this.form.value;
     const event = this.ticket?.appInventoryType == 'admission' ? 'Admission' : 'Appointment';

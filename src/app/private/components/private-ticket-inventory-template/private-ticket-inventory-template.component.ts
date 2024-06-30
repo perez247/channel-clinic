@@ -17,6 +17,7 @@ import { PrivateCreateTicketModalComponent } from '../../modals/private-create-t
 import { Router } from '@angular/router';
 import { InventoryService } from 'src/app/shared/services/api/inventory/inventory.service';
 import { PaginationContext } from 'src/app/shared/core/models/pagination';
+import { UtilityHelpers } from 'src/app/shared/core/functions/utility-helpers';
 
 @Component({
   selector: 'app-private-ticket-inventory-template',
@@ -38,6 +39,7 @@ export class PrivateTicketInventoryTemplateComponent extends SharedUtilityCompon
   roles = AppRoles;
 
   appTicketTypes = AppTicketTypes;
+  services: {name: string, value: number}[] = [];
 
   constructor(
     private toast: CustomToastService,
@@ -51,6 +53,11 @@ export class PrivateTicketInventoryTemplateComponent extends SharedUtilityCompon
   }
 
   override ngOnInit(): void {
+    this.setServicesEntered();
+  }
+
+  setServicesEntered(): void {
+    this.services = this.inventoryService.setServicesEntered(this.ticket?.ticketInventories ?? []);
   }
 
   @Confirmable({

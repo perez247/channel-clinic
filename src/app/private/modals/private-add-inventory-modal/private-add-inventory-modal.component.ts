@@ -50,9 +50,9 @@ export class PrivateAddInventoryModalComponent extends SharedUtilityComponent im
   }
 
   setLookUp(): void {
-    const lookups = this.eventBus.getState().lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType) ?? [];
+    const lookups = this.eventBus.state.lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType) ?? [];
 
-    this.currentUser = this.eventBus.getState().user.value;
+    this.currentUser = this.eventBus.state.user.value;
 
     const isAdmin = this.currentUser?.userRoles?.find(x => x === this.appRoles.admin);
 
@@ -61,7 +61,7 @@ export class PrivateAddInventoryModalComponent extends SharedUtilityComponent im
       return;
     }
 
-    const userRoles = this.eventBus.getState().user.value?.userRoles || [];
+    const userRoles = this.eventBus.state.user.value?.userRoles || [];
 
     userRoles.forEach(x => {
       let inRole = lookups?.find(y => y.name == x);

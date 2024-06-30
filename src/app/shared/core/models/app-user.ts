@@ -1,6 +1,6 @@
 import { AppCost } from "./app-ticket"
 
-export class AppUser {
+  export class AppUser {
 
     constructor(data: Partial<AppUser>)
     {
@@ -115,6 +115,7 @@ export class AppUser {
     id: string
     dateCreated: string
     dateModified: string
+    staffResponsible: string
   }
 
   export class UserFilter {

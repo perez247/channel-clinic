@@ -24,7 +24,7 @@ export class OnlyFinanceRoleGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-      const roles = this.eventBus.getState().user.value?.userRoles || [];
+      const roles = this.eventBus.state.user.value?.userRoles || [];
 
       const hasFinance = roles.find(x => x === this.roles.finance || x === this.roles.admin);
 

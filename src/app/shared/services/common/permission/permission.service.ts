@@ -34,7 +34,7 @@ export class PermissionService {
 
   getUserRoles(): string[]
   {
-    const currentUser = this.eventBus.getState().user.value;
+    const currentUser = this.eventBus.state.user.value;
     const roles = currentUser?.userRoles || [];
 
     const id = currentUser?.base?.id || ''

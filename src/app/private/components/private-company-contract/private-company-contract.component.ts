@@ -9,6 +9,7 @@ import { IConfirmAction, SharedConfirmActionModalComponent } from 'src/app/share
 import { finalize } from 'rxjs';
 import * as moment from 'moment';
 import { AppRoles } from 'src/app/shared/core/models/app-roles';
+import { IAddUserContract, PrivateAddUserContractComponent } from '../../modals/private-add-user-contract/private-add-user-contract.component';
 
 @Component({
   selector: 'app-private-company-contract',
@@ -124,40 +125,23 @@ export class PrivateCompanyContractComponent extends SharedUtilityComponent impl
     }
   }
 
-  confirmAddContract(): void {
-    const modalRef = this.modalService.open(SharedConfirmActionModalComponent);
-    const confirmData = {
-      title: `Add a new contract`,
-      body: `Are you sure you want to add a new contract for this patient`,
-      positiveBtn: `Yes, Add`,
-      positiveBtnCss: `btn btn-primary`,
-      nagativeBtn: `No, Cancel`,
-      negativeBtnCss: `btn btn-danger`
-    } as IConfirmAction;
+  addContract(): void {
+    const modalRef = this.modalService.open(PrivateAddUserContractComponent, { size: 'lg' });
+    const component: PrivateAddUserContractComponent = modalRef.componentInstance;
 
-    modalRef.componentInstance.confirmData = confirmData;
-    const sub = modalRef.componentInstance.actionTaken.subscribe({
-      next: (takeAction: boolean) => {
-        if(takeAction) {
-          this.addNewContract();
-        }
+    component.contractInfo = {
+      companyId: this.user?.company?.base?.id,
+      fullName: this.user?.firstName,
+    } as IAddUserContract;
+
+    const sub = component.reload.subscribe({
+      next: () => {
+        this.reload.emit();
       }
     });
-    this.subscriptions.push(sub)
-  }
-
-  private addNewContract(): void {
-    const data = { companyId: this.user?.company?.base?.id, durationInDays: 180 }
-    this.loadingContract = true;
-    const sub = this.companyService.addCompanyContract(data)
-      .pipe(finalize(() => this.loadingContract = false))
-      .subscribe({
-        next: (result) => {
-          this.reload.emit();
-        }
-      });
 
     this.subscriptions.push(sub);
   }
+
 
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit } from '@angular/core';
 import { PrivateRoutingModule } from './private-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { PrivateWelcomeUserComponent } from './pages/private-welcome-user/private-welcome-user.component';
@@ -132,6 +132,10 @@ import { PrivateAddUserContractComponent } from './modals/private-add-user-contr
 import { AddTicketInventoryDebtorComponent } from './modals/add-ticket-inventory-debtor/add-ticket-inventory-debtor.component';
 import { PrivateNursingInventoryItemComponent } from './components/private-ticket-inventories/private-nursing-inventory-item/private-nursing-inventory-item.component';
 import { PrivateTicketInventoryItemStaffObservationComponent } from './components/private-ticket-inventory-item-components/private-ticket-inventory-item-staff-observation/private-ticket-inventory-item-staff-observation.component';
+import { UserService } from '../shared/services/api/user/user.service';
+import { EventBusService } from '../shared/services/common/event-bus/event-bus.service';
+import { AppUser } from '../shared/core/models/app-user';
+import { EventBusActions, EventBusData } from '../shared/services/common/event-bus/event-bus-action';
 
 @NgModule({
   declarations: [
@@ -275,4 +279,14 @@ import { PrivateTicketInventoryItemStaffObservationComponent } from './component
     SharedModule
   ]
 })
-export class PrivateModule { }
+export class PrivateModule {
+
+  constructor(
+    userService: UserService,
+    eventBus: EventBusService
+  ) {
+    userService.getInternalStaff().then(x => {
+      eventBus.emit({ key: EventBusActions.staff, value: x } as EventBusData<AppUser[]>);
+    })
+   }
+}

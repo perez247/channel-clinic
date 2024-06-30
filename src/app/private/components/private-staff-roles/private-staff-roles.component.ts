@@ -44,7 +44,7 @@ export class PrivateStaffRolesComponent extends SharedUtilityComponent implement
   }
 
   initializeForm(): void {
-    this.roles = this.eventBus.getState().lookUps.value?.filter(x => x.type === AppConstants.LookUpType.StaffRoleEnum) ?? [];
+    this.roles = this.eventBus.state.lookUps.value?.filter(x => x.type === AppConstants.LookUpType.StaffRoleEnum) ?? [];
     this.roles.forEach(x => {
       this.userRoles[x.name] = false;
     });

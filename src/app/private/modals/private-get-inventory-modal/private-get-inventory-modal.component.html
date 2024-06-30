@@ -30,7 +30,7 @@
             <div class="form-group col-12 col-sm-3">
               <label class="form-control-label mb-2" for="dosageField"><strong>Dosage</strong></label>
 
-              <input placeholder="Dosage" maxlength="250" type="number" class="form-control" id="dosageField" formControlName="dosage"  [ngClass]="{'is-invalid': errorService.getError(form, 'dosage')}">
+              <input placeholder="Dosage" maxlength="250" type="number" pattern="[0-9]" class="form-control" id="dosageField" formControlName="dosage"  [ngClass]="{'is-invalid': errorService.getError(form, 'dosage')}">
 
               <app-custom-error-message [errorMessage]="errorService.getError(form, 'dosage')"></app-custom-error-message>
             </div>
@@ -38,7 +38,7 @@
             <div class="form-group col-12 col-sm-3">
               <label class="form-control-label mb-2" for="timesField"><strong>Times</strong></label>
 
-              <input placeholder="Times" maxlength="250" type="number" class="form-control" id="timesField" formControlName="times"  [ngClass]="{'is-invalid': errorService.getError(form, 'times')}">
+              <input placeholder="Times" maxlength="250" type="number" pattern="[0-9]" class="form-control" id="timesField" formControlName="times"  [ngClass]="{'is-invalid': errorService.getError(form, 'times')}">
 
               <app-custom-error-message [errorMessage]="errorService.getError(form, 'times')"></app-custom-error-message>
             </div>
@@ -57,7 +57,7 @@
             <div *ngIf="form.get('frequency')?.value != 'Once'" class="form-group col-12 col-sm-3">
               <label class="form-control-label mb-2" for="durationField"><strong>Duration</strong></label>
 
-              <select type="text" class="form-control" id="durationField" formControlName="duration"  [ngClass]="{'is-invalid': errorService.getError(form, 'duration')}">
+              <select type="text" class="form-control" (change)="durationChanged($event)" id="durationField" formControlName="duration"  [ngClass]="{'is-invalid': errorService.getError(form, 'duration')}">
                 <option [value]="null">---</option>
                 <option *ngFor="let duration of durations" [value]="duration">{{duration}}</option>
               </select>

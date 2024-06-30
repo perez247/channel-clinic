@@ -45,6 +45,12 @@
                     </div>
 
                     <div class="form-group col-md-6">
+                      <label class="form-control-label mb-2" for="emailField"><strong>Email</strong></label>
+                      <input placeholder="email" maxlength="100" type="email" class="form-control" id="emailField" formControlName="email"  [ngClass]="{'is-invalid': errorService.getError(form, 'email')}">
+                      <app-custom-error-message [errorMessage]="errorService.getError(form, 'email')"></app-custom-error-message>
+                    </div>
+
+                    <div class="form-group col-md-12">
                       <label class="form-control-label mb-2" for="addressField"><strong>Address</strong></label>
                       <input placeholder="Address" maxlength="1000" type="text" class="form-control" id="addressField" formControlName="address"  [ngClass]="{'is-invalid': errorService.getError(form, 'address')}">
                       <app-custom-error-message [errorMessage]="errorService.getError(form, 'address')"></app-custom-error-message>

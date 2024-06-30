@@ -32,17 +32,22 @@ export class PrivateTicketInventoryItemDepartmentNoteComponent implements OnInit
   }
 
   setNoteDisabled(): void {
-    if (this.ticket.cost) {
+    if (this.ticketInventory.concludedDate) {
       this.noteDisabled = true;
       return;
     }
+
+    // if (this.ticket.cost) {
+    //   this.noteDisabled = true;
+    //   return;
+    // }
 
     if (this.isAdmission && this.ticketInventory.updated) {
       this.noteDisabled = true;
       return;
     }
 
-    const currentUser = new AppUser(this.eventBus.getState().user.value || {});
+    const currentUser = new AppUser(this.eventBus.state.user.value || {});
 
     if (!currentUser.hasClaim([this.roles.admin, this.ticketInventory.inventory.appInventoryType || ''], false)) {
       this.noteDisabled = true;

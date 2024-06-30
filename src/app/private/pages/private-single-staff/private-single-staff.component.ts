@@ -79,7 +79,7 @@ export class PrivateSingleStaffComponent extends SharedUtilityComponent  impleme
           this.staff = data.result ?? [];
           this.staffItem = this.staff[0];
 
-          const currentUser = this.eventBus.getState().user.value;
+          const currentUser = this.eventBus.state.user.value;
 
           if (currentUser?.base?.id === this.staffItem.base?.id) {
             this.eventBus.emit({key: EventBusActions.state.currentUser, value: this.staffItem } as EventBusData<AppUser>);

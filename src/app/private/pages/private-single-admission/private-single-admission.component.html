@@ -23,9 +23,12 @@
       ></app-private-patient-info>
     </div>
     <div class="ms-4 ps-4 border-start border-3">
-      <div> <strong>Admitted:</strong> {{ dashboard.ticketInventories[0].admissionStartDate | date }} </div>
+      <div> <strong>Admitted:</strong> 
+        <span *ngIf=" dashboard.ticketInventories[0].admissionStartDate ">{{ dashboard.ticketInventories[0].admissionStartDate | date }} </span>
+        <span *ngIf=" !dashboard.ticketInventories[0].admissionStartDate "> Contact Finance </span>
+      </div>
       <div *ngIf="dashboard.ticketInventories[0].admissionEndDate "> <strong>Discharged:</strong> {{ dashboard.ticketInventories[0].admissionEndDate | date }} </div>
-      <div> <strong>Duration in days:</strong> {{ duration }} </div>
+      <div> <strong>Duration in days:</strong> {{ duration || '0' }} </div>
     </div>
   </div>
 
@@ -88,14 +91,14 @@
     </div>
 
     <div class="col-lg-6 my-5">
-      <div [routerLink]="['/' + routes.privateRoute.admission_sectionName('nursing', (ticketId)).$absolutePath]" appHoverClass hover-class="shadow" class="card pointer">
+      <div [routerLink]="['/' + routes.privateRoute.admission_sectionName('nurse', (ticketId)).$absolutePath]" appHoverClass hover-class="shadow" class="card pointer">
         <div class="card-body position-relative text-end">
           <span class="d-block p-4 bg-black shadow icon-set">
             <fa-icon [icon]="fonts.faUserNurse" class="pe-1 text-white" [size]="'4x'"></fa-icon>
           </span>
           <span class="text-muted">
             <span>Nursing</span>
-            <span class="d-block h2">{{dashboard.nursing}}</span>
+            <span class="d-block h2">{{dashboard.nurse}}</span>
           </span>
         </div>
       </div>

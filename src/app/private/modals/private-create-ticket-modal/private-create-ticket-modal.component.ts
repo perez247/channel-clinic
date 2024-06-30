@@ -130,7 +130,6 @@ export class PrivateCreateTicketModalComponent extends SharedUtilityComponent im
     });
 
     if (this.returnData) {
-      console.log(data);
       this.saved.emit(data);
       this.activeModal.close();
       return;

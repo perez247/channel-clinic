@@ -5,10 +5,10 @@
     </div>
     <div class="col-10 row">
       <div class="col-12">
-        <span *ngIf="!ticketInventory.surgeryTestResult && !ticketInventory.labRadiologyTestResult">
+        <span *ngIf="!ticketInventory.surgeryTestResult && !ticketInventory.labRadiologyTestResult" class="d-flex">
           <fa-icon class="text-warning" [icon]="fonts.faClock"></fa-icon>
           Pending
-          <fa-icon (click)="addResultModal()" class="text-primary mx-1 pointer" [icon]="fonts.faPencilAlt"></fa-icon>
+          <fa-icon appHasRole [roles]="[roles.admin, this.ticketInventory.inventory.appInventoryType]" (click)="addResultModal()" class="text-primary mx-1 pointer" [icon]="fonts.faPencilAlt"></fa-icon>
         </span>
         <span *ngIf="ticketInventory.surgeryTestResult || ticketInventory.labRadiologyTestResult">
           <fa-icon class="text-success" [icon]="fonts.faCheckCircle"></fa-icon>

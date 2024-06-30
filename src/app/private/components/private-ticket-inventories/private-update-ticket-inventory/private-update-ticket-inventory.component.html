@@ -1,27 +1,31 @@
 
-<section 
-  *ngIf="(!canUpdate || ticket?.cost || isAdmission) && !ticketInventory?.concludedDate" 
-  class="card-header d-flex justify-content-between"
-  [ngClass]="{'bg-danger': !canUpdate}"
-  >
+<ng-container *ngIf="hasPermission">
+  <section 
+    *ngIf="(canUpdate || ticket?.cost || isAdmission || ticketInventory?.inventory?.appInventoryType == roles.admission) && (!ticketInventory?.concludedDate || isAdminOrFinance)" 
+    class="card-footer d-flex justify-content-between"
+    [ngClass]="{'bg-danger': canUpdate}"
+    >
 
-  <div>
-    <span>&nbsp;</span>
-    <button *ngIf="!ticketInventory?.concludedDate && ticket?.cost && !isAdmission" [disabled]="isLoading" (click)="concludeTicketInventory()" class="btn btn-sm btn-primary">
-      Conclude
-      <app-shared-loading *ngIf="isLoading"></app-shared-loading>
-    </button>
-    <button *ngIf="!ticketInventory?.concludedDate && isAdmission" [disabled]="isLoading" (click)="concludeTicketInventory()" class="btn btn-sm btn-primary">
-      Conclude
-      <app-shared-loading *ngIf="isLoading"></app-shared-loading>
-    </button>
-  </div>
+    <div class="d-flex">
+      <span>&nbsp;</span>
+      <!-- <button *ngIf="!ticketInventory?.concludedDate && ticket?.cost && !isAdmission" [disabled]="isLoading" (click)="concludeTicketInventory()" class="btn btn-sm btn-primary">
+        Conclude
+        <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+      </button> -->
+      <button appHasRole [roles]="[roles.admin, ticketInventory?.inventory?.appInventoryType]" selectedCompany *ngIf="!ticketInventory?.concludedDate" [disabled]="isLoading" (click)="concludeTicketInventory()" class="btn btn-sm btn-primary">
+        Conclude
+        <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+      </button>
+    </div>
 
-  <div>
-    <span>&nbsp;</span>
-    <button *ngIf="!canUpdate" [disabled]="isLoading" (click)="updateTicketInventory()" class="btn btn-sm btn-primary">
-      Save
-      <app-shared-loading *ngIf="isLoading"></app-shared-loading>
-    </button>
-  </div>
-</section>
+    <div class="d-flex">
+      <span>&nbsp;</span>
+      <button appHasRole [roles]="[roles.admin, roles.doctor, roles.finance, ticketInventory?.inventory?.appInventoryType]" *ngIf="canUpdate" [disabled]="isLoading" (click)="updateTicketInventory()" class="btn btn-sm btn-primary">
+        Save
+        <app-shared-loading *ngIf="isLoading"></app-shared-loading>
+      </button>
+    </div>
+  </section>
+
+
+</ng-container>

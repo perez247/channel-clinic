@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { faPlusCircle, faTrash, faNairaSign } from '@fortawesome/free-solid-svg-icons';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ITicketInventoryDebtor, TicketInventory } from 'src/app/shared/core/models/app-ticket';
+import { AppTicket, ITicketInventoryDebtor, TicketInventory } from 'src/app/shared/core/models/app-ticket';
 import { Company } from 'src/app/shared/core/models/app-user';
 
 @Component({
@@ -11,6 +11,7 @@ import { Company } from 'src/app/shared/core/models/app-user';
 })
 export class AddTicketInventoryDebtorComponent implements OnInit {
 
+  @Input() ticket: AppTicket = {} as AppTicket;
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
   @Input() sumTotal = 0;
 
@@ -24,7 +25,9 @@ export class AddTicketInventoryDebtorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.payers = [];
     this.payers = this.ticketInventory.payers;
+
     const d = JSON.stringify(this.ticketInventory.debtors);
     this.debtors = JSON.parse(d);
   }

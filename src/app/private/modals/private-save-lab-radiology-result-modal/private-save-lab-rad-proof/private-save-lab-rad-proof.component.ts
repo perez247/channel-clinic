@@ -5,6 +5,7 @@ import { PrivateUploadProfilePictureModalComponent } from '../../private-upload-
 import { SharedViewImageComponent } from 'src/app/shared/modals/shared-view-image/shared-view-image.component';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Confirmable } from 'src/app/shared/decorators/confirm-action-method-decorator';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
 
 @Component({
   selector: 'app-private-save-lab-rad-proof',
@@ -16,6 +17,8 @@ export class PrivateSaveLabRadProofComponent implements OnInit {
   @Input() ticketInventory: TicketInventory = {} as TicketInventory;
 
   fonts = { faTrashAlt }
+
+  roles = AppRoles;
 
   constructor(
     private modalService: NgbModal,
