@@ -14,7 +14,7 @@ COPY ./ ./
 
 RUN npm install
 
-RUN npm install @angular/cli
+RUN npm install @angular/cli@13
 
 # Create production application
 RUN npm run build
