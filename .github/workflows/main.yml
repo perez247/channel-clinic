@@ -42,7 +42,7 @@ jobs:
           USER_NAME: ${{ secrets.SERVER_USER }}
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} << EOF
             # Login to GitHub Container Registry
             echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             
@@ -58,3 +58,4 @@ jobs:
             
             # Cleanup
             docker system prune -f
+          EOF
