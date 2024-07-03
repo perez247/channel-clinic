@@ -1,13 +1,19 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ImageCroppedEvent } from "ngx-image-cropper";
+import { SharedUtilityComponent } from "src/app/shared/components/shared-utility/shared-utility.component";
+import { UtilityHelpers } from "src/app/shared/core/functions/utility-helpers";
+import { ImageService } from "src/app/shared/services/common/image/image.service";
 
 @Component({
   selector: 'app-private-upload-profile-picture-modal',
   templateUrl: './private-upload-profile-picture-modal.component.html',
-  styleUrls: ['./private-upload-profile-picture-modal.component.scss']
+  styleUrls: ['./private-upload-profile-picture-modal.component.scss'],
+  providers: [
+    ImageService
+  ]
 })
-export class PrivateUploadProfilePictureModalComponent implements OnInit {
+export class PrivateUploadProfilePictureModalComponent extends SharedUtilityComponent implements OnInit {
 
   @Output() newImage = new EventEmitter<string>();
 
@@ -16,9 +22,12 @@ export class PrivateUploadProfilePictureModalComponent implements OnInit {
 
   constructor(
     public activeModal: NgbActiveModal,
-  ) { }
+    private imageService: ImageService
+  ) {
+    super()
+   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
   }
 
   fileChangeEvent(event: any): void {
@@ -27,8 +36,14 @@ export class PrivateUploadProfilePictureModalComponent implements OnInit {
 
   imageCropped(event: ImageCroppedEvent): void {
     const base64 = event.base64 ?? '';
-    // this.croppedImage = UtilityHelpers.dataURLtoFile(base64, 'image.jpeg');
-    this.croppedImage = base64;
+    if (base64.length <= 0) { return }
+
+    const sub = this.imageService.compressBase64(base64).subscribe({
+      next: (compressed) => {
+        this.croppedImage = compressed;
+      }
+    });
+    this.subscriptions.push(sub);
   }
 
   saveChanges() {
