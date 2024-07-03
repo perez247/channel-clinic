@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: '/api',
+  apiUrl: ':5000/api',
   timeOut: 10000,
 };

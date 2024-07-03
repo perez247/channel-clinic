@@ -41,14 +41,20 @@ export class PrivateUploadFilesModalComponent implements OnInit {
 
     // validate file
     this.fileStatus = UtilityHelpers.validateFile(file);
+    console.log(this.fileStatus, file);
 
     if (!this.fileStatus.isSuccess) { return; }
+
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
         this.imageChangedEvent = reader.result;
         this.fileOnDisplay = file.name;
     };
+
+    reader.onerror = (error) => {
+      console.log(error);
+    }
   }
 
   addToList(): void {

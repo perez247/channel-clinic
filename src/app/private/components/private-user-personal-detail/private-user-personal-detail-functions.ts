@@ -16,6 +16,7 @@ export class UserPersonalDetailFunctions {
       otherName: [appUser?.otherName, [CustomValidator.MaxLength(200)]],
       occupation: [appUser?.occupation, [CustomValidator.MaxLength(250)]],
       gender: [appUser?.gender, [CustomValidator.MaxLength(200)]],
+      bloodGroup: [appUser?.bloodGroup, [CustomValidator.MaxLength(200)]],
       address: [appUser?.address, [CustomValidator.MaxLength(2000)]],
       profile: [appUser?.profile],
       companyUniqueId: [appUser?.patient?.companyUniqueId, [CustomValidator.MaxLength(255)]],

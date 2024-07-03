@@ -148,19 +148,20 @@ export class PrivateUserFilesComponent extends SharedUtilityComponent implements
 
   private addFiles(filesToAdd: any): void {
     const data = { userId: this.user?.base?.id, UserFiles: filesToAdd }
-    this.isLoading = true;
-    const sub = this.userService.addFiles(data)
-      .pipe(finalize(() => this.isLoading = false))
-      .subscribe({
-        next: (data) => {
-          this.toast.success(`Files added successfully`);
-          this.reload.emit(this.userSections.userFiles);
-        },
-        error: (error) => {
-          console.error(error);
-        }
-      });
-    this.subscriptions.push(sub);
+    console.log(data);
+    // this.isLoading = true;
+    // const sub = this.userService.addFiles(data)
+    //   .pipe(finalize(() => this.isLoading = false))
+    //   .subscribe({
+    //     next: (data) => {
+    //       this.toast.success(`Files added successfully`);
+    //       this.reload.emit(this.userSections.userFiles);
+    //     },
+    //     error: (error) => {
+    //       console.error(error);
+    //     }
+    //   });
+    // this.subscriptions.push(sub);
   }
 
 

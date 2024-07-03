@@ -14,6 +14,7 @@ import { AppCost } from "./app-ticket"
     otherName?: string
     occupation?: string
     gender?: string
+    bloodGroup?: string
     phone: any
     address?: string
     base?: Base

@@ -55,12 +55,6 @@
                     </div>
 
                     <div class="form-group col-12 col-sm-6">
-                        <label class="form-control-label mb-2" for="occupationField"><strong>Occupation</strong></label>
-                        <input placeholder="Occupation" maxlength="200" type="text" class="form-control" id="occupationField" formControlName="occupation"  [ngClass]="{'is-invalid': errorService.getError(form, 'occupation')}">
-                        <app-custom-error-message [errorMessage]="errorService.getError(form, 'occupation')"></app-custom-error-message>
-                    </div>
-
-                    <div class="form-group col-12 col-sm-6">
                         <label class="form-control-label mb-2" for="genderField"><strong>Gender</strong></label>
                         <select class="form-control" id="genderField" formControlName="gender"  [ngClass]="{'is-invalid': errorService.getError(form, 'gender')}">
                             <option>---</option>
@@ -72,12 +66,25 @@
                     </div>
 
                     <ng-container *ngIf="user?.patient">
+                        
+                        <div class="form-group col-12 col-sm-6">
+                            <label class="form-control-label mb-2" for="bloodGroupField"><strong>Blood Group</strong></label>
+                            <input placeholder="Blood Group" maxlength="200" type="text" class="form-control" id="bloodGroupField" formControlName="bloodGroup"  [ngClass]="{'is-invalid': errorService.getError(form, 'bloodGroup')}">
+                            <app-custom-error-message [errorMessage]="errorService.getError(form, 'bloodGroup')"></app-custom-error-message>
+                        </div>
+
                         <div class="form-group col-12 col-sm-6">
                             <label class="form-control-label mb-2" for="companyUniqueIdField"><strong>Company Unique Id</strong></label>
                             <input placeholder="Company Unique Id" maxlength="255" type="text" class="form-control" id="companyUniqueIdField" formControlName="companyUniqueId"  [ngClass]="{'is-invalid': errorService.getError(form, 'companyUniqueId')}">
                             <app-custom-error-message [errorMessage]="errorService.getError(form, 'companyUniqueId')"></app-custom-error-message>
                         </div>
                     </ng-container>
+
+                    <div class="form-group col-12">
+                        <label class="form-control-label mb-2" for="occupationField"><strong>Occupation</strong></label>
+                        <input placeholder="Occupation" maxlength="200" type="text" class="form-control" id="occupationField" formControlName="occupation"  [ngClass]="{'is-invalid': errorService.getError(form, 'occupation')}">
+                        <app-custom-error-message [errorMessage]="errorService.getError(form, 'occupation')"></app-custom-error-message>
+                    </div>
 
                     <div class="form-group col-12">
                         <label class="form-control-label mb-2" for="addressField"><strong>Address</strong></label>
@@ -87,9 +94,9 @@
 
                     <ng-container *ngIf="user?.patient">
                       <div class="form-group col-12">
-                        <label class="form-control-label mb-2" for="otherInformationField"><strong>Other Company Information</strong></label>
+                        <label class="form-control-label mb-2" for="otherInformationField"><strong>Other Information</strong></label>
 
-                        <textarea placeholder="Other Company related information" maxlength="2000" rows="4" class="form-control" id="otherInformationField" formControlName="otherInformation"  [ngClass]="{'is-invalid': errorService.getError(form, 'otherInformation')}"> </textarea>
+                        <textarea placeholder="Other related information" maxlength="2000" rows="4" class="form-control" id="otherInformationField" formControlName="otherInformation"  [ngClass]="{'is-invalid': errorService.getError(form, 'otherInformation')}"> </textarea>
                         <app-custom-error-message [errorMessage]="errorService.getError(form, 'otherInformation')"></app-custom-error-message>
                         <div class="d-flex justify-content-end ">
                           <small>{{form.get('otherInformation')?.value?.length ?? 0}}/2000</small>
