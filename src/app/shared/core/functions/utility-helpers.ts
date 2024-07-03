@@ -24,8 +24,13 @@ export class UtilityHelpers
   }
 
   public static validateFile(file: any): IFileStatus {
-    if (file.size > 200000) {
-      return { isSuccess: false, errorMessage:  'File should no be greater 2MB'}
+    if (file.size > 500000) {
+      return { isSuccess: false, errorMessage:  'File should no be greater 500kb'}
+    }
+
+    
+    if (!UtilityHelpers.validateFileType(file as File)) {
+      return { isSuccess: false, errorMessage:  'Invalid file type. Please upload a PDF, DOC, DOCX, XLS, XLSX, ODS, CSV, or image file.'}
     }
 
     return { isSuccess: true, errorMessage: undefined };
@@ -41,6 +46,7 @@ export class UtilityHelpers
       return { isSuccess: false, errorMessage:  'File name is required'}
     }
 
+
     const pattern = new RegExp('^[a-zA-Z0-9._ ]*$');
 
     const result = pattern.test(fileName ?? '');
@@ -51,6 +57,27 @@ export class UtilityHelpers
 
     return { isSuccess: true, errorMessage: undefined };
   }
+
+  public static validateFileType(file: File) {
+    const allowedTypes = [
+      // Documents
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      // Spreadsheets
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'application/vnd.oasis.opendocument.spreadsheet',
+      'text/csv',
+      // Images
+      'image/jpeg',
+      'image/png',
+      'image/gif'
+    ];
+
+    return allowedTypes.includes(file.type); // File is valid
+  }
+  
 
   public static showError(error: any, toast: CustomToastService): string {
     // console.log(error);

@@ -2,7 +2,10 @@
 
     <div class="modal-content">
         <div class="modal-header c-bg-primary">
-          <h5 class="modal-title">Upload Files ({{ total }})</h5>
+          <div >
+            <h5 class="modal-title">Upload Files ({{ total }})</h5>
+            <small *ngIf="!imageChangedEvent" class="d-block text-danger">{{ fileStatus?.errorMessage }}</small>
+          </div>
           <button (click)="activeModal.close()" class="btn" type="button" data-bs-dismiss="modal" aria-label="Close">
             <i class="fas fa-times"></i>
           </button>
