@@ -46,14 +46,14 @@ jobs:
             echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
             # Pull the latest image
-            docker pull ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/hms_frontend:latest
+            docker pull ghcr.io/${{ github.repository_owner }}/channel-clinic/hms_frontend:latest
 
-            # Stop the existing container (if it exists).. using variable for repo name
+            # Stop the existing container (if it exists)
             docker stop hms_frontend || true
             docker rm hms_frontend || true
 
             # Run the new container
-            docker run -d --name hms_frontend -p 80:4200 ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/hms_frontend:latest
+            docker run -d --name hms_frontend -p 80:4200 ghcr.io/${{ github.repository_owner }}/channel-clinic/hms_frontend:latest
 
             # Cleanup
             docker system prune -f
