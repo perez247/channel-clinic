@@ -36,7 +36,7 @@ jobs:
           tags: ghcr.io/${{ github.repository }}/hms_frontend:latest
 
       - name: Deploy package
-        uses: appleboy/ssh-action@v0.1.2
+        uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
