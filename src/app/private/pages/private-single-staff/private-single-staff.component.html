@@ -56,7 +56,9 @@
 
       </ngb-panel>
 
-    <ngb-panel [id]="userSections.nextOfKin" [disabled]="disableTabs">
+    <ngb-panel [id]="userSections.nextOfKin" [disabled]="disableTabs"
+      *ngIf="currentUser?.hasClaim([roles.admin, roles.hr], false)"
+    >
 
           <ng-template ngbPanelTitle>
               Next of Kin
@@ -68,7 +70,9 @@
 
     </ngb-panel>
 
-    <ngb-panel [id]="userSections.staffDetails" [disabled]="disableTabs">
+    <ngb-panel [id]="userSections.staffDetails" [disabled]="disableTabs"
+      *ngIf="currentUser?.hasClaim([roles.admin, roles.hr], false)"
+    >
 
       <ng-template ngbPanelTitle>
           Staff Details
@@ -111,7 +115,7 @@
       </ng-template>
 
       <ng-template ngbPanelContent>
-              <app-private-user-files [user]="staffItem" (reload)="getStaffList($event)" ></app-private-user-files>
+          <app-private-user-files [user]="staffItem" (reload)="getStaffList($event)" ></app-private-user-files>
       </ng-template>
 
     </ngb-panel>

@@ -56,7 +56,7 @@
 
 	</ngb-panel>
 
-  <ngb-panel [id]="userSections.nextOfKin" [disabled]="disableTabs">
+<ngb-panel [id]="userSections.nextOfKin" [disabled]="disableTabs">
 
 		<ng-template ngbPanelTitle>
 			Next of Kin
@@ -68,20 +68,22 @@
 
 	</ngb-panel>
 
-  <ngb-panel [id]="userSections.allergies" [disabled]="disableTabs">
+  <ngb-panel [id]="userSections.allergies" [disabled]="disableTabs" 
+    *ngIf="currentUser?.hasClaim([roles.admin, roles.doctor, roles.nurse, roles.pharmacy, roles.surgery, roles.lab, roles.radiology], false)"
+  >
 
-		<ng-template ngbPanelTitle>
-			Allergies
-		</ng-template>
+    <ng-template ngbPanelTitle>
+      Allergies
+    </ng-template>
 
-		<ng-template ngbPanelContent>
+    <ng-template ngbPanelContent>
       <app-private-patient-allergies [patient]="patient.patient" (reload)="getPatient($event)"></app-private-patient-allergies>
-		</ng-template>
+    </ng-template>
 
-	</ngb-panel>
+  </ngb-panel>
 
-
-  <ngb-panel [id]="userSections.vitals" [disabled]="disableTabs">
+  <ngb-panel [id]="userSections.vitals" [disabled]="disableTabs"
+  *ngIf="currentUser?.hasClaim([roles.admin, roles.doctor, roles.nurse, roles.pharmacy, roles.surgery, roles.lab, roles.radiology], false)"  >
 
 		<ng-template ngbPanelTitle>
 			Vitals
@@ -93,7 +95,9 @@
 
 	</ngb-panel>
 
-  <ngb-panel [id]="userSections.userFiles" [disabled]="disableTabs">
+  <ngb-panel [id]="userSections.userFiles" [disabled]="disableTabs"
+  *ngIf="currentUser?.hasClaim([roles.admin, roles.reception, roles.nurse], false)"
+  >
 
 		<ng-template ngbPanelTitle>
 			Files
