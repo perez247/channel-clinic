@@ -58,7 +58,7 @@ export class PrivateUserNextOfKinComponent extends SharedUtilityComponent implem
   ngAfterContentChecked() {}
 
   initializeForm(): void {
-    this.form = NextOfKinFunctions.createForm(this.fb, this.user?.nextOfKin);
+    this.form = NextOfKinFunctions.createForm(this.fb, this.user?.nextOfKin, this.user?.base?.id);
     this.disableForm = true;
   }
 

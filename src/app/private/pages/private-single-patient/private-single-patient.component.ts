@@ -9,6 +9,8 @@ import { UserService } from 'src/app/shared/services/api/user/user.service';
 import { AppConstants } from 'src/app/shared/core/models/app-constants';
 import { CustomToastService } from 'src/app/shared/services/common/custom-toast/custom-toast.service';
 import { ApplicationRoutes } from 'src/app/shared/core/routes/app-routes';
+import { AppRoles } from 'src/app/shared/core/models/app-roles';
+import { EventBusService } from 'src/app/shared/services/common/event-bus/event-bus.service';
 
 @Component({
   selector: 'app-private-single-patient',
@@ -33,11 +35,16 @@ export class PrivateSinglePatientComponent extends SharedUtilityComponent  imple
 
   currentDate = new Date().toUTCString();
 
+  roles = AppRoles;
+
+  currentUser? : AppUser;
+
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
     private router: Router,
     private toast: CustomToastService,
+    private evenbusService: EventBusService
   ) {
     super();
   }
@@ -47,6 +54,7 @@ export class PrivateSinglePatientComponent extends SharedUtilityComponent  imple
     this.filter.userId = id;
     this.paginationRequest = new PaginationRequest<UserFilter>(this.appPagination, this.filter);
     this.getPatient(this.currentSection);
+    this.currentUser = new AppUser(this.evenbusService.state.user.value || {});
   }
 
   getPatient(currentSection: string): void {

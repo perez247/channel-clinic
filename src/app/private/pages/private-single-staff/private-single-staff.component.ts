@@ -38,6 +38,8 @@ export class PrivateSingleStaffComponent extends SharedUtilityComponent  impleme
 
   roles = AppRoles;
   
+  currentUser? : AppUser;
+
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
@@ -55,6 +57,7 @@ export class PrivateSingleStaffComponent extends SharedUtilityComponent  impleme
         this.filter.userId = d.get('id') || '';
         this.paginationRequest = new PaginationRequest<UserFilter>(this.appPagination, this.filter);
         this.getStaffList(this.currentSection);
+        this.currentUser = new AppUser(this.eventBus.state.user.value || {});
       }
     });
 
