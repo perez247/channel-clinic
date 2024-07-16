@@ -69,7 +69,7 @@ export class PrivatePatientVitalsComponent extends SharedUtilityComponent implem
           this.vitals = data.result ?? [];
         },
         error: (data) => {
-          console.log(data);
+          throw data;
         }
       });
 

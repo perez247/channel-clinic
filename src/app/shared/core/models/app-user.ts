@@ -117,6 +117,7 @@ import { AppCost } from "./app-ticket"
     dateCreated: string
     dateModified: string
     staffResponsible: string
+    staffName: string
   }
 
   export class UserFilter {

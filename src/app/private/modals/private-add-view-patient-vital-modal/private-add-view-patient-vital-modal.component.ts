@@ -30,6 +30,8 @@ export class PrivateAddViewPatientVitalModalComponent extends SharedUtilityCompo
 
   staffResponsible?: AppUser;
 
+  staffName?: string;
+
   constructor(
     public activeModal: NgbActiveModal,
     private patientService: PatientService,
@@ -48,6 +50,7 @@ export class PrivateAddViewPatientVitalModalComponent extends SharedUtilityCompo
   override ngOnInit(): void {
     if (this.patientVital) {
       this.vitalStructure = JSON.parse(this.patientVital.data || '');
+      this.staffName = this.patientVital.base?.staffName;
     }
   }
 
@@ -71,7 +74,7 @@ export class PrivateAddViewPatientVitalModalComponent extends SharedUtilityCompo
   })
   private beginAdding(newData: any): void {
     this.isLoading = true;
-    const data = { patientId : this.patientId, data: JSON.stringify(newData), staffResponsible: this.staffResponsible?.base?.id };
+    const data = { patientId : this.patientId, data: JSON.stringify(newData), staffResponsible: this.staffResponsible?.base?.id, staffName: this.staffName };
     const sub = this.patientService.addVital(data)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({

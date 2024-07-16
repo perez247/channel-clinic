@@ -24,7 +24,7 @@
         <tbody>
           <tr *ngFor="let vital of vitals" >
             <td><a class="text-primary text-underline pointer" (click)="viewVital(vital)" >{{vital?.base?.dateCreated | date:"medium"}}</a></td>
-            <td>{{vital?.nurse?.user?.lastName}} {{vital?.nurse?.user?.firstName}}</td>
+            <td>{{vital?.base?.staffName}}</td>
           </tr>
         </tbody>
       </table>
