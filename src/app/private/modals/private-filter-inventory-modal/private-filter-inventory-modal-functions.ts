@@ -11,6 +11,8 @@ export class FilterInventoryModalFunctions {
       appInventoryType: [filter?.appInventoryType],
       low: [filter?.low],
       quantity: [filter?.quantity, [CustomValidator.isNumber]],
+      companyId: filter?.companyId,
+      companyName: filter?.companyName
     });
   }
 

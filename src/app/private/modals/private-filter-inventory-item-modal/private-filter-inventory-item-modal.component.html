@@ -21,7 +21,7 @@
                       <strong>Company Name</strong>
                     </label>
                     <input placeholder="Company Name" maxlength="250" type="text" class="form-control" id="companyNameField" formControlName="companyName"  [ngClass]="{'is-invalid': errorService.getError(form, 'companyName')}">
-                    <!-- <app-shared-user-autocomplete [userType]="'company'" (selected)="setComany($event)" class="position-absolute w-100" [searchWord]="form.get('companyName')?.value"></app-shared-user-autocomplete> -->
+                    <!-- <app-shared-user-autocomplete [userType]="'company'" (selected)="setCompany($event)" class="position-absolute w-100" [searchWord]="form.get('companyName')?.value"></app-shared-user-autocomplete> -->
                     <app-custom-error-message [errorMessage]="errorService.getError(form, 'companyName')"></app-custom-error-message>
                   </div>
 

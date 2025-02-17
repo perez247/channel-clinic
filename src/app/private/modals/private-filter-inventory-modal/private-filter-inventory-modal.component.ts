@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ILookUp, AppConstants } from "src/app/shared/core/models/app-constants";
@@ -6,6 +7,7 @@ import { InventoryFilter } from "src/app/shared/core/models/inventory";
 import { CustomErrorService } from "src/app/shared/services/common/custom-error/custom-error.service";
 import { EventBusService } from "src/app/shared/services/common/event-bus/event-bus.service";
 import { FilterInventoryModalFunctions } from "./private-filter-inventory-modal-functions";
+import { AppUser } from "src/app/shared/core/models/app-user";
 
 @Component({
   selector: 'app-private-filter-inventory-modal',
@@ -21,6 +23,8 @@ export class PrivateFilterInventoryModalComponent implements OnInit {
 
   lookups: ILookUp[] = [];
   lookupType = AppConstants.LookUpType;
+
+  fonts = { faTrash }
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -40,6 +44,20 @@ export class PrivateFilterInventoryModalComponent implements OnInit {
 
   setLookUp(): void {
     this.lookups = this.eventBus.state.lookUps.value?.filter(x => x.type === this.lookupType.AppInventoryType) ?? [];
+  }
+
+  setCompany(company: AppUser) {
+    this.form.patchValue({
+      companyId: company.company?.base?.id,
+      companyName: company.company?.name,
+    });
+  }
+
+  clearCompany() {
+    this.form.patchValue({
+      companyId: null,
+      companyName: null,
+    });
   }
 
   clearForm() {

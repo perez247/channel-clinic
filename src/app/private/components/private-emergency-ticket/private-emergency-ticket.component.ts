@@ -35,7 +35,6 @@ export class PrivateEmergencyTicketComponent implements OnInit {
     component.ticketInventories = this.ticketInventories;
     const sub = component.saved.subscribe({
       next: (data: any) => {
-        console.log(data);
         this.ticket = data;
         this.ticketInventories = this.ticket?.ticketInventories as any;
         this.updatedTicket.emit(data);

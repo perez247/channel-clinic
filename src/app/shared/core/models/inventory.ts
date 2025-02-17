@@ -7,6 +7,10 @@ import { Base, Company } from "./app-user";
     quantity?: number;
     inventoryId?: string;
     low?: boolean;
+    companyId?: string;
+    companyName?: string;
+    inventoryIds?: string[];
+    includeCompanyInventoryItem?: boolean;
   }
 
   export class InventoryItemFilter {

@@ -6,8 +6,8 @@ export class PaginationRequest<T>
     private filter?: T;
 
     constructor(newPagination?: AppPagination, newFilter?: T) {
-        this.pagination = newPagination;
-        this.filter = newFilter;
+        this.pagination = newPagination ? newPagination : new AppPagination();
+        this.filter = newFilter ? newFilter : {} as T;
     }
 
     setPagination(pagination: Partial<AppPagination>): void {

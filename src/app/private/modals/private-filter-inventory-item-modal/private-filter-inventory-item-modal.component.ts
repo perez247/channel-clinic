@@ -34,7 +34,7 @@ export class PrivateFilterInventoryItemModalComponent implements OnInit {
     this.form = FilterInventoryItemModalFunctions.createForm(this.fb, this.filter);
   }
 
-  setComany(company: AppUser) {
+  setCompany(company: AppUser) {
     this.form.patchValue({
       companyId: company.company?.base?.id,
       companyName: company.company?.name,

@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { faTrashAlt, faPen, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { AppAppointment } from "src/app/shared/core/models/app-appointment";
 import { AppTicket, AppTicketTypes, ITicketInventory, TicketFilter } from "src/app/shared/core/models/app-ticket";
-import { InventoryFilter } from "src/app/shared/core/models/inventory";
-import { AppPagination, PaginationRequest, PaginationResponse } from "src/app/shared/core/models/pagination";
+import { AppInventory, InventoryFilter } from "src/app/shared/core/models/inventory";
+import { AppPagination, PaginationContext, PaginationRequest, PaginationResponse } from "src/app/shared/core/models/pagination";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { TicketService } from "src/app/shared/services/api/ticket/ticket.service";
 import { CustomErrorService } from "src/app/shared/services/common/custom-error/custom-error.service";
@@ -13,6 +13,7 @@ import { PrivateCreateTicketFunctions } from "./private-create-ticket-modal-func
 import { SharedUtilityComponent } from "src/app/shared/components/shared-utility/shared-utility.component";
 import { finalize } from "rxjs";
 import { PrivateGetInventoryModalComponent } from "../private-get-inventory-modal/private-get-inventory-modal.component";
+import { InventoryService } from "src/app/shared/services/api/inventory/inventory.service";
 
 
 @Component({
@@ -32,7 +33,6 @@ export class PrivateCreateTicketModalComponent extends SharedUtilityComponent im
 
   @Input() returnData = false;
 
-
   @Input() executeAction?: (data: any, activeModal: NgbActiveModal, setLoading: (state: boolean) => void) => void;
   @Input() executeInParentComponent = false;
 
@@ -51,6 +51,8 @@ export class PrivateCreateTicketModalComponent extends SharedUtilityComponent im
   appTicketTypes = AppTicketTypes;
   allTypesExceptionAdmision = Object.keys(this.appTicketTypes).filter(x => x !== this.appTicketTypes.admission);
 
+  checkingTariff = false;
+
   constructor(
     public activeModal: NgbActiveModal,
     private fb: FormBuilder,
@@ -58,6 +60,7 @@ export class PrivateCreateTicketModalComponent extends SharedUtilityComponent im
     private toast: CustomToastService,
     private modalService: NgbModal,
     private ticketService: TicketService,
+    private inventoryService: InventoryService,
   ) {
     super();
   }
@@ -167,5 +170,15 @@ export class PrivateCreateTicketModalComponent extends SharedUtilityComponent im
 
   updateLoading(state: boolean): void {
     this.isLoading = state;
+  }
+
+  checkTicketTariff(): void {
+    this.checkingTariff = true;
+    const pagination = new PaginationContext<AppInventory, InventoryFilter>();
+    pagination.request?.setPagination({ pageSize: 50 });
+    const sub = this.inventoryService.getInventories(pagination.request)
+      .pipe(
+        finalize(() => this.checkingTariff = false)
+      )
   }
 }
